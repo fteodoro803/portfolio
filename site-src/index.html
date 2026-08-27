@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fernando Teodoro — Portfolio</title>
+  <link rel="stylesheet" href="{{ROOT}}css/style.css" />
+</head>
+<body>
+<!--#include partial="nav.html"-->
+
+<main>
+  <div class="hero">
+    <h1>Fernando Teodoro</h1>
+    <p class="subhead">Melbourne-based full-stack developer. I look for a real gap in an existing system, then build the practical, working fix for it — not a slide deck about it.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>Pa-Ride</h3>
+      <div class="card-tags">React Native · TypeScript · Supabase (Postgres, PostGIS)</div>
+      <p class="card-hook">A carpool marketplace for the Philippines, positioned as cost-sharing to stay outside ride-hailing regulation — solo, from spec to a PostGIS corridor-matching algorithm.</p>
+      <a class="card-link" href="{{ROOT}}projects/pa-ride.html">Read case study →</a>
+    </div>
+
+    <!--IF:queueSystemVisible-->
+    <div class="card">
+      <h3>Realtime Queue Management System</h3>
+      <div class="card-tags">React · Meteor · MongoDB · Docker · Google Cloud</div>
+      <p class="card-hook">Started from my brother's story about hospital wait times in the Philippines — grew into a multi-tenant RBAC platform any organisation running a queue can use.</p>
+      <a class="card-link" href="{{ROOT}}projects/queue-system.html">Read case study →</a>
+    </div>
+    <!--ENDIF-->
+
+    <div class="card">
+      <h3>Melbourne Public Transport Widget</h3>
+      <div class="card-tags">Flutter · Flask · WidgetKit/SwiftUI · GTFS Realtime</div>
+      <p class="card-hook">A personalised departure board on your phone's home screen, built with a collaborator — reverse-engineered PTV's request-signing scheme from scratch to get there.</p>
+      <a class="card-link" href="{{ROOT}}projects/transport-widget.html">Read case study →</a>
+    </div>
+  </div>
+
+  <p><a href="{{ROOT}}other-projects.html">See other projects →</a> (uni work, a hackathon site, a Unity game)</p>
+
+  <h2 id="contact">Contact</h2>
+  <div class="contact-block">
+    <a href="mailto:fernandoagustin803@gmail.com">fernandoagustin803@gmail.com</a>
+    <a href="https://linkedin.com/in/fernando-agustin-teodoro">LinkedIn</a>
+    <a href="https://github.com/fteodoro803">GitHub</a>
+    <a class="button secondary" href="{{ROOT}}assets/resume.pdf">Download Resume (PDF)</a>
+  </div>
+</main>
+
+<!--#include partial="footer.html"-->
+</body>
+</html>
