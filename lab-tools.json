@@ -1,0 +1,13 @@
+[
+  {
+    "id": "lap-sim",
+    "title": "Lap Timer Demo",
+    "tags": "Vanilla JS · Canvas · Simulated data",
+    "description": "A simulated racing session with a live speed trace, sector splits and delta-to-best — a placeholder that previews the telemetry visualiser I'm building.",
+    "note": "Runs entirely in the browser, no game needed.",
+    "path": "lab-demo/lap-sim",
+    "output": ".",
+    "build": "",
+    "enabled": true
+  }
+]

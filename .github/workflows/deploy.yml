@@ -26,8 +26,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Build site (honors config.json toggles)
+      - name: Build site (honors config.json toggles, assembles Lab tools)
         run: python3 build.py
+        env:
+          # Only needed if a Lab tool repo is private; empty is fine otherwise.
+          LAB_TOKEN: ${{ secrets.LAB_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
