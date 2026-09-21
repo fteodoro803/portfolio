@@ -1,5 +1,4 @@
 ---
-photo: assets/uploads/medium.gif
 ---
 I'm a Melbourne-based full-stack developer. My pattern across projects has been the same one, whether the domain is transport, healthcare queues, or carpooling: find a real gap in an existing system, then build the practical, working version of the fix — not a slide deck about it.
 
