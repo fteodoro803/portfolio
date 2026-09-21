@@ -1,10 +1,12 @@
 # Portfolio site
 
+**To change something on the site, use [Pages CMS →](https://pagescms.org)** (sign in with GitHub, open this repo). No code needed. See [CONTENT.md](CONTENT.md) for how.
+
 Static site on GitHub Pages. Text lives in `content/`, page shapes and styling in `site-src/`, and `build.py` combines them into `dist/`. The workflow in `.github/workflows/deploy.yml` builds and deploys on every push to `main`.
 
 | I want to… | Read |
 |---|---|
-| Edit text, projects, resumes, or hide something | **[CONTENT.md](CONTENT.md)**. Editable in a browser with Pages CMS |
+| Edit text, projects, resumes, or hide something | **[Pages CMS](https://pagescms.org)** in a browser. Guide: **[CONTENT.md](CONTENT.md)** |
 | Add or update a Lab tool | **[LAB.md](LAB.md)** |
 | Change colours, fonts or components | **[DESIGN.md](DESIGN.md)** |
 
