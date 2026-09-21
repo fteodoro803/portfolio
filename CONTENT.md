@@ -56,7 +56,7 @@ The site stays a static site on GitHub Pages. The CMS is just a friendlier way t
 
 1. You edit in the CMS and press **Save**. That commits to `main`.
 2. The **Build and deploy portfolio site** workflow starts by itself. Watch it under **Actions** on GitHub.
-3. About a minute later the change is live.
+3. About a minute later the change is live. If you've visited recently, your browser may show its saved copy for up to 10 minutes. Hard refresh (`Cmd+Shift+R`) to see it now ([why](README.md#caching-why-changes-can-take-a-few-minutes-to-show)).
 
 If the run turns red, the previous version of the site stays live. Open the run to see why ([Troubleshooting](#troubleshooting)).
 
@@ -193,6 +193,7 @@ Everything between the `---` lines is a setting (`key: value`). Everything after
 | Symptom | Likely cause |
 |---|---|
 | Saved in the CMS but the site didn't change | Check **Actions**. The run may still be going, or failed |
+| Actions is green but a normal tab still shows the old page | Browser cache (up to 10 minutes). Hard refresh with `Cmd+Shift+R`, or use an incognito window. See [Caching](README.md#caching-why-changes-can-take-a-few-minutes-to-show) |
 | Run is red at "Deploy to GitHub Pages" with a timeout | GitHub hiccup. Start a **new** run (Actions → Run workflow). Don't use "Re-run jobs" |
 | Run is red at "Build site" | Read the error. Usual causes below |
 | `file '…' not found` for a resume | The PDF path in the entry is wrong or the file wasn't uploaded |

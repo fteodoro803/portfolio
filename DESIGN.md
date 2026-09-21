@@ -53,7 +53,7 @@ Every page starts with the shared head and nav partials and ends with the footer
 </body>
 ```
 
-`head.html` brings in the font, stylesheet, theme script and `js/site.js`. The build adds `aria-current="page"` to the matching nav link automatically.
+`head.html` brings in the font, stylesheet, theme script and `js/site.js`. The build appends a content fingerprint to the CSS and JS links (`style.css?v=…`) so edits show up immediately; see [Caching](README.md#caching-why-changes-can-take-a-few-minutes-to-show). The build adds `aria-current="page"` to the matching nav link automatically.
 
 Use `<main>` (900px) for grids and hubs, and `<main class="narrow">` (760px) for reading pages like case studies and About.
 
