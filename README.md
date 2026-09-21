@@ -35,6 +35,10 @@ gh workflow run deploy.yml
 
 **Full guide** — adding and editing tools, the rules a tool repo must follow, the `lab-tools.json` fields, troubleshooting, and expandable "why" explanations: see **[LAB.md](LAB.md)**.
 
+## Design
+
+Colours, fonts and reusable components are documented in **[DESIGN.md](DESIGN.md)**. The theme (light/dark) and all styling live in `site-src/css/style.css`.
+
 ## Local preview
 
 ```

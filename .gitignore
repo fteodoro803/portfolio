@@ -2,3 +2,4 @@ dist/
 .lab-cache/
 __pycache__/
 .DS_Store
+design-input/

@@ -78,6 +78,17 @@ def render_includes(html):
     return html
 
 
+NAV_RE = re.compile(r'<nav class="site-nav".*?</nav>', re.DOTALL)
+
+
+def mark_active_nav(html, rel):
+    """Add aria-current="page" to the nav link that points at this page."""
+    link = f'<a href="{{{{ROOT}}}}{rel}">'
+    return NAV_RE.sub(
+        lambda m: m.group(0).replace(link, link[:-1] + ' aria-current="page">', 1), html, count=1
+    )
+
+
 def render_if_blocks(html, config):
     def _sub(match):
         flag, block = match.group(1), match.group(2)
@@ -119,14 +130,15 @@ def render_lab_cards(tools):
         source_url = tool.get("sourceUrl") or (
             f"https://github.com/{tool['repo']}" if tool.get("repo") else ""
         )
-        note = f'<p class="card-note">{esc(tool["note"])}</p>' if tool.get("note") else ""
-        source = f' · <a class="card-link" href="{esc(source_url)}">Source</a>' if source_url else ""
+        type_label = f'<span class="card-type">{esc(tool["type"])}</span>' if tool.get("type") else ""
         tags = f'<div class="card-tags">{esc(tool["tags"])}</div>' if tool.get("tags") else ""
+        note = f'<p class="card-note">{esc(tool["note"])}</p>' if tool.get("note") else ""
+        source = f'<a class="card-link" href="{esc(source_url)}">Source</a>' if source_url else ""
         cards.append(
             '<div class="card">'
-            f'<h3>{esc(tool["title"])}</h3>{tags}'
+            f'{type_label}<h3>{esc(tool["title"])}</h3>{tags}'
             f'<p class="card-hook">{esc(tool["description"])}</p>{note}'
-            f'<a class="card-link" href="{{{{ROOT}}}}lab/{tool["id"]}/">Open →</a>{source}'
+            f'<div class="card-links"><a class="card-link" href="{{{{ROOT}}}}lab/{tool["id"]}/">Open →</a>{source}</div>'
             "</div>"
         )
     return "\n".join(cards)
@@ -239,6 +251,7 @@ def build():
         root_prefix = "../" * depth
 
         html = render_includes(html)
+        html = mark_active_nav(html, rel.as_posix())
         html = render_if_blocks(html, config)
         html = html.replace(LAB_MARKER, render_lab_cards(lab_tools))
         html = html.replace("{{ROOT}}", root_prefix)

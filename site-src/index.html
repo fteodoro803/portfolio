@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--#include partial="head.html"-->
   <title>Fernando Teodoro — Portfolio</title>
-  <link rel="stylesheet" href="{{ROOT}}css/style.css" />
 </head>
 <body>
 <!--#include partial="nav.html"-->
@@ -40,15 +38,17 @@
     </div>
   </div>
 
-  <p><a href="{{ROOT}}other-projects.html">See other projects →</a> (uni work, a hackathon site, a Unity game)</p>
-  <p><a href="{{ROOT}}lab/index.html">Visit the Lab →</a> (small side projects you can open and use)</p>
+  <div class="pill-row">
+    <a class="pill" href="{{ROOT}}other-projects.html">See other projects →</a>
+    <a class="pill primary" href="{{ROOT}}lab/index.html">Visit the Lab →</a>
+  </div>
 
   <h2 id="contact">Contact</h2>
   <div class="contact-block">
-    <a href="mailto:fernandoagustin803@gmail.com">fernandoagustin803@gmail.com</a>
-    <a href="https://linkedin.com/in/fernando-agustin-teodoro">LinkedIn</a>
-    <a href="https://github.com/fteodoro803">GitHub</a>
-    <a class="button secondary" href="{{ROOT}}assets/resume.pdf">Download Resume (PDF)</a>
+    <a class="contact-link" href="mailto:fernandoagustin803@gmail.com">fernandoagustin803@gmail.com</a>
+    <a class="contact-link" href="https://linkedin.com/in/fernando-agustin-teodoro">LinkedIn</a>
+    <a class="contact-link" href="https://github.com/fteodoro803">GitHub</a>
+    <a class="pill outline" href="{{ROOT}}assets/resume.pdf">Download Resume (PDF)</a>
   </div>
 </main>
 
