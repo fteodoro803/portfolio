@@ -23,6 +23,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 | Hide a tool temporarily | Set `"enabled": false` in `lab-tools.json`, push |
 | Stop a broken tool blocking deploys | Same as above |
 | Use a private tool repo | Add the `LAB_TOKEN` secret ([details](#private-tool-repos)) |
+| Edit Lab cards in a browser | Pages CMS → **Lab tools** (see [CONTENT.md](CONTENT.md)); it edits `lab-tools.json` |
 
 > **⚠️ The portfolio site does not rebuild when a tool repo changes.** Pushing to a tool repo does nothing to the live site until you [rebuild](#rebuild-the-site).
 
@@ -80,7 +81,7 @@ Each tool repo stays a normal, standalone project with its own README, history a
    cd dist && python3 -m http.server 8000
    ```
 
-   Open http://localhost:8000/lab/. This needs `git` and network access for `repo` tools.
+   Open http://localhost:8000/lab/. This needs `git` and network access for `repo` tools, and the local setup from the [README](README.md#local-preview).
 4. **Commit and push to `main`.** The push triggers a rebuild, which publishes the tool.
 
 Your tool is now at `/lab/<id>/` and has a card on the hub page.

@@ -1,0 +1,152 @@
+# Pages CMS configuration. See CONTENT.md for how this fits together.
+# Docs: https://pagescms.org/docs/configuration/
+
+# Uploaded images and PDFs are saved here, and referenced from content as
+# "assets/uploads/<file>" (the build makes that work from any page).
+media:
+  input: site-src/assets/uploads
+  output: assets/uploads
+
+content:
+  # ---------- Site-wide details ----------
+  - name: site
+    label: Site details
+    type: file
+    path: content/site.yml
+    format: yaml
+    fields:
+      - { name: name, label: Short name (header and page titles), type: string }
+      - { name: fullName, label: Full name (footer), type: string }
+      - { name: location, label: Location (footer), type: string }
+      - { name: email, label: Email, type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - { name: github, label: GitHub URL, type: string }
+
+  # ---------- Pages ----------
+  - name: home
+    label: Home page
+    type: file
+    path: content/pages/home.md
+    format: yaml-frontmatter
+    fields:
+      - name: subhead
+        label: Intro line under the name
+        type: text
+
+  - name: about
+    label: About page
+    type: file
+    path: content/pages/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: photo
+        label: Photo (optional)
+        type: image
+      - { name: photoAlt, label: Photo description (for screen readers), type: string }
+      - { name: body, label: Text, type: rich-text }
+
+  - name: resume-page
+    label: Resume page intro
+    type: file
+    path: content/pages/resume.md
+    format: yaml-frontmatter
+    fields:
+      - { name: body, label: Intro text, type: rich-text }
+
+  # ---------- Collections ----------
+  - name: case-studies
+    label: Case studies
+    type: collection
+    path: content/case-studies
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      sort: order
+      fields: [title, featured, visible, order]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: tags, label: Tags line (shown on the page), type: string }
+      - { name: cardTags, label: Short tags (shown on the home card), type: string }
+      - name: summary
+        label: Card summary (one or two sentences)
+        type: text
+      - { name: demoUrl, label: Live demo URL (optional), type: string }
+      - { name: demoLabel, label: Demo button text, type: string, default: "Try the live demo →" }
+      - { name: demoNote, label: Note next to the demo button (optional), type: string }
+      - { name: featured, label: Show on the home page, type: boolean, default: true }
+      - name: visible
+        label: Published
+        description: Turn off to hide this case study everywhere. Its URL stops working.
+        type: boolean
+        default: true
+      - { name: order, label: Order (1 = first), type: number }
+      - name: body
+        label: Write-up
+        description: "Use headings for sections. A quote block becomes a highlighted callout."
+        type: rich-text
+
+  - name: other-projects
+    label: Other projects
+    type: collection
+    path: content/other-projects
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      sort: order
+      fields: [title, visible, order]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: tags, label: Tags line, type: string }
+      - name: summary
+        label: Card summary (optional)
+        description: Leave empty to use the first sentence of the write-up.
+        type: text
+      - { name: note, label: Note shown under the write-up (optional), type: text }
+      - { name: link, label: Link to a repo or site (optional), type: string }
+      - { name: visible, label: Published, type: boolean, default: true }
+      - { name: order, label: Order (1 = first), type: number }
+      - { name: body, label: Write-up, type: rich-text }
+
+  - name: resumes
+    label: Resumes
+    type: collection
+    path: content/resumes
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      sort: order
+      fields: [title, recommended, visible, order]
+    fields:
+      - { name: title, label: "Name (e.g. Software or Data)", type: string, required: true }
+      - { name: description, label: Who this one is for, type: text }
+      - name: file
+        label: PDF
+        type: file
+      - { name: recommended, label: Mark as "Start here", type: boolean, default: false }
+      - { name: visible, label: Published, type: boolean, default: true }
+      - { name: order, label: Order (1 = first), type: number }
+
+  # ---------- Lab ----------
+  - name: lab
+    label: Lab tools
+    type: file
+    path: lab-tools.json
+    format: json
+    list: true
+    fields:
+      - { name: id, label: "ID (becomes the URL: /lab/<id>/)", type: string, required: true }
+      - { name: title, label: Title, type: string, required: true }
+      - { name: type, label: "Type label (e.g. Tool, Log)", type: string }
+      - { name: tags, label: Tags line, type: string }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: note, label: Short note (optional), type: string }
+      - { name: repo, label: "GitHub repo (owner/name)", type: string }
+      - { name: path, label: Local folder (instead of a repo), type: string }
+      - { name: ref, label: Branch or tag (optional), type: string }
+      - { name: build, label: Build command (optional), type: string }
+      - { name: output, label: Folder to publish, type: string, default: "." }
+      - { name: sourceUrl, label: Source link override (optional), type: string }
+      - { name: enabled, label: Published, type: boolean, default: true }

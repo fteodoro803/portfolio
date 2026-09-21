@@ -26,7 +26,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Build site (honors config.json toggles, assembles Lab tools)
+      - name: Install build dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build site (content + Lab tools)
         run: python3 build.py
         env:
           # Only needed if a Lab tool repo is private; empty is fine otherwise.

@@ -69,10 +69,12 @@ Use `<main>` (900px) for grids and hubs, and `<main class="narrow">` (760px) for
 | Tags line | `<div class="tags">` | Under a case-study title |
 | Button | `<a class="button">` | Primary action on case studies |
 | Pills | `<a class="pill">`, `.pill.primary`, `.pill.outline` | Home-page links and the resume button. Wrap in `.pill-row` |
-| Callout | `<div class="callout">` (or `.status-note`) | Highlighted note |
-| Bullet list | `<ul class="project-bullets">` | Case-study lists |
+| Callout | `<div class="callout">` (or `.status-note`) | Highlighted note. In content, a Markdown quote block becomes one |
+| Bullet list | `<ul class="project-bullets">` | Case-study lists. Markdown lists get it automatically |
 | Back link | `<a class="back-link">` | End of a page |
 | Links in text | plain `<a>` inside `<p>` | Underlined automatically |
+
+Page text comes from `content/` (see [CONTENT.md](CONTENT.md)); the HTML around it lives in `site-src/*.html` and `site-src/templates/`.
 
 ## Lab tool pages
 

@@ -412,3 +412,27 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
   .hero h1 { font-size: 2rem; }
   .dialog-body { padding: 24px; }
 }
+
+/* ---------- Content from the CMS ---------- */
+
+.about-top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.about-top h1 { margin: 0; }
+
+.about-photo {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+main img { max-width: 100%; height: auto; border-radius: 12px; }
+
+.callout p, .status-note p { margin: 0 0 10px; }
+.callout p:last-child, .status-note p:last-child { margin-bottom: 0; }
