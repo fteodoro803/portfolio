@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <!--#include partial="head.html"-->
-  <title>Lab — {{site.name}}</title>
+  <title>{{entry.title}} — {{site.name}}</title>
 </head>
 <body>
 <!--#include partial="nav.html"-->
 
-<main>
-  <h1>Lab</h1>
-  <p class="tagline">Small side projects you can open and use — the things I build for fun, outside the case studies.</p>
+<main class="narrow">
+  <h1>{{entry.title}}</h1>
+  <div class="tags">{{entry.tags}}</div>
 
-  <div class="card-grid">
-<!--LAB-CARDS-->
-  </div>
+  {{entry.demoBlock}}
+
+{{entry.body}}
 
   <a class="back-link" href="{{ROOT}}index.html">← Back home</a>
 </main>

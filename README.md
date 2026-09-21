@@ -1,25 +1,16 @@
 # Portfolio site
 
-Static site, built from `site-src/` into `dist/` by `build.py`, deployed automatically to GitHub Pages by the workflow in `.github/workflows/deploy.yml` on every push to `main`.
+Static site on GitHub Pages. Text lives in `content/`, page shapes and styling in `site-src/`, and `build.py` combines them into `dist/`. The workflow in `.github/workflows/deploy.yml` builds and deploys on every push to `main`.
 
-## To hide/show the Queue System page
+| I want to… | Read |
+|---|---|
+| Edit text, projects, resumes, or hide something | **[CONTENT.md](CONTENT.md)**. Editable in a browser with Pages CMS |
+| Add or update a Lab tool | **[LAB.md](LAB.md)** |
+| Change colours, fonts or components | **[DESIGN.md](DESIGN.md)** |
 
-Edit `config.json`:
+## Editing content
 
-```json
-{
-  "queueSystemVisible": false
-}
-```
-
-Set it to `true` when you're ready to reveal it, commit, and push (or just edit the file directly on github.com — click it, click the pencil icon, change `false` to `true`, commit). GitHub Actions rebuilds and redeploys automatically within about a minute. When `false`, the Queue System page and its home-page card don't exist in the published output at all — it's not just hidden, the URL won't resolve.
-
-## Before this is live
-
-1. **Add your resume**: drop a PDF at `site-src/assets/resume.pdf` (a general, non-tailored version).
-2. **Fill in the two demo links**: search for `PASTE_..._LIVE_URL_HERE` in `site-src/projects/pa-ride.html` and `site-src/projects/queue-system.html` and swap in the real URLs.
-3. **Confirm the hackathon write-up**: `site-src/other-projects.html` has a draft note on `The Professionals' Portfolio` marked for your review — see the chat for the full findings.
-4. **Custom domain** (optional): once you've bought a domain, add a `CNAME` file at the repo root containing just the domain (e.g. `fteodoro.dev`), and point your DNS at GitHub's servers per [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+Use [Pages CMS](https://pagescms.org) (forms, no code), or edit the files in `content/` directly on GitHub. Saving commits to `main` and the site rebuilds in about a minute. Setup, recipes and troubleshooting are in **[CONTENT.md](CONTENT.md)**.
 
 ## The Lab
 
@@ -33,23 +24,33 @@ The Lab (`/lab/`) is a hub of small side projects. Each tool lives in its own re
 gh workflow run deploy.yml
 ```
 
-**Full guide** — adding and editing tools, the rules a tool repo must follow, the `lab-tools.json` fields, troubleshooting, and expandable "why" explanations: see **[LAB.md](LAB.md)**.
+If a run fails at "Deploy to GitHub Pages" with a timeout, start a **new** run this way instead of using "Re-run jobs" (re-running inside the same run uploads a second artifact, which the deploy step rejects).
 
-## Design
-
-Colours, fonts and reusable components are documented in **[DESIGN.md](DESIGN.md)**. The theme (light/dark) and all styling live in `site-src/css/style.css`.
+Full guide: **[LAB.md](LAB.md)**.
 
 ## Local preview
 
+One-time setup (the build needs two small Python packages):
+
 ```
-python3 build.py
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Then, whenever you want to preview:
+
+```
+.venv/bin/python build.py
 cd dist && python3 -m http.server 8000
 ```
 
-`build.py` needs `git` (and network access) to fetch Lab tools that use `repo`. Tools that use `path` build offline.
-
-Then open http://localhost:8000
+Open http://localhost:8000. `build.py` also needs `git` and network access to fetch Lab tools that use `repo`; tools that use `path` build offline.
 
 ## One-time repo setup
 
-In the repo's Settings → Pages, set **Source** to **GitHub Actions** (not "Deploy from a branch") — the workflow handles the rest.
+In the repo's Settings → Pages, set **Source** to **GitHub Actions** (not "Deploy from a branch"). The workflow handles the rest.
+
+## Still to do
+
+- **Confirm the hackathon write-up:** `content/other-projects/professionals-portfolio.md` has a draft note (the **Note** field) that shows publicly. Clear it once you're happy with the wording.
+- **Custom domain** (optional): once you've bought a domain, add a `CNAME` file at the repo root containing just the domain (e.g. `fteodoro.dev`), and point your DNS at GitHub's servers per [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).

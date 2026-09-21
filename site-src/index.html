@@ -2,40 +2,19 @@
 <html lang="en">
 <head>
 <!--#include partial="head.html"-->
-  <title>Fernando Teodoro — Portfolio</title>
+  <title>{{site.name}} — Portfolio</title>
 </head>
 <body>
 <!--#include partial="nav.html"-->
 
 <main>
   <div class="hero">
-    <h1>Fernando Teodoro</h1>
-    <p class="subhead">Melbourne-based full-stack developer. I look for a real gap in an existing system, then build the practical, working fix for it — not a slide deck about it.</p>
+    <h1>{{site.name}}</h1>
+    <p class="subhead">{{page.subhead}}</p>
   </div>
 
   <div class="card-grid">
-    <div class="card">
-      <h3>Pa-Ride</h3>
-      <div class="card-tags">React Native · TypeScript · Supabase (Postgres, PostGIS)</div>
-      <p class="card-hook">A carpool marketplace for the Philippines, positioned as cost-sharing to stay outside ride-hailing regulation — solo, from spec to a PostGIS corridor-matching algorithm.</p>
-      <a class="card-link" href="{{ROOT}}projects/pa-ride.html">Read case study →</a>
-    </div>
-
-    <!--IF:queueSystemVisible-->
-    <div class="card">
-      <h3>Realtime Queue Management System</h3>
-      <div class="card-tags">React · Meteor · MongoDB · Docker · Google Cloud</div>
-      <p class="card-hook">Started from my brother's story about hospital wait times in the Philippines — grew into a multi-tenant RBAC platform any organisation running a queue can use.</p>
-      <a class="card-link" href="{{ROOT}}projects/queue-system.html">Read case study →</a>
-    </div>
-    <!--ENDIF-->
-
-    <div class="card">
-      <h3>Melbourne Public Transport Widget</h3>
-      <div class="card-tags">Flutter · Flask · WidgetKit/SwiftUI · GTFS Realtime</div>
-      <p class="card-hook">A personalised departure board on your phone's home screen, built with a collaborator — reverse-engineered PTV's request-signing scheme from scratch to get there.</p>
-      <a class="card-link" href="{{ROOT}}projects/transport-widget.html">Read case study →</a>
-    </div>
+<!--CASE-STUDY-CARDS-->
   </div>
 
   <div class="pill-row">
@@ -45,10 +24,10 @@
 
   <h2 id="contact">Contact</h2>
   <div class="contact-block">
-    <a class="contact-link" href="mailto:fernandoagustin803@gmail.com">fernandoagustin803@gmail.com</a>
-    <a class="contact-link" href="https://linkedin.com/in/fernando-agustin-teodoro">LinkedIn</a>
-    <a class="contact-link" href="https://github.com/fteodoro803">GitHub</a>
-    <a class="pill outline" href="{{ROOT}}assets/resume.pdf">Download Resume (PDF)</a>
+    <a class="contact-link" href="mailto:{{site.email}}">{{site.email}}</a>
+    <a class="contact-link" href="{{site.linkedin}}">LinkedIn</a>
+    <a class="contact-link" href="{{site.github}}">GitHub</a>
+    <a class="pill outline" href="{{ROOT}}resume.html">Resume →</a>
   </div>
 </main>
 
