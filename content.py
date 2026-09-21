@@ -17,7 +17,9 @@ import yaml
 ROOT_DIR = Path(__file__).parent
 CONTENT = ROOT_DIR / "content"
 
-FRONT_MATTER_RE = re.compile(r"\A---[ \t]*\n(.*?)\n---[ \t]*(?:\n(.*))?\Z", re.DOTALL)
+# The settings block can be empty (`---` then `---`), which is how Pages CMS saves a
+# file with no settings, and may use Windows line endings.
+FRONT_MATTER_RE = re.compile(r"\A---[ \t]*\r?\n(?:(.*?)\r?\n)?---[ \t]*(?:\r?\n(.*))?\Z", re.DOTALL)
 FIRST_SENTENCE_RE = re.compile(r"^.*?[.!?](?=\s|$)", re.DOTALL)
 # Uploaded media is stored as "assets/..." (or "/assets/..."). Rewrite it so it works
 # from any page depth and under a sub-path like /portfolio/.
@@ -32,7 +34,7 @@ def read_entry(path):
     match = FRONT_MATTER_RE.match(text)
     if not match:
         return {}, text.strip()
-    meta = yaml.safe_load(match.group(1)) or {}
+    meta = yaml.safe_load(match.group(1) or "") or {}
     if not isinstance(meta, dict):
         raise SystemExit(f"{path}: front matter must be key: value pairs")
     return meta, (match.group(2) or "").strip()
