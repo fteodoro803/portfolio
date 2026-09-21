@@ -30,6 +30,24 @@ If a run fails at "Deploy to GitHub Pages" with a timeout, start a **new** run t
 
 Full guide: **[LAB.md](LAB.md)**.
 
+## Caching (why changes can take a few minutes to show)
+
+GitHub Pages tells browsers they may reuse any file for **10 minutes** (`cache-control: max-age=600`), and there's no setting to change that. Two things follow:
+
+- **Styling and scripts show up straight away.** The build adds a version stamp to the CSS and JS links (for example `style.css?v=b2d32183`). The stamp is a short fingerprint of the file's contents, so it changes only when the file does. A changed file gets a new address, and browsers fetch it immediately instead of using their saved copy.
+- **Page text can lag by up to 10 minutes** for someone who visited recently, because the HTML page itself can't be stamped: its address has to stay the same. A hard refresh (`Cmd+Shift+R` / `Ctrl+Shift+R`) or an incognito window shows the latest straight away.
+
+<details>
+<summary><strong>▸ Why?</strong> — why stamp the CSS and JS but not the pages?</summary>
+
+Browsers decide whether to reuse a saved file by its address. If a file's address never changes, the browser can't tell it has been updated, so it may keep showing the old copy until the 10 minutes are up.
+
+For CSS and JS we control the address, so the build appends `?v=<fingerprint>`. Because the fingerprint comes from the file's contents, an unchanged file keeps the same address (so it stays cached and loads fast), and a changed file gets a new one.
+
+Pages can't work the same way. Visitors and links use addresses like `/about.html`, and adding a changing suffix would break those links and bookmarks. So pages stay subject to the 10-minute window. Uploaded images and PDFs aren't stamped either, but if you replace one, upload it under a new file name and it will show immediately.
+
+</details>
+
 ## Local preview
 
 One-time setup (the build needs two small Python packages):

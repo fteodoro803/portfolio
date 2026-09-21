@@ -22,6 +22,11 @@ into dist/, the folder that gets published.
   - Each visible file in content/case-studies/ becomes projects/<name>.html,
     using site-src/templates/case-study.html.
 
+  - CSS and JS links get a version stamp (style.css?v=3f9a1c1b) that changes only
+    when the file's contents change. GitHub Pages lets browsers reuse files for
+    10 minutes; a new URL makes them fetch the new file straight away. See the
+    "Caching" section of README.md.
+
   - {{ROOT}} becomes the relative path back to the site root ("" for top-level
     pages, "../" one folder down), so links work under any URL prefix.
 
@@ -35,6 +40,7 @@ Environment:
   LAB_TOKEN  Optional GitHub token, only needed if a Lab tool repo is private.
 """
 
+import hashlib
 import re
 import shutil
 from pathlib import Path
@@ -50,6 +56,7 @@ TEMPLATES = SRC / "templates"
 
 INCLUDE_RE = re.compile(r'<!--#include partial="([^"]+)"-->')
 NAV_RE = re.compile(r'<nav class="site-nav".*?</nav>', re.DOTALL)
+ASSET_LINK_RE = re.compile(r"\{\{ROOT\}\}((?:css|js)/[^\"'?#]+\.(?:css|js))")
 
 
 def render_includes(html):
@@ -82,10 +89,22 @@ def fill(html, prefix, values, raw=()):
     return re.sub(r"\{\{" + prefix + r"\.(\w+)\}\}", _sub, html)
 
 
+def asset_versions():
+    """Short content hash for each CSS/JS file, e.g. {"css/style.css": "3f9a1c1b"}."""
+    versions = {}
+    for folder in ("css", "js"):
+        for path in (SRC / folder).rglob("*"):
+            if path.is_file():
+                digest = hashlib.md5(path.read_bytes()).hexdigest()[:8]
+                versions[path.relative_to(SRC).as_posix()] = digest
+    return versions
+
+
 class Site:
     """Everything the pages need, loaded once per build."""
 
     def __init__(self):
+        self.asset_versions = asset_versions()
         self.site = content.load_site()
         self.pages = {}
         for path in (content.CONTENT / "pages").glob("*.md"):
@@ -113,6 +132,11 @@ class Site:
             html = fill(html, "page", self.pages.get(name, {}), raw=("body", "photoBlock"))
         if entry is not None:
             html = fill(html, "entry", entry, raw=("body", "demoBlock"))
+
+        # Version-stamp CSS/JS links so browsers refetch a file as soon as it changes.
+        html = ASSET_LINK_RE.sub(
+            lambda m: m.group(0) + "?v=" + self.asset_versions.get(m.group(1), ""), html
+        )
 
         depth = rel.count("/")
         return html.replace("{{ROOT}}", "../" * depth)
