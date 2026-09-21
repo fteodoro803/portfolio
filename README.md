@@ -21,12 +21,28 @@ Set it to `true` when you're ready to reveal it, commit, and push (or just edit 
 3. **Confirm the hackathon write-up**: `site-src/other-projects.html` has a draft note on `The Professionals' Portfolio` marked for your review — see the chat for the full findings.
 4. **Custom domain** (optional): once you've bought a domain, add a `CNAME` file at the repo root containing just the domain (e.g. `fteodoro.dev`), and point your DNS at GitHub's servers per [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
+## The Lab
+
+The Lab (`/lab/`) is a hub of small side projects. Each tool lives in its own repo; this repo holds the hub page and `lab-tools.json` (the tool list), and the build assembles everything into one site.
+
+> **⚠️ Reminder: the site does not rebuild when a tool repo changes.** After you push to a tool's repo, rebuild the portfolio to publish it.
+
+**To rebuild:** GitHub → **Actions** → **Build and deploy portfolio site** → **Run workflow**. Or from a terminal:
+
+```
+gh workflow run deploy.yml
+```
+
+**Full guide** — adding and editing tools, the rules a tool repo must follow, the `lab-tools.json` fields, troubleshooting, and expandable "why" explanations: see **[LAB.md](LAB.md)**.
+
 ## Local preview
 
 ```
 python3 build.py
 cd dist && python3 -m http.server 8000
 ```
+
+`build.py` needs `git` (and network access) to fetch Lab tools that use `repo`. Tools that use `path` build offline.
 
 Then open http://localhost:8000
 

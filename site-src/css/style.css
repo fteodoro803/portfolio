@@ -180,3 +180,9 @@ ul.project-bullets { padding-left: 20px; }
 ul.project-bullets li { margin-bottom: 10px; }
 
 .back-link { display: inline-block; margin-top: 40px; font-size: 0.92rem; }
+
+.card .card-note {
+  margin: -6px 0 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
