@@ -256,9 +256,3 @@ A cloud relay doesn't help, because the game sends to your local network. Since 
 
 </details>
 
-<details>
-<summary><strong>▸ What's in <code>lab-demo/</code>?</strong></summary>
-
-A stand-in for a tool repo, so the Lab works end to end before any real tool repo exists. `lab-tools.json` points at it with `path` instead of `repo`. It's built the same way as a cloned repo. Once you have real tools, replace or remove the `lap-sim` entry and delete `lab-demo/`.
-
-</details>
