@@ -1,9 +1,6 @@
 ---
-title: Unity Developer — Space Golf
-tags: C# · Unity · Procedural Mesh Generation · Sep–Oct 2022
-summary: ''
-note: ''
-link: ''
+title: Space Golf
+tags: "Unity Developer "
 visible: true
 order: 2
 ---
