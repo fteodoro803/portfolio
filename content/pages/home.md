@@ -1,3 +1,3 @@
 ---
-subhead: Melbourne-based full-stack developer.
+subhead: Melbourne-based full-stack developer
 ---
