@@ -1,6 +1,7 @@
 ---
 title: COVID-19 Air Quality Project
 tags: Data Analyst
+summary: "Analysis on Victoria's air quality during the COVID-19 lockdowns. "
 link: https://github.com/fteodoro803/covid-air-quality-victoria
 visible: true
 order: 3
