@@ -1,14 +1,13 @@
 [
   {
-    "id": "lap-sim",
-    "title": "Lap Timer Demo",
+    "id": "telemetry",
+    "title": "Sim Racing Telemetry",
     "type": "Tool",
-    "tags": "Vanilla JS · Canvas · Simulated data",
-    "description": "A simulated racing session with a live speed trace, sector splits and delta-to-best — a placeholder that previews the telemetry visualiser I'm building.",
-    "note": "Runs entirely in the browser, no game needed.",
-    "path": "lab-demo/lap-sim",
-    "output": ".",
-    "build": "",
+    "tags": "JavaScript · WebSockets · UDP · GT7",
+    "description": "A live dashboard for racing-game telemetry — lap and sector times, deltas to your best or last lap, speed, gear, rpm and pedals. Built for Gran Turismo 7 first.",
+    "note": "Opens straight into a demo session. Live data needs a small bridge program (linked on the page) running on your own network.",
+    "repo": "fteodoro803/sim-racing-telemetry",
+    "output": "web",
     "enabled": true
   }
 ]
