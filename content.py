@@ -37,7 +37,14 @@ def read_entry(path):
     meta = yaml.safe_load(match.group(1) or "") or {}
     if not isinstance(meta, dict):
         raise SystemExit(f"{path}: front matter must be key: value pairs")
-    return meta, (match.group(2) or "").strip()
+    body = (match.group(2) or "").strip()
+    # Pages CMS has, at least once, saved an empty front matter block as
+    # `---\n---\n---\n\n---\n\n<body>` instead of `---\n---\n<body>`. Our regex is lenient
+    # enough to parse that without error, silently treating the stray `---` lines as
+    # body content (which then renders as a horizontal rule). Catch it here instead.
+    if body == "---" or body.startswith("---\n"):
+        raise SystemExit(f"{path}: body starts with a stray '---' — front matter is likely corrupted")
+    return meta, body
 
 
 def load_site():
