@@ -1,8 +1,9 @@
 ---
 title: C-LARA Image Annotation Tool
 tags: Product Owner & Full-Stack Developer
-summary: A custom tool to streamline annotated image-set creation for the C-LARA
+summary: A tool to streamline annotated image-set creation for the C-LARA
   language-learning platform
+link: https://github.com/fteodoro803/C-LARA-Image-Annotation-Tool
 visible: true
 order: 1
 ---
