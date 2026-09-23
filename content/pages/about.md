@@ -1,8 +1,5 @@
 ---
 ---
----
-
----
 
 Hi! I'm a Melbourne-based full-stack developer who loves taking systems apart, spotting the gaps, and building practical solutions from the ground up.
 
