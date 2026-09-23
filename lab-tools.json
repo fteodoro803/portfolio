@@ -4,7 +4,7 @@
     "title": "Sim Racing Telemetry",
     "type": "Tool",
     "tags": "JavaScript · WebSockets · UDP · GT7",
-    "description": "A live dashboard for racing-game telemetry — lap and sector times, deltas to your best or last lap, speed, gear, rpm and pedals. Built for Gran Turismo 7 first.",
+    "description": "A live dashboard for driving and race timing telemetry. Built for Gran Turismo 7.",
     "note": "Opens straight into a demo session. Live data needs a small bridge program (linked on the page) running on your own network.",
     "repo": "fteodoro803/sim-racing-telemetry",
     "output": "web",
