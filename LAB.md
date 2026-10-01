@@ -1,6 +1,6 @@
 # The Lab — how it works and how to add tools
 
-The Lab (`/lab/`) is a hub of small side projects that visitors can open and use. Each tool lives in **its own GitHub repo**. This repo only holds the hub page and `lab-tools.json`, the list of tools.
+The Lab is the "Try it live" section of the Projects page (`/projects.html`; `/lab/` redirects there). It holds small side projects that visitors can open and use. Each tool lives in **its own GitHub repo**. This repo only holds the Projects page and `lab-tools.json`, the list of tools.
 
 Sections marked **▸ Why?** expand to explain the reasoning.
 
@@ -43,7 +43,7 @@ So `dist/` ends up like this:
 ```
 dist/
   index.html, about.html, ...          ← from the portfolio repo (build.py)
-  lab/index.html                       ← hub page, from the portfolio repo
+  lab/index.html                       ← redirect to the Projects page
   lab/telemetry/index.html, app.js     ← from the telemetry-viz repo
   lab/another-tool/index.html, ...     ← from another-tool repo
 ```
@@ -81,10 +81,10 @@ Each tool repo stays a normal, standalone project with its own README, history a
    cd dist && python3 -m http.server 8000
    ```
 
-   Open http://localhost:8000/lab/. This needs `git` and network access for `repo` tools, and the local setup from the [README](README.md#local-preview).
+   Open http://localhost:8000/projects.html. This needs `git` and network access for `repo` tools, and the local setup from the [README](README.md#local-preview).
 4. **Commit and push to `main`.** The push triggers a rebuild, which publishes the tool.
 
-Your tool is now at `/lab/<id>/` and has a card on the hub page.
+Your tool is now at `/lab/<id>/` and has a card on the Projects page.
 
 ## Update an existing tool
 

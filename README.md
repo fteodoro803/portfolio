@@ -16,7 +16,7 @@ Use [Pages CMS](https://pagescms.org) (forms, no code), or edit the files in `co
 
 ## The Lab
 
-The Lab (`/lab/`) is a hub of small side projects. Each tool lives in its own repo; this repo holds the hub page and `lab-tools.json` (the tool list), and the build assembles everything into one site.
+The Lab is the "Try it live" section of the Projects page (`/projects.html`). Each tool lives in its own repo; this repo holds the page and `lab-tools.json` (the tool list), and the build assembles everything into one site.
 
 > **⚠️ Reminder: the site does not rebuild when a tool repo changes.** After you push to a tool's repo, rebuild the portfolio to publish it.
 
