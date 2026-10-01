@@ -148,6 +148,8 @@ def other_project_cards(entries):
     cards = []
     for e in entries:
         m, pid = e["meta"], f'proj-{e["slug"]}'
+        # Card shows the stack; the pop-up adds the role in front of it.
+        dialog_tags = " · ".join(x for x in (m.get("role"), m.get("tags")) if x)
         summary = m.get("summary") or first_sentence(e["body"])
         extra = ""
         if m.get("note"):
@@ -163,7 +165,7 @@ def other_project_cards(entries):
         <div class="dialog-body">
           <form method="dialog"><button class="dialog-close" aria-label="Close">✕</button></form>
           <h3 id="{pid}-title">{esc(m["title"])}</h3>
-          <div class="card-tags">{esc(m.get("tags", ""))}</div>
+          <div class="card-tags">{esc(dialog_tags)}</div>
           {render_markdown(e["body"]) or ""}{extra}
         </div>
       </dialog>
