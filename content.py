@@ -113,13 +113,16 @@ def case_study_cards(entries):
         m = e["meta"]
         if str(m.get("featured", True)).lower() == "false":
             continue
+        demo = f'<a class="card-link" href="{esc(m["demoUrl"])}">Demo →</a>' if m.get("demoUrl") else ""
         cards.append(
             '<div class="card">'
             f'<h3>{esc(m["title"])}</h3>'
             f'<div class="card-tags">{esc(m.get("cardTags") or m.get("tags", ""))}</div>'
             f'<p class="card-hook">{esc(m.get("summary", ""))}</p>'
+            '<div class="card-links">'
             f'<a class="card-link" href="{{{{ROOT}}}}projects/{e["slug"]}.html">Read case study →</a>'
-            "</div>"
+            f'{demo}'
+            "</div></div>"
         )
     return "\n".join(cards)
 
