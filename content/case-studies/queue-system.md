@@ -3,11 +3,11 @@ title: Realtime Queue Management System
 tags: React 18 · TypeScript · Meteor (Node.js) · MongoDB · Docker · Google Cloud · Solo build, reviewed by others
 cardTags: React · Meteor · MongoDB · Docker · Google Cloud
 summary: Started from my brother's story about hospital wait times in the Philippines — grew into a multi-tenant RBAC platform any organisation running a queue can use.
-demoUrl: https://queue-system-322182421963.australia-southeast2.run.app/
+demoUrl: https://queue-demo-322182421963.australia-southeast2.run.app/
 demoLabel: Try the live demo →
 demoNote: (seeded with demo data)
 featured: true
-visible: false
+visible: true
 order: 2
 ---
 ## The problem
