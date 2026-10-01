@@ -9,5 +9,18 @@
     "repo": "fteodoro803/sim-racing-telemetry",
     "output": "web",
     "enabled": true
+  },
+  {
+    "id": "queue-demo",
+    "title": "Queue System: live demo",
+    "type": "Demo",
+    "tags": "Meteor · React · MongoDB · Real-time",
+    "description": "A walk-in clinic queue you can operate yourself: run the line as staff, watch the waiting-room screen, and join from a patient's phone.",
+    "note": "Shared with other visitors and reset after an hour of inactivity. The first load can take a few seconds.",
+    "repo": "fteodoro803/queue-system",
+    "ref": "release",
+    "output": "lab-web",
+    "sourceUrl": "",
+    "enabled": true
   }
 ]

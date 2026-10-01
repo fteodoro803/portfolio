@@ -204,7 +204,7 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 | `ref` | no | Branch or tag. Defaults to the repo's default branch. |
 | `build` | no | Shell command run in a fresh checkout (e.g. `"npm ci && npm run build"`). Leave out for plain HTML. |
 | `output` | no | Folder inside the repo to publish. Defaults to `"."` (everything), so set it, e.g. `"web"`. It must contain `index.html`. |
-| `sourceUrl` | no | Link for the card's "Source" link. Defaults to the GitHub repo when `repo` is set. |
+| `sourceUrl` | no | Link for the card's "Source" link. Defaults to the GitHub repo when `repo` is set. Set to `""` to hide the link, for a private repo. (Pages CMS can't save an empty value; edit `lab-tools.json` directly.) |
 | `enabled` | no | `false` skips the tool entirely. Defaults to `true`. |
 
 ### Private tool repos

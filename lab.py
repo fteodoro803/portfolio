@@ -53,9 +53,12 @@ def render_lab_cards(tools):
     esc = html_lib.escape
     cards = []
     for tool in tools:
-        source_url = tool.get("sourceUrl") or (
-            f"https://github.com/{tool['repo']}" if tool.get("repo") else ""
-        )
+        # An explicit empty "sourceUrl" hides the Source link, for a tool whose
+        # repo is private (the "or" form this replaced treated "" as unset).
+        if "sourceUrl" in tool:
+            source_url = tool["sourceUrl"]
+        else:
+            source_url = f"https://github.com/{tool['repo']}" if tool.get("repo") else ""
         type_label = f'<span class="card-type">{esc(tool["type"])}</span>' if tool.get("type") else ""
         tags = f'<div class="card-tags">{esc(tool["tags"])}</div>' if tool.get("tags") else ""
         note = f'<p class="card-note">{esc(tool["note"])}</p>' if tool.get("note") else ""
