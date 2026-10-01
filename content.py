@@ -148,6 +148,8 @@ def other_project_cards(entries):
     cards = []
     for e in entries:
         m, pid = e["meta"], f'proj-{e["slug"]}'
+        # Card shows the stack; the pop-up adds the role in front of it.
+        dialog_tags = " · ".join(x for x in (m.get("role"), m.get("tags")) if x)
         summary = m.get("summary") or first_sentence(e["body"])
         extra = ""
         if m.get("note"):
@@ -155,15 +157,16 @@ def other_project_cards(entries):
         if m.get("link"):
             extra += f'\n          <a class="card-link" href="{esc(m["link"])}">View repo →</a>'
         cards.append(f'''    <article class="project-card">
+      <span class="card-type neutral">Write-up</span>
       <h3>{esc(m["title"])}</h3>
       <div class="card-tags">{esc(m.get("tags", ""))}</div>
       <p>{esc(summary)}</p>
-      <button class="more-link" type="button" data-open="{pid}">Read more →</button>
+      <button class="more-link" type="button" data-open="{pid}" aria-haspopup="dialog">Read more<span class="visually-hidden">: {esc(m["title"])}</span> →</button>
       <dialog class="project-dialog" id="{pid}" aria-labelledby="{pid}-title">
         <div class="dialog-body">
           <form method="dialog"><button class="dialog-close" aria-label="Close">✕</button></form>
           <h3 id="{pid}-title">{esc(m["title"])}</h3>
-          <div class="card-tags">{esc(m.get("tags", ""))}</div>
+          <div class="card-tags">{esc(dialog_tags)}</div>
           {render_markdown(e["body"]) or ""}{extra}
         </div>
       </dialog>

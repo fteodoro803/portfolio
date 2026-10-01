@@ -1,6 +1,7 @@
 ---
 title: C-LARA Image Annotation Tool
-tags: Product Owner & Full-Stack Developer
+tags: Python · Django REST · React
+role: Product Owner & Full-Stack Developer
 summary: A tool to streamline annotated image-set creation for the C-LARA
   language-learning platform
 link: https://github.com/fteodoro803/C-LARA-Image-Annotation-Tool

@@ -1,6 +1,7 @@
 ---
 title: Space Golf
-tags: "Unity Developer "
+tags: Unity · C#
+role: Unity Developer
 visible: true
 order: 2
 ---

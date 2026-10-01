@@ -62,13 +62,19 @@ def render_lab_cards(tools):
         type_label = f'<span class="card-type">{esc(tool["type"])}</span>' if tool.get("type") else ""
         tags = f'<div class="card-tags">{esc(tool["tags"])}</div>' if tool.get("tags") else ""
         note = f'<p class="card-note">{esc(tool["note"])}</p>' if tool.get("note") else ""
-        source = f'<a class="card-link" href="{esc(source_url)}">Source</a>' if source_url else ""
+        title = esc(tool["title"])
+        source = (
+            f'<a class="card-link" href="{esc(source_url)}">Source'
+            f'<span class="visually-hidden"> for {title}</span></a>'
+            if source_url else ""
+        )
         cards.append(
-            '<div class="card">'
-            f'{type_label}<h3>{esc(tool["title"])}</h3>{tags}'
+            '<article class="card live-card">'
+            f'{type_label}<h3>{title}</h3>{tags}'
             f'<p class="card-hook">{esc(tool["description"])}</p>{note}'
-            f'<div class="card-links"><a class="card-link" href="{{{{ROOT}}}}lab/{tool["id"]}/">Open →</a>{source}</div>'
-            "</div>"
+            f'<div class="card-links"><a class="pill primary" href="{{{{ROOT}}}}lab/{tool["id"]}/">Open'
+            f'<span class="visually-hidden"> {title}</span> →</a>{source}</div>'
+            "</article>"
         )
     return "\n".join(cards)
 
