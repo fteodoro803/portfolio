@@ -1,6 +1,6 @@
 ---
 title: COVID-19 Air Quality Project
-tags: Python
+tags: Python · Pandas · scikit-learn · Matplotlib
 role: Data Analyst
 summary: Analysis on Victoria's air quality during the COVID-19 lockdowns
 link: https://github.com/fteodoro803/covid-air-quality-victoria

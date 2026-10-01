@@ -122,6 +122,8 @@ class Site:
 
         html = html.replace("<!--CASE-STUDY-CARDS-->", content.case_study_cards(self.case_studies))
         html = html.replace("<!--OTHER-PROJECTS-->", content.other_project_cards(self.other_projects))
+        html = html.replace("<!--LAB-COUNT-->", str(len(self.lab_tools)))
+        html = html.replace("<!--WRITEUP-COUNT-->", str(len(self.other_projects)))
         html = html.replace("<!--RESUME-CARDS-->", content.resume_cards(self.resumes, SRC))
         html = html.replace("<!--LAB-CARDS-->", lab.render_lab_cards(self.lab_tools))
 
