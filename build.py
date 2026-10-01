@@ -15,9 +15,9 @@ into dist/, the folder that gets published.
 
   - Marker comments are replaced with generated HTML:
         <!--CASE-STUDY-CARDS-->  featured case-study cards (home)
-        <!--OTHER-PROJECTS-->    Other Projects cards and dialogs
+        <!--OTHER-PROJECTS-->    Projects page write-up cards and dialogs
         <!--RESUME-CARDS-->      one card per resume variant
-        <!--LAB-CARDS-->         Lab hub cards, from lab-tools.json
+        <!--LAB-CARDS-->         Projects page live-tool cards, from lab-tools.json
 
   - Each visible file in content/case-studies/ becomes projects/<name>.html,
     using site-src/templates/case-study.html.

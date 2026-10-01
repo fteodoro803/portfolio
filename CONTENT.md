@@ -78,9 +78,9 @@ If you'd rather preview first, Pages CMS can be pointed at a separate branch, bu
 | About page | `content/pages/about.md` | About page (text + optional photo) |
 | Resume page intro | `content/pages/resume.md` | Text above the resume cards |
 | Case studies | `content/case-studies/*.md` | `/projects/<name>.html`, plus a card on the home page |
-| Other projects | `content/other-projects/*.md` | Other Projects page (card + pop-up) |
+| Other projects | `content/other-projects/*.md` | Projects page, "Write-ups" section (card + pop-up) |
 | Resumes | `content/resumes/*.md` | One card per variant on the Resume page |
-| Lab tools | `lab-tools.json` | Lab hub cards (and which tools get built) |
+| Lab tools | `lab-tools.json` | Projects page, "Try it live" section (and which tools get built) |
 
 Not editable in the CMS: the look of the site (`site-src/css/style.css`), the page layouts (`site-src/*.html`), and the Lab tools themselves, which live in their own repos.
 
