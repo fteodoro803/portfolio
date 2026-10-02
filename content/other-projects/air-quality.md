@@ -7,7 +7,7 @@ link: https://github.com/fteodoro803/covid-air-quality-victoria
 visible: true
 order: 3
 ---
-Proposed and led a 3-person team investigating whether Victoria's air quality measurably improved during COVID-19 lockdowns. 
+Proposed and led a 3-person team investigating whether Victoria's air quality improved during COVID-19 lockdowns.
 
 Sourced environmental data directly from EPA Victoria and built a 4-stage data pipeline integrating four datasets spanning air quality, mobility, and location data. 
 
