@@ -63,7 +63,23 @@ Tags go on each bullet. A project or job gets its tags from the union of its bul
 
 The page is public, so keep phone, address and email out of `resume.json`.
 
+### Where it shows up
+
+It's decided: this is a Lab tool, since it's its own tool. It appears in two places:
+
+- **The Projects page:** the normal Lab card.
+- **The Resume page:** a card beside the PDF cards, so visitors find it where they'd look for a resume.
+
+The Resume page cards currently need a PDF (`file`) in `content/resumes/*.md`. The second card needs a small change in `resume_cards` in `content.py` so an entry can have a `link` (e.g. `/lab/resume/`) instead of a `file`, with a button like "Explore →" instead of "Download PDF →". Document the new field in [CONTENT.md](CONTENT.md) when it's added.
+
+### Steps
+
+1. Tag every bullet in the master resume (the main piece of work). Agree the tag list first, then tag against it.
+2. Convert the master resume to `resume.json` in the data shape above.
+3. Build the page: render, filter, URL state, print stylesheet.
+4. Add the `lab-tools.json` entry ([how](LAB.md#add-a-new-tool)).
+5. Add the `link` support and the Resume page card.
+
 ### Open questions
 
 - Needs the master resume as input, and a tag set agreed before any building.
-- Lab tool (own repo, as above) or a normal page here? A page here would be editable in the CMS and wouldn't need a rebuild step, but it would need new build code in `build.py`. The Lab route is the lighter change.
