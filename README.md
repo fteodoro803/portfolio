@@ -9,6 +9,7 @@ Static site on GitHub Pages. Text lives in `content/`, page shapes and styling i
 | Edit text, projects, resumes, or hide something | **[Pages CMS](https://pagescms.org)** in a browser. Guide: **[CONTENT.md](CONTENT.md)** |
 | Add or update a Lab tool | **[LAB.md](LAB.md)** |
 | Change colours, fonts or components | **[DESIGN.md](DESIGN.md)** |
+| See what's planned | **[IDEAS.md](IDEAS.md)** |
 
 ## Editing content
 
