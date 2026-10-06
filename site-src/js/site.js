@@ -5,9 +5,7 @@
   var toggle = document.querySelector(".theme-toggle");
   if (toggle) {
     toggle.addEventListener("click", function () {
-      var current = root.dataset.theme ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      var next = current === "dark" ? "light" : "dark";
+      var next = root.dataset.theme === "dark" ? "light" : "dark";
       root.dataset.theme = next;
       try { localStorage.setItem("fte-theme", next); } catch (e) {}
     });
