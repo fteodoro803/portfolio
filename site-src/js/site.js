@@ -1,4 +1,4 @@
-// Site-wide behaviour: the light/dark toggle and the Other Projects dialogs.
+// Site-wide behaviour: the light/dark toggle and the project pop-ups.
 (function () {
   var root = document.documentElement;
 

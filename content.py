@@ -104,31 +104,126 @@ def first_sentence(text):
     return match.group(0) if match else plain.strip()
 
 
-# ---------- HTML fragments ----------
+# ---------- Project cards ----------
+#
+# Every project (a content/projects/ file or a Lab tool) is turned into the same card
+# "spec" and drawn by project_card(), so all cards share one layout. Only the type label
+# and the primary action change. Sections of the Projects page are picked by `group`.
 
-def case_study_cards(entries):
-    """Home-page cards for featured case studies."""
-    cards = []
+PROJECT_FORMATS = ("page", "modal")
+# Order of groups when cards from different groups share a list (the home page).
+GROUP_RANK = {"page": 0, "live": 1, "modal": 2}
+
+
+def is_true(value, default=False):
+    """Read a front-matter flag; a CMS may leave it blank or save it as text."""
+    if value is None or value == "":
+        return default
+    return str(value).lower() == "true"
+
+
+def load_projects():
+    """Visible entries in content/projects/, each checked for a valid `format`."""
+    entries = load_collection("projects")
     for e in entries:
-        m = e["meta"]
-        if str(m.get("featured", True)).lower() == "false":
-            continue
-        demo = f'<a class="card-link" href="{esc(m["demoUrl"])}">Demo →</a>' if m.get("demoUrl") else ""
-        cards.append(
-            '<div class="card">'
-            f'<h3>{esc(m["title"])}</h3>'
-            f'<div class="card-tags">{esc(m.get("cardTags") or m.get("tags", ""))}</div>'
-            f'<p class="card-hook">{esc(m.get("summary", ""))}</p>'
-            '<div class="card-links">'
-            f'<a class="card-link" href="{{{{ROOT}}}}projects/{e["slug"]}.html">Read case study →</a>'
-            f'{demo}'
-            "</div></div>"
+        if e["meta"].get("format") not in PROJECT_FORMATS:
+            raise SystemExit(
+                f"content/projects/{e['slug']}.md: 'format' must be one of {', '.join(PROJECT_FORMATS)}"
+            )
+    return entries
+
+
+def project_spec(entry):
+    """Card spec for a content/projects/ entry."""
+    m, fmt = entry["meta"], entry["meta"]["format"]
+    secondary = []
+    if m.get("demoUrl"):
+        secondary.append(("Demo", m["demoUrl"]))
+    if m.get("link"):
+        secondary.append(("Repo", m["link"]))
+    spec = {
+        "group": fmt,
+        "order": m.get("order"),
+        "slug": entry["slug"],
+        "featured": is_true(m.get("featured")),
+        "title": m["title"],
+        "label": "Case study" if fmt == "page" else "Write-up",
+        "neutral": fmt == "modal",
+        "tags": m.get("cardTags") or m.get("tags", ""),
+        "hook": m.get("summary") or first_sentence(entry["body"]),
+        "secondary": secondary,
+    }
+    if fmt == "page":
+        spec["primary"] = ("Read more", f'{{{{ROOT}}}}projects/{entry["slug"]}.html')
+    else:
+        # The pop-up shows the role in front of the stack, and keeps the note.
+        spec["dialog"] = {
+            "tags": " · ".join(x for x in (m.get("role"), m.get("tags")) if x),
+            "body": render_markdown(entry["body"]),
+            "note": m.get("note", ""),
+        }
+    return spec
+
+
+def sort_specs(specs):
+    """Group first (case studies, live tools, write-ups), then `order`, then name."""
+    def key(s):
+        order = s["order"] if isinstance(s["order"], (int, float)) else 9999
+        return (GROUP_RANK[s["group"]], order, s["slug"])
+
+    return sorted(specs, key=key)
+
+
+def project_card(spec):
+    """One project card. `spec` keys are described in project_spec()."""
+    title = esc(spec["title"])
+    hidden = lambda text: f'<span class="visually-hidden">{text}</span>'
+    dialog = spec.get("dialog")
+    pid = f'proj-{spec["slug"]}'
+
+    if dialog:
+        primary = (
+            f'<button class="pill primary" type="button" data-open="{pid}" aria-haspopup="dialog">'
+            f'Read more{hidden(": " + title)} →</button>'
         )
-    return "\n".join(cards)
+    else:
+        label, href = spec["primary"]
+        primary = f'<a class="pill primary" href="{esc(href)}">{esc(label)}{hidden(" " + title)} →</a>'
+
+    secondary = "".join(
+        f'<a class="card-link" href="{esc(href)}">{esc(label)}{hidden(" for " + title)}</a>'
+        for label, href in spec["secondary"]
+    )
+    pill = f'<span class="card-type{" neutral" if spec.get("neutral") else ""}">{esc(spec["label"])}</span>'
+    tags = f'<div class="card-tags">{esc(spec["tags"])}</div>' if spec.get("tags") else ""
+    note = f'<p class="card-note">{esc(spec["note"])}</p>' if spec.get("note") else ""
+
+    html = (
+        '<article class="card project-card">'
+        f'{pill}<h3>{title}</h3>{tags}'
+        f'<p class="card-hook">{esc(spec["hook"])}</p>{note}'
+        f'<div class="card-links">{primary}{secondary}</div>'
+    )
+    if dialog:
+        extra = f'<p class="dialog-note">{esc(dialog["note"])}</p>' if dialog["note"] else ""
+        html += (
+            f'<dialog class="project-dialog" id="{pid}" aria-labelledby="{pid}-title">'
+            '<div class="dialog-body">'
+            '<form method="dialog"><button class="dialog-close" aria-label="Close">✕</button></form>'
+            f'<h3 id="{pid}-title">{title}</h3>'
+            f'<div class="card-tags">{esc(dialog["tags"])}</div>'
+            f'{dialog["body"]}{extra}'
+            "</div></dialog>"
+        )
+    return html + "</article>"
 
 
-def case_study_values(entry):
-    """Placeholder values for the case-study page template."""
+def project_cards(specs):
+    return "\n".join(project_card(s) for s in specs)
+
+
+def project_page_values(entry):
+    """Placeholder values for the project page template (format: page)."""
     m = entry["meta"]
     demo = ""
     if m.get("demoUrl"):
@@ -141,37 +236,6 @@ def case_study_values(entry):
         "demoBlock": demo,
         "body": render_markdown(entry["body"]),
     }
-
-
-def other_project_cards(entries):
-    """Other Projects: a card plus a dialog with the full write-up."""
-    cards = []
-    for e in entries:
-        m, pid = e["meta"], f'proj-{e["slug"]}'
-        # Card shows the stack; the pop-up adds the role in front of it.
-        dialog_tags = " · ".join(x for x in (m.get("role"), m.get("tags")) if x)
-        summary = m.get("summary") or first_sentence(e["body"])
-        extra = ""
-        if m.get("note"):
-            extra += f'\n          <p class="dialog-note">{esc(m["note"])}</p>'
-        if m.get("link"):
-            extra += f'\n          <a class="card-link" href="{esc(m["link"])}">View repo →</a>'
-        cards.append(f'''    <article class="project-card">
-      <span class="card-type neutral">Write-up</span>
-      <h3>{esc(m["title"])}</h3>
-      <div class="card-tags">{esc(m.get("tags", ""))}</div>
-      <p>{esc(summary)}</p>
-      <button class="more-link" type="button" data-open="{pid}" aria-haspopup="dialog">Read more<span class="visually-hidden">: {esc(m["title"])}</span> →</button>
-      <dialog class="project-dialog" id="{pid}" aria-labelledby="{pid}-title">
-        <div class="dialog-body">
-          <form method="dialog"><button class="dialog-close" aria-label="Close">✕</button></form>
-          <h3 id="{pid}-title">{esc(m["title"])}</h3>
-          <div class="card-tags">{esc(dialog_tags)}</div>
-          {render_markdown(e["body"]) or ""}{extra}
-        </div>
-      </dialog>
-    </article>''')
-    return "\n\n".join(cards)
 
 
 def resume_cards(entries, src_dir):

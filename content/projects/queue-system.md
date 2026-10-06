@@ -1,5 +1,6 @@
 ---
 title: Realtime Queue Management System
+format: page
 tags: React 18 · TypeScript · Meteor (Node.js) · MongoDB · Docker · Google Cloud · Reviewed by others
 cardTags: React · Meteor · MongoDB · Docker · Google Cloud
 summary: Started from my brother's story about hospital wait times in the Philippines. It grew into a multi-tenant RBAC platform that any organisation running a queue can use.

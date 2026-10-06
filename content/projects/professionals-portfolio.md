@@ -1,8 +1,10 @@
 ---
 title: The Professionals' Portfolio
+format: modal
 tags: HTML · CSS · JavaScript
 role: Hackiethon 2022
 link: https://github.com/fteodoro803/The-Professionals-Portfolio
+featured: false
 visible: true
 order: 4
 ---

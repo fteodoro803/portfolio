@@ -54,61 +54,54 @@ content:
       - { name: body, label: Intro text, type: rich-text }
 
   # ---------- Collections ----------
-  - name: case-studies
-    label: Case studies
+  - name: projects
+    label: Projects
     type: collection
-    path: content/case-studies
+    path: content/projects
     filename: "{primary}.md"
     format: yaml-frontmatter
     view:
       primary: title
       sort: order
-      fields: [title, featured, visible, order]
+      fields: [title, format, featured, visible, order]
     fields:
       - { name: title, label: Title, type: string, required: true }
-      - { name: tags, label: Tags line (shown on the page), type: string }
-      - { name: cardTags, label: Short tags (shown on the home card), type: string }
-      - name: summary
-        label: Card summary (one or two sentences)
-        type: text
-      - { name: demoUrl, label: Live demo URL (optional), type: string }
-      - { name: demoLabel, label: Demo button text, type: string, default: "Try the live demo →" }
-      - { name: demoNote, label: Note next to the demo button (optional), type: string }
-      - { name: featured, label: Show on the home page, type: boolean, default: true }
+      - name: format
+        label: How it opens
+        description: "Page: its own page, for a full write-up. Pop-up: a short write-up in a window on the Projects page."
+        type: select
+        required: true
+        default: modal
+        options:
+          values:
+            - { value: page, label: "Page (case study)" }
+            - { value: modal, label: "Pop-up (short write-up)" }
+      - { name: featured, label: Show on the home page, type: boolean, default: false }
       - name: visible
         label: Published
-        description: Turn off to hide this case study everywhere. Its URL stops working.
+        description: Turn off to hide this project everywhere. A page's URL stops working.
         type: boolean
         default: true
-      - { name: order, label: Order (1 = first), type: number }
+      - name: order
+        label: Order (1 = first)
+        description: Counts within its group on the Projects page (case studies, then pop-ups). The home page uses the same order.
+        type: number
+      - name: summary
+        label: Card summary (one or two sentences)
+        description: Leave empty to use the first sentence of the write-up.
+        type: text
+      - { name: tags, label: Tags line (shown on the page or in the pop-up), type: string }
+      - { name: cardTags, label: Short tags (shown on the card; falls back to the tags line), type: string }
+      - { name: role, label: Your role (shown in the pop-up, optional), type: string }
+      - { name: demoUrl, label: Live demo URL (optional), type: string }
+      - { name: demoLabel, label: Demo button text (on a page), type: string, default: "Try the live demo →" }
+      - { name: demoNote, label: Note next to the demo button (on a page, optional), type: string }
+      - { name: link, label: Link to a repo or site (optional), type: string }
+      - { name: note, label: Note shown under the write-up (pop-up, optional), type: text }
       - name: body
         label: Write-up
         description: "Use headings for sections. A quote block becomes a highlighted callout."
         type: rich-text
-
-  - name: other-projects
-    label: Other projects
-    type: collection
-    path: content/other-projects
-    filename: "{primary}.md"
-    format: yaml-frontmatter
-    view:
-      primary: title
-      sort: order
-      fields: [title, visible, order]
-    fields:
-      - { name: title, label: Title, type: string, required: true }
-      - { name: tags, label: Stack (shown under the title, e.g. "Python · React"), type: string }
-      - { name: role, label: Your role (shown in the pop-up, optional), type: string }
-      - name: summary
-        label: Card summary (optional)
-        description: Leave empty to use the first sentence of the write-up.
-        type: text
-      - { name: note, label: Note shown under the write-up (optional), type: text }
-      - { name: link, label: Link to a repo or site (optional), type: string }
-      - { name: visible, label: Published, type: boolean, default: true }
-      - { name: order, label: Order (1 = first), type: number }
-      - { name: body, label: Write-up, type: rich-text }
 
   - name: resumes
     label: Resumes
@@ -150,4 +143,5 @@ content:
       - { name: build, label: Build command (optional), type: string }
       - { name: output, label: Folder to publish, type: string, default: "." }
       - { name: sourceUrl, label: Source link override (optional), type: string }
+      - { name: featured, label: Show on the home page, type: boolean, default: false }
       - { name: enabled, label: Published, type: boolean, default: true }

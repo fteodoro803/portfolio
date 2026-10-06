@@ -3,11 +3,11 @@ The Lab: self-contained tools that live in their own repos.
 
 lab-tools.json lists the tools. For each enabled one, build_lab() fetches it
 (git clone of `repo`, or a copy of a local `path`), runs its build command,
-and copies the output folder into dist/lab/<id>/. render_lab_cards() makes the
-hub-page cards from the same list. See LAB.md for the full guide.
+and copies the output folder into dist/lab/<id>/. lab_specs() describes the
+Projects-page cards from the same list (content.py draws them). See LAB.md for the
+full guide.
 """
 
-import html as html_lib
 import json
 import os
 import re
@@ -15,6 +15,8 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+import content
 
 ROOT_DIR = Path(__file__).parent
 DIST = ROOT_DIR / "dist"
@@ -46,37 +48,30 @@ def load_lab_tools():
     return enabled
 
 
-def render_lab_cards(tools):
-    if not tools:
-        return "<p>Nothing here yet — check back soon.</p>"
-
-    esc = html_lib.escape
-    cards = []
-    for tool in tools:
+def lab_specs(tools):
+    """Card specs (see content.project_spec) for the Lab tools, in list order."""
+    specs = []
+    for index, tool in enumerate(tools):
         # An explicit empty "sourceUrl" hides the Source link, for a tool whose
         # repo is private (the "or" form this replaced treated "" as unset).
         if "sourceUrl" in tool:
             source_url = tool["sourceUrl"]
         else:
             source_url = f"https://github.com/{tool['repo']}" if tool.get("repo") else ""
-        type_label = f'<span class="card-type">{esc(tool["type"])}</span>' if tool.get("type") else ""
-        tags = f'<div class="card-tags">{esc(tool["tags"])}</div>' if tool.get("tags") else ""
-        note = f'<p class="card-note">{esc(tool["note"])}</p>' if tool.get("note") else ""
-        title = esc(tool["title"])
-        source = (
-            f'<a class="card-link" href="{esc(source_url)}">Source'
-            f'<span class="visually-hidden"> for {title}</span></a>'
-            if source_url else ""
-        )
-        cards.append(
-            '<article class="card live-card">'
-            f'{type_label}<h3>{title}</h3>{tags}'
-            f'<p class="card-hook">{esc(tool["description"])}</p>{note}'
-            f'<div class="card-links"><a class="pill primary" href="{{{{ROOT}}}}lab/{tool["id"]}/">Open'
-            f'<span class="visually-hidden"> {title}</span> →</a>{source}</div>'
-            "</article>"
-        )
-    return "\n".join(cards)
+        specs.append({
+            "group": "live",
+            "order": index,
+            "slug": tool["id"],
+            "featured": content.is_true(tool.get("featured")),
+            "title": tool["title"],
+            "label": tool.get("type") or "Tool",
+            "tags": tool.get("tags", ""),
+            "hook": tool["description"],
+            "note": tool.get("note", ""),
+            "primary": ("Open", f"{{{{ROOT}}}}lab/{tool['id']}/"),
+            "secondary": [("Source", source_url)] if source_url else [],
+        })
+    return specs
 
 
 def redact(text, secret):

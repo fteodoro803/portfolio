@@ -14,13 +14,16 @@ into dist/, the folder that gets published.
     rendered Markdown) from content/pages/<page>.md. Home uses home.md.
 
   - Marker comments are replaced with generated HTML:
-        <!--CASE-STUDY-CARDS-->  featured case-study cards (home)
-        <!--OTHER-PROJECTS-->    Projects page write-up cards and dialogs
+        <!--FEATURED-CARDS-->    home-page cards: every project and Lab tool marked featured
+        <!--CASE-STUDY-CARDS-->  Projects page: projects with format "page"
+        <!--LAB-CARDS-->         Projects page: live-tool cards, from lab-tools.json
+        <!--WRITEUP-CARDS-->     Projects page: projects with format "modal" (card + pop-up)
+        <!--*-COUNT-->           how many cards are in each of those three sections
         <!--RESUME-CARDS-->      one card per resume variant
-        <!--LAB-CARDS-->         Projects page live-tool cards, from lab-tools.json
 
-  - Each visible file in content/case-studies/ becomes projects/<name>.html,
-    using site-src/templates/case-study.html.
+  - Projects and Lab tools all become cards of one shape (content.project_card).
+    Each visible file in content/projects/ with `format: page` also becomes
+    projects/<name>.html, using site-src/templates/case-study.html.
 
   - CSS and JS links get a version stamp (style.css?v=3f9a1c1b) that changes only
     when the file's contents change. GitHub Pages lets browsers reuse files for
@@ -111,21 +114,24 @@ class Site:
             page = content.load_page(path.stem)
             page["photoBlock"] = content.photo_block(page)
             self.pages[path.stem] = page
-        self.case_studies = content.load_collection("case-studies")
-        self.other_projects = content.load_collection("other-projects")
+        self.projects = content.load_projects()
         self.resumes = content.load_collection("resumes")
         self.lab_tools = lab.load_lab_tools()
+        self.cards = content.sort_specs(
+            [content.project_spec(e) for e in self.projects] + lab.lab_specs(self.lab_tools)
+        )
 
     def render(self, html, rel, entry=None):
         html = render_includes(html)
         html = mark_active_nav(html, rel)
 
-        html = html.replace("<!--CASE-STUDY-CARDS-->", content.case_study_cards(self.case_studies))
-        html = html.replace("<!--OTHER-PROJECTS-->", content.other_project_cards(self.other_projects))
-        html = html.replace("<!--LAB-COUNT-->", str(len(self.lab_tools)))
-        html = html.replace("<!--WRITEUP-COUNT-->", str(len(self.other_projects)))
+        featured = [c for c in self.cards if c["featured"]]
+        html = html.replace("<!--FEATURED-CARDS-->", content.project_cards(featured))
+        for marker, group in (("CASE-STUDY", "page"), ("LAB", "live"), ("WRITEUP", "modal")):
+            cards = [c for c in self.cards if c["group"] == group]
+            html = html.replace(f"<!--{marker}-CARDS-->", content.project_cards(cards))
+            html = html.replace(f"<!--{marker}-COUNT-->", str(len(cards)))
         html = html.replace("<!--RESUME-CARDS-->", content.resume_cards(self.resumes, SRC))
-        html = html.replace("<!--LAB-CARDS-->", lab.render_lab_cards(self.lab_tools))
 
         html = fill(html, "site", self.site)
         # Top-level pages read content/pages/<name>.md; the home page is "home".
@@ -166,19 +172,21 @@ def build():
             shutil.copy2(path, DIST / rel)
 
     template = (TEMPLATES / "case-study.html").read_text()
-    for entry in site.case_studies:
+    for entry in site.projects:
+        if entry["meta"]["format"] != "page":
+            continue
         rel = f"projects/{entry['slug']}.html"
-        write(DIST / rel, site.render(template, rel, content.case_study_values(entry)))
+        write(DIST / rel, site.render(template, rel, content.project_page_values(entry)))
 
     lab.build_lab(site.lab_tools)
 
     print(f"Built site to {DIST}")
-    hidden = [e for e in (content.CONTENT / "case-studies").glob("*.md")
-              if e.stem not in {c["slug"] for c in site.case_studies}]
+    hidden = [e for e in (content.CONTENT / "projects").glob("*.md")
+              if e.stem not in {p["slug"] for p in site.projects}]
     if hidden:
         print("Hidden by 'visible: false':")
         for path in hidden:
-            print(f"  - case-studies/{path.name}")
+            print(f"  - projects/{path.name}")
 
 
 if __name__ == "__main__":

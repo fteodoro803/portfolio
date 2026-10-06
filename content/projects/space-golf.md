@@ -1,7 +1,9 @@
 ---
 title: Space Golf
+format: modal
 tags: Unity · C#
 role: Unity Developer
+featured: false
 visible: true
 order: 2
 ---
