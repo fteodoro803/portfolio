@@ -136,13 +136,6 @@ header.site-header {
   gap: 14px;
 }
 
-.site-name {
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--text);
-}
-.site-name:hover { text-decoration: none; }
-
 nav.site-nav {
   display: flex;
   gap: 2px;
@@ -204,11 +197,22 @@ footer.site-footer a:hover { text-decoration: none; border-color: var(--accent);
 
 .hero { margin-bottom: 0; }
 
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
 .hero h1 {
   font-size: 2.4rem;
   margin: 0 0 12px;
   letter-spacing: -0.01em;
 }
+
+.hero-bio { max-width: 68ch; }
+.hero-bio p:last-child { margin-bottom: 0; }
 
 .hero p.subhead {
   color: var(--text-muted);
@@ -511,21 +515,9 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
 /* ---------- Small screens ---------- */
 
 @media (max-width: 720px) {
-  /* Name and theme toggle share the first row; the nav sits on one row underneath,
-     stretched a little past the gutter so the links' tap areas line up with the edges. */
   header.site-header { position: static; }
-  .header-inner { padding: 6px 20px 2px; gap: 0; }
-  .site-name { order: 1; }
-  .theme-toggle { order: 2; }
-  nav.site-nav {
-    order: 3;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    width: calc(100% + 16px);
-    margin: 0 -8px;
-    gap: 0;
-  }
-  nav.site-nav a { padding: 0 8px; font-size: 0.9rem; }
+  .header-inner { padding: 14px 24px; gap: 10px; flex-wrap: nowrap; }
+  nav.site-nav { flex-wrap: nowrap; }
 }
 
 @media (max-width: 560px) {
@@ -547,7 +539,7 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
   .dialog-body { padding: 16px 20px calc(28px + env(safe-area-inset-bottom)); }
 }
 
-/* Five nav links need about 350px at full size; shrink them a little on narrow phones. */
+/* Four nav links need about 300px at full size; shrink them a little on narrow phones. */
 @media (max-width: 400px) { nav.site-nav a { padding: 0 6px; font-size: 0.85rem; } }
 @media (max-width: 340px) { nav.site-nav a { padding: 0 4px; font-size: 0.78rem; } }
 
@@ -557,15 +549,6 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
 }
 
 /* ---------- Content from the CMS ---------- */
-
-.about-top {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-.about-top h1 { margin: 0; }
 
 .about-photo {
   width: 128px;

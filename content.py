@@ -277,7 +277,7 @@ def resume_cards(entries, src_dir):
 
 
 def photo_block(page):
-    """Optional About-page photo (set `photo` in content/pages/about.md)."""
+    """Optional home-page photo (set `photo` in content/pages/home.md)."""
     photo = str(page.get("photo") or "").lstrip("/")
     if not photo:
         return ""
