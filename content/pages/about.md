@@ -1,4 +1,6 @@
 ---
+photo: assets/uploads/fernando-portrait.jpg
+photoAlt: Portrait of Fernando
 ---
 
 Hi! I'm a Melbourne-based full-stack developer who loves taking systems apart, spotting the gaps, and building practical solutions from the ground up.
