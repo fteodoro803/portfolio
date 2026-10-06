@@ -15,9 +15,18 @@ Static site on GitHub Pages. Text lives in `content/`, page shapes and styling i
 
 Use [Pages CMS](https://pagescms.org) (forms, no code), or edit the files in `content/` directly on GitHub. Saving commits to `main` and the site rebuilds in about a minute. Setup, recipes and troubleshooting are in **[CONTENT.md](CONTENT.md)**.
 
+## Projects
+
+Everything on the Projects page is a **project**: one file in `content/projects/`, with a **How it opens** setting (`format`):
+
+- **Page:** its own page at `/projects/<name>.html`. For case studies with real detail.
+- **Pop-up:** a short write-up in a window on the Projects page. For smaller work.
+
+Any project can also be put on the home page with **Show on the home page** (`featured`, off by default). The Projects page groups cards into Case studies, Try it live (the Lab) and Smaller work. Every card shares one layout, drawn by `project_card` in `content.py`. Details: **[CONTENT.md](CONTENT.md#fields-worth-knowing)**.
+
 ## The Lab
 
-The Lab is the "Try it live" section of the Projects page (`/projects.html`). Each tool lives in its own repo; this repo holds the page and `lab-tools.json` (the tool list), and the build assembles everything into one site.
+The Lab is the "Try it live" section of the Projects page (`/projects.html`), and a tool can be featured on the home page too. Each tool lives in its own repo; this repo holds the page and `lab-tools.json` (the tool list), and the build assembles everything into one site.
 
 > **⚠️ Reminder: the site does not rebuild when a tool repo changes.** After you push to a tool's repo, rebuild the portfolio to publish it.
 
@@ -73,5 +82,4 @@ In the repo's Settings → Pages, set **Source** to **GitHub Actions** (not "Dep
 
 ## Still to do
 
-- **Confirm the hackathon write-up:** `content/other-projects/professionals-portfolio.md` has a draft note (the **Note** field) that shows publicly. Clear it once you're happy with the wording.
 - **Custom domain** (optional): once you've bought a domain, add a `CNAME` file at the repo root containing just the domain (e.g. `fteodoro.dev`), and point your DNS at GitHub's servers per [GitHub's custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).

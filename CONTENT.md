@@ -20,8 +20,8 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 |---|---|
 | Change the intro line on the home page | CMS → **Home page** |
 | Change my bio, or add a photo | CMS → **About page** |
-| Edit a case study | CMS → **Case studies** → pick one |
-| Add or edit a smaller project | CMS → **Other projects** |
+| Add or edit a project (case study or smaller work) | CMS → **Projects** |
+| Put a project on the home page | CMS → **Projects** → pick one → **Show on the home page** |
 | Add a new resume variant | CMS → **Resumes** → new |
 | Change email, LinkedIn, GitHub, footer | CMS → **Site details** |
 | Add or edit a Lab card | CMS → **Lab tools** (see [LAB.md](LAB.md) for the tool repo side) |
@@ -77,25 +77,26 @@ If you'd rather preview first, Pages CMS can be pointed at a separate branch, bu
 | Home page | `content/pages/home.md` | Intro line under your name |
 | About page | `content/pages/about.md` | About page (text + optional photo) |
 | Resume page intro | `content/pages/resume.md` | Text above the resume cards |
-| Case studies | `content/case-studies/*.md` | `/projects/<name>.html`, plus a card on the home page |
-| Other projects | `content/other-projects/*.md` | Projects page, "Write-ups" section (card + pop-up) |
+| Projects | `content/projects/*.md` | A card on the Projects page, plus its own page or a pop-up (see below). Optionally a card on the home page |
 | Resumes | `content/resumes/*.md` | One card per variant on the Resume page |
-| Lab tools | `lab-tools.json` | Projects page, "Try it live" section (and which tools get built) |
+| Lab tools | `lab-tools.json` | Projects page, "Try it live" section (and which tools get built). Optionally the home page |
 
 Not editable in the CMS: the look of the site (`site-src/css/style.css`), the page layouts (`site-src/*.html`), and the Lab tools themselves, which live in their own repos.
 
 ### Fields worth knowing
 
-**Case studies**
-- **Published:** off hides the case study everywhere (page and card). The Queue System write-up is currently off.
-- **Show on the home page:** off keeps the page but removes its home card.
-- **Order:** lowest number first, on the home page and elsewhere.
-- **Card summary / Short tags:** what shows on the home card. The full **Tags line** shows on the page itself.
-- **Live demo URL:** leave empty for no demo button.
-
-**Other projects**
+**Projects**
+- **How it opens:** *Page* gives the project its own page at `/projects/<name>.html` (a case study). *Pop-up* shows a short write-up in a window on the Projects page. Use a page for anything with real detail and a pop-up for small work.
+- **Show on the home page:** off by default. Turn it on for any project, page or pop-up, to put its card on the home page. Lab tools have the same switch (`featured` in `lab-tools.json`).
+- **Published:** off hides the project everywhere (card, page and pop-up). A page's URL stops working.
+- **Order:** lowest number first. On the Projects page it counts within each section (case studies, then pop-ups; Lab tools follow their order in `lab-tools.json`). The home page lists its cards in the same sequence: case studies, then Lab tools, then pop-ups.
 - **Card summary:** leave empty to use the first sentence of the write-up.
-- **Note:** small italic line under the write-up in the pop-up. The hackathon entry uses it for a draft note, so clear it once you're happy with the wording.
+- **Short tags:** shown on the card. Leave empty to use the full **Tags line**, which shows on the page or in the pop-up.
+- **Your role:** shown in the pop-up, in front of the tags.
+- **Live demo URL / Link:** each adds a small link on the card ("Demo", "Repo"). The demo button text and note only apply to a page.
+- **Note:** small italic line under the write-up in a pop-up.
+
+Every card looks the same: a type label (Case study, Tool or Write-up), the title, tags, a one-line summary, then a main button and any small links. Fields you leave empty are just left out.
 
 **Resumes**
 - **PDF:** upload or pick a file. It's stored in `site-src/assets/uploads/`.
@@ -118,15 +119,15 @@ A single "Download resume" link only works with one resume. With variants for di
 
 </details>
 
-### Add a case study
+### Add a project
 
-1. CMS → **Case studies** → add a new entry.
-2. Fill in the title, tags, card summary and write-up. Set **Order** and leave **Published** on.
-3. Save. The page appears at `/projects/<title-as-filename>.html` and a card appears on the home page.
+1. CMS → **Projects** → add a new entry.
+2. Pick **How it opens**: *Page* for a full case study, *Pop-up* for a short write-up.
+3. Fill in the title, tags and write-up (add a card summary for a page). Set **Order** and leave **Published** on.
+4. Turn on **Show on the home page** if you want it there.
+5. Save. A card appears on the Projects page. A page also gets its own URL at `/projects/<title-as-filename>.html`.
 
-### Add a smaller project
-
-CMS → **Other projects** → new entry. Title, tags and a write-up are enough.
+A pop-up only needs a title, tags and a short write-up.
 
 ### Add a photo to About
 
@@ -199,6 +200,7 @@ Everything between the `---` lines is a setting (`key: value`). Everything after
 | `file '…' not found` for a resume | The PDF path in the entry is wrong or the file wasn't uploaded |
 | `missing 'title'` | An entry has an empty title |
 | A page or card vanished | Its **Published** switch is off (or **Show on the home page**, for the home card) |
+| `'format' must be one of page, modal` | A project is missing **How it opens**, or it has another value |
 | CMS doesn't list a section | `.pages.yml` isn't on `main` yet, or has a syntax error |
 | CMS says it can't access the repo | Re-check the GitHub access you granted it |
 | Image shows as broken | The upload failed, or the path in the entry doesn't match the file in `site-src/assets/uploads/` |
@@ -215,7 +217,7 @@ It's the format Pages CMS reads and writes natively, and it's plain text, so it 
 <details>
 <summary><strong>▸ Why did <code>config.json</code> go away?</strong></summary>
 
-It had one job: hide the Queue System page. That's now the **Published** switch on the case study itself, so there's one obvious place to look. Hiding still removes the page completely, not just its card.
+It had one job: hide the Queue System page. That's now the **Published** switch on the project itself, so there's one obvious place to look. Hiding still removes the page completely, not just its card.
 
 </details>
 
@@ -236,6 +238,6 @@ site-src/css, js                         ← the look
 build.py + content.py + lab.py           ← combine them into dist/
 ```
 
-Page templates contain placeholders like `{{site.name}}` and `{{page.body}}`, and marker comments like `<!--OTHER-PROJECTS-->`. The build fills them from `content/`. The top of `build.py` lists every placeholder and marker.
+Page templates contain placeholders like `{{site.name}}` and `{{page.body}}`, and marker comments like `<!--WRITEUP-CARDS-->`. The build fills them from `content/`. The top of `build.py` lists every placeholder and marker.
 
 </details>

@@ -196,7 +196,8 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 | `id` | yes | Lowercase letters, digits, hyphens. Becomes the URL: `/lab/<id>/`. Must be unique. |
 | `title` | yes | Card heading. |
 | `description` | yes | Card text, one or two sentences. |
-| `type` | no | Short label shown above the card title, e.g. `"Tool"` or `"Log"`. |
+| `type` | no | Short label shown above the card title, e.g. `"Tool"` or `"Log"`. Defaults to `"Tool"`. |
+| `featured` | no | `true` also shows the card on the home page. Defaults to off. |
 | `tags` | no | Small line of tech under the title, e.g. `"JavaScript · WebSockets"`. |
 | `note` | no | Extra short line, e.g. "Needs a local bridge for live data; demo mode works standalone." |
 | `repo` | one of `repo`/`path` | GitHub `owner/name`. Cloned fresh on every build. |

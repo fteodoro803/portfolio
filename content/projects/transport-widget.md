@@ -1,5 +1,6 @@
 ---
 title: Melbourne Public Transport Widget
+format: page
 tags: Flutter (iOS/Android/macOS/Windows/Linux) · Python (Flask) · WidgetKit/SwiftUI · GTFS Realtime · Built with a collaborator
 cardTags: Flutter · Flask · WidgetKit/SwiftUI · GTFS Realtime
 summary: A personalised departure board on your phone's home screen, built with a collaborator. I implemented PTV's request-signing scheme from scratch to get there.

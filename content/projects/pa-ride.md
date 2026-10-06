@@ -1,5 +1,6 @@
 ---
 title: Pa-Ride
+format: page
 tags: React Native (Expo Router) · TypeScript · Supabase (Postgres, PostGIS, Realtime, Auth) · Self-directed
 cardTags: React Native · TypeScript · Supabase (Postgres, PostGIS)
 summary: A carpool marketplace for the Philippines, positioned as cost-sharing to stay outside ride-hailing regulation. I took it from a one-line idea to a PostGIS corridor-matching algorithm.
