@@ -91,11 +91,11 @@ Not editable in the CMS: the look of the site (`site-src/css/style.css`), the pa
 - **Order:** lowest number first. On the Projects page it counts within each section (case studies, then pop-ups; Lab tools follow their order in `lab-tools.json`). The home page lists its cards in the same sequence: case studies, then Lab tools, then pop-ups.
 - **Card summary:** leave empty to use the first sentence of the write-up.
 - **Short tags:** shown on the card. Leave empty to use the full **Tags line**, which shows on the page or in the pop-up.
-- **Your role:** shown in the pop-up, in front of the tags.
-- **Live demo URL / Link:** each adds a small link on the card ("Demo", "Repo"). The demo button text and note only apply to a page.
+- **Your role:** shown in the pop-up, on its own line under the title.
+- **Live demo URL / Link:** each adds a small link in the top corner of the card ("Demo", "Repo"). A pop-up also shows them as buttons under the write-up. The demo button text and note only apply to a page.
 - **Note:** small italic line under the write-up in a pop-up.
 
-Every card looks the same: a type label (Case study, Tool or Write-up), the title, tags, a one-line summary, then a main button and any small links. Fields you leave empty are just left out.
+Every card looks the same: a type label (Case study, Tool or Write-up) with any small links beside it, then the title, tags, a one-line summary and a main button. The whole card is clickable. Write-up cards are drawn lighter (no fill) so the larger projects read first. Fields you leave empty are just left out.
 
 **Resumes**
 - **PDF:** upload or pick a file. It's stored in `site-src/assets/uploads/`.

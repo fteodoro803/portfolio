@@ -156,12 +156,21 @@ def project_spec(entry):
     if fmt == "page":
         spec["primary"] = ("Read more", f'{{{{ROOT}}}}projects/{entry["slug"]}.html')
     else:
-        # The pop-up shows the role in front of the stack, and keeps the note.
+        # The pop-up shows the role and the stack on separate lines, and repeats
+        # the links as buttons so they sit next to the full write-up.
+        links = []
+        if m.get("demoUrl"):
+            links.append(("Try the demo", m["demoUrl"]))
+        if m.get("link"):
+            links.append(("View repo", m["link"]))
         spec["dialog"] = {
-            "tags": " · ".join(x for x in (m.get("role"), m.get("tags")) if x),
+            "role": m.get("role", ""),
+            "tags": m.get("tags", ""),
             "body": render_markdown(entry["body"]),
             "note": m.get("note", ""),
+            "links": links,
         }
+        spec["quiet"] = True
     return spec
 
 
@@ -181,6 +190,8 @@ def project_card(spec):
     dialog = spec.get("dialog")
     pid = f'proj-{spec["slug"]}'
 
+    # The main button's ::after stretches over the whole card (see style.css), so the
+    # card has one real link and the small links sit above it in the top row.
     if dialog:
         primary = (
             f'<button class="pill primary" type="button" data-open="{pid}" aria-haspopup="dialog">'
@@ -194,26 +205,34 @@ def project_card(spec):
         f'<a class="card-link" href="{esc(href)}">{esc(label)}{hidden(" for " + title)}</a>'
         for label, href in spec["secondary"]
     )
+    links = f'<div class="card-links">{secondary}</div>' if secondary else ""
     pill = f'<span class="card-type{" neutral" if spec.get("neutral") else ""}">{esc(spec["label"])}</span>'
     tags = f'<div class="card-tags">{esc(spec["tags"])}</div>' if spec.get("tags") else ""
     note = f'<p class="card-note">{esc(spec["note"])}</p>' if spec.get("note") else ""
 
     html = (
-        '<article class="card project-card">'
-        f'{pill}<h3>{title}</h3>{tags}'
+        f'<article class="card project-card{" is-quiet" if spec.get("quiet") else ""}">'
+        f'<div class="card-head">{pill}{links}</div>'
+        f'<h3>{title}</h3>{tags}'
         f'<p class="card-hook">{esc(spec["hook"])}</p>{note}'
-        f'<div class="card-links">{primary}{secondary}</div>'
+        f'<div class="card-actions">{primary}</div>'
     )
     if dialog:
+        role = f'<p class="dialog-role">{esc(dialog["role"])}</p>' if dialog["role"] else ""
+        dtags = f'<div class="card-tags">{esc(dialog["tags"])}</div>' if dialog["tags"] else ""
         extra = f'<p class="dialog-note">{esc(dialog["note"])}</p>' if dialog["note"] else ""
+        buttons = "".join(
+            f'<a class="pill outline" href="{esc(href)}">{esc(label)} →</a>' for label, href in dialog["links"]
+        )
         html += (
             f'<dialog class="project-dialog" id="{pid}" aria-labelledby="{pid}-title">'
-            '<div class="dialog-body">'
+            '<div class="dialog-head"><div class="dialog-titles">'
+            # Focus lands on the title when the dialog opens, so no ring shows until Tab.
+            f'<h2 id="{pid}-title" tabindex="-1" autofocus>{title}</h2>{role}{dtags}</div>'
             '<form method="dialog"><button class="dialog-close" aria-label="Close">✕</button></form>'
-            f'<h3 id="{pid}-title">{title}</h3>'
-            f'<div class="card-tags">{esc(dialog["tags"])}</div>'
-            f'{dialog["body"]}{extra}'
-            "</div></dialog>"
+            "</div>"
+            f'<div class="dialog-body">{dialog["body"]}{extra}{buttons}</div>'
+            "</dialog>"
         )
     return html + "</article>"
 
