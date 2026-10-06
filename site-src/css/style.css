@@ -116,13 +116,6 @@ header.site-header {
   gap: 14px;
 }
 
-.site-name {
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--text);
-}
-.site-name:hover { text-decoration: none; }
-
 nav.site-nav {
   display: flex;
   gap: 22px;
@@ -180,11 +173,22 @@ footer.site-footer a:hover { text-decoration: none; border-color: var(--accent);
 
 .hero { margin-bottom: 44px; }
 
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
 .hero h1 {
   font-size: 2.4rem;
   margin: 0 0 12px;
   letter-spacing: -0.01em;
 }
+
+.hero-bio { max-width: 68ch; }
+.hero-bio p:last-child { margin-bottom: 0; }
 
 .hero p.subhead {
   color: var(--text-muted);
@@ -412,12 +416,10 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
 /* ---------- Small screens ---------- */
 
 @media (max-width: 720px) {
-  /* Name and theme toggle share the first row; the nav wraps underneath. */
   header.site-header { position: static; }
-  .header-inner { padding: 14px 24px; gap: 10px; }
-  .site-name { order: 1; }
-  .theme-toggle { order: 2; }
-  nav.site-nav { order: 3; width: 100%; gap: 8px 18px; }
+  .header-inner { padding: 14px 24px; gap: 10px; flex-wrap: nowrap; }
+  nav.site-nav { gap: 14px; flex-wrap: nowrap; }
+  nav.site-nav a { font-size: 0.9rem; }
 }
 
 @media (max-width: 520px) {
@@ -427,15 +429,6 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
 }
 
 /* ---------- Content from the CMS ---------- */
-
-.about-top {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-.about-top h1 { margin: 0; }
 
 .about-photo {
   width: 128px;

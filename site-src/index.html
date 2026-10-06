@@ -9,8 +9,16 @@
 
 <main>
   <div class="hero">
-    <h1>{{site.name}}</h1>
-    <p class="subhead">{{page.subhead}}</p>
+    <div class="hero-top">
+      {{page.photoBlock}}
+      <div>
+        <h1>{{site.name}}</h1>
+        <p class="subhead">{{page.subhead}}</p>
+      </div>
+    </div>
+    <div class="hero-bio">
+{{page.body}}
+    </div>
   </div>
 
   <div class="card-grid">

@@ -19,7 +19,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 | I want to… | Where |
 |---|---|
 | Change the intro line on the home page | CMS → **Home page** |
-| Change my bio, or add a photo | CMS → **About page** |
+| Change my bio, or add a photo | CMS → **Home page** |
 | Add or edit a project (case study or smaller work) | CMS → **Projects** |
 | Put a project on the home page | CMS → **Projects** → pick one → **Show on the home page** |
 | Add a new resume variant | CMS → **Resumes** → new |
@@ -74,8 +74,7 @@ If you'd rather preview first, Pages CMS can be pointed at a separate branch, bu
 | CMS section | Files | Shows up on |
 |---|---|---|
 | Site details | `content/site.yml` | Header, footer, contact links, page titles |
-| Home page | `content/pages/home.md` | Intro line under your name |
-| About page | `content/pages/about.md` | About page (text + optional photo) |
+| Home page | `content/pages/home.md` | Intro line, bio and optional photo |
 | Resume page intro | `content/pages/resume.md` | Text above the resume cards |
 | Projects | `content/projects/*.md` | A card on the Projects page, plus its own page or a pop-up (see below). Optionally a card on the home page |
 | Resumes | `content/resumes/*.md` | One card per variant on the Resume page |
@@ -129,9 +128,9 @@ A single "Download resume" link only works with one resume. With variants for di
 
 A pop-up only needs a title, tags and a short write-up.
 
-### Add a photo to About
+### Add a photo to the home page
 
-CMS → **About page** → **Photo** → upload. It shows as a round photo next to the heading. Add a description for screen readers.
+CMS → **Home page** → **Photo** → upload. It shows as a round photo next to the heading. Add a description for screen readers.
 
 ### Add an image inside a write-up
 

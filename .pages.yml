@@ -32,18 +32,11 @@ content:
       - name: subhead
         label: Intro line under the name
         type: text
-
-  - name: about
-    label: About page
-    type: file
-    path: content/pages/about.md
-    format: yaml-frontmatter
-    fields:
       - name: photo
         label: Photo (optional)
         type: image
       - { name: photoAlt, label: Photo description (for screen readers), type: string }
-      - { name: body, label: Text, type: rich-text }
+      - { name: body, label: About me (bio under the name), type: rich-text }
 
   - name: resume-page
     label: Resume page intro
