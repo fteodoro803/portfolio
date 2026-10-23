@@ -146,7 +146,7 @@ A tool repo can be written in any language or framework, as long as building it 
 1. **Publish a subfolder, not the whole repo.** Put the page in `web/` for plain HTML tools, and set `"output": "web"`. For tools with a build step (React, Vite, etc.), use the build output folder (`dist`) and set `"build"` to the command that produces it.
 2. **Keep everything else out of that folder:** companion programs (like a UDP bridge), tests, notes, `.env` files, config with IP addresses, and raw data.
 3. **Use relative paths** for the tool's own files (`app.js`, not `/app.js`). The tool is served from `/lab/<id>/`, not from the site root.
-4. **Link back to the hub** with `<a href="../">← Back to Lab</a>`.
+4. **Link back to the Projects page** with `<a href="../">← Back to Projects</a>`. `../` is the old `/lab/` page, which forwards to the address set by `projectsPage` in `content/site.yml`, so a changed address is a one-line edit.
 5. **Don't depend on the portfolio's CSS or JS.** The tool must work on its own. It can look however it likes.
 6. **Make it useful without extra setup** where you can, for example with demo data, so visitors can try it without installing anything.
 

@@ -22,7 +22,7 @@ resume-explorer/
   README.md             ← NOT published
 ```
 
-The page reads `resume.json` and renders it. A tool can't use the portfolio's CSS, so it needs its own light styling (match the colours and fonts in [DESIGN.md](DESIGN.md)). Remember the "← Back to Lab" link.
+The page reads `resume.json` and renders it. A tool can't use the portfolio's CSS, so it needs its own light styling (match the colours and fonts in [DESIGN.md](DESIGN.md)). Remember the "← Back to Projects" link.
 
 Because it's a Lab tool, it has the usual Lab catch: the portfolio doesn't rebuild when the tool repo changes, so [rebuild the site](LAB.md#rebuild-the-site) after pushing.
 

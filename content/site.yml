@@ -4,3 +4,5 @@ location: Melbourne, Australia
 email: fernandoagustin803@gmail.com
 linkedin: https://linkedin.com/in/fernando-agustin-teodoro
 github: https://github.com/fteodoro803
+# Where "Back to Projects" links land. Relative to the site root; project pages link to ../ and /lab/ forwards here.
+projectsPage: projects.html#lab
