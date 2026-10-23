@@ -13,6 +13,7 @@
   --accent-text: #ffffff;
   --live-panel: #f7e9df;
   --border-hover: #d3ad97;   /* accent mixed 35% into --border */
+  --media-tint: #f3e7dd;     /* behind card screenshots */
   --card-shadow: 0 10px 24px -16px rgba(80, 40, 15, 0.35);
   --backdrop: rgba(33, 29, 26, 0.48);
   --section-gap: 64px;
@@ -38,6 +39,7 @@
   --accent-text: #201c19;
   --live-panel: #3a2a1f;
   --border-hover: #75523b;
+  --media-tint: #33271f;
   --card-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.7);
   --backdrop: rgba(10, 8, 6, 0.64);
 }
@@ -332,10 +334,109 @@ footer.site-footer a:hover { text-decoration: none; border-color: var(--accent);
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 18px 24px 24px;
+  padding: 0;
+  overflow: hidden;  /* so the screenshot follows the card's rounded corners */
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.project-card:hover { border-color: var(--border-hover); box-shadow: var(--card-shadow); }
+/* The text sits in its own box so the screenshot can run edge to edge above it. */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 24px 24px;
+}
+
+/* Card screenshots: one 16:10 tinted panel for every card, so cards in a row stay level.
+   Web projects show the page with rounded corners and a soft shadow; phone apps show the
+   whole screen in a thin bezel. The margin is kept small so the picture gets the space.
+   Several pictures sit in a row inside .media-track and js/site.js scrolls it. The track
+   sits under the card's click area, so a click on a picture opens the project; the arrows
+   and dots are lifted above it (z-index) so they work on their own. */
+.card-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--media-tint);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+/* Absolute, so the 16:10 box stays fixed however tall the pictures are. */
+.media-track { position: absolute; inset: 0; display: flex; overflow: hidden; }
+.media-slide {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5%;
+}
+.card-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.card-media .framed {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px -12px rgba(40, 20, 10, 0.45);
+}
+.card-media .framed img { object-position: top left; }  /* a taller capture loses its bottom */
+.card-media .device {
+  height: 100%;
+  aspect-ratio: 9 / 19.5;
+  border: 3px solid #1b1b1f;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1b1b1f;
+  box-shadow: 0 10px 24px -12px rgba(40, 20, 10, 0.45);
+}
+
+.media-nav {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  padding: 0 0 3px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.media-nav.prev { left: 8px; }
+.media-nav.next { right: 8px; }
+.media-nav:hover { border-color: var(--border-hover); color: var(--accent); }
+.media-nav:focus-visible, .media-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.media-dots {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  display: flex;
+}
+.media-dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.media-dot::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--text-muted);
+  opacity: 0.85;
+}
+.media-dot[aria-current="true"]::before { background: var(--accent); border-color: var(--accent); opacity: 1; }
 
 .card-head {
   display: flex;

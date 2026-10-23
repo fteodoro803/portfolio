@@ -8,6 +8,17 @@
     "note": "Opens straight into a demo session. Live data needs a small bridge program (linked on the page) running on your own network.",
     "repo": "fteodoro803/sim-racing-telemetry",
     "output": "web",
+    "screenshotKind": "web",
+    "cardImages": [
+      {
+        "image": "assets/uploads/telemetry-1.webp",
+        "alt": "Telemetry dashboard late in lap 3: lap and sector times, delta to best, speed, pedal trace and tyre temperatures"
+      },
+      {
+        "image": "assets/uploads/telemetry-2.webp",
+        "alt": "The same dashboard early in the lap, with the sector and lap table still filling in"
+      }
+    ],
     "enabled": true
   },
   {
@@ -19,6 +30,17 @@
     "repo": "fteodoro803/gran-turismo-tuner",
     "build": "npm ci && npm run build",
     "output": "dist",
+    "screenshotKind": "web",
+    "cardImages": [
+      {
+        "image": "assets/uploads/gran-turismo-tuner-1.webp",
+        "alt": "Tune editor for an Alpine A110 '17 with sections for tires, suspension, differential, aerodynamics, brakes and engine tuning"
+      },
+      {
+        "image": "assets/uploads/gran-turismo-tuner-2.webp",
+        "alt": "Car picker with manufacturer Alpine and model A110 '17 selected"
+      }
+    ],
     "enabled": true
   }
 ]

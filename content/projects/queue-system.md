@@ -7,6 +7,10 @@ summary: Started from my brother's story about hospital wait times in the Philip
 demoUrl: https://queue-demo-322182421963.australia-southeast2.run.app/
 demoLabel: Try the live demo →
 demoNote: (seeded with demo data)
+screenshotKind: web
+cardImages:
+  - image: assets/uploads/queue-system-1.webp
+    alt: Staff dashboard for a dentistry clinic's queue, showing two patients waiting with their estimated wait times
 featured: true
 visible: true
 order: 2

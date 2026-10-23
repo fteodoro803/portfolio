@@ -69,11 +69,15 @@ Each tool repo stays a normal, standalone project with its own README, history a
      "note": "Optional short line under the description.",
      "repo": "fteodoro803/telemetry-viz",
      "output": "web",
+     "screenshotKind": "web",
+     "cardImages": [
+       { "image": "assets/uploads/telemetry-1.webp", "alt": "What the picture shows" }
+     ],
      "enabled": true
    }
    ```
 
-   The only fields you must fill in are `id`, `title`, `description`, and one of `repo` or `path`. The [field reference](#lab-toolsjson-field-reference) covers the rest.
+   The fields you must fill in are `id`, `title`, `description`, `screenshotKind`, at least one entry in `cardImages`, and one of `repo` or `path`. The build fails without the pictures. How to capture and save them is in [Add card pictures](CONTENT.md#add-card-pictures). The [field reference](#lab-toolsjson-field-reference) covers the rest.
 3. **Preview it locally** (optional but recommended):
 
    ```
@@ -206,6 +210,8 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 | `build` | no | Shell command run in a fresh checkout (e.g. `"npm ci && npm run build"`). Leave out for plain HTML. |
 | `output` | no | Folder inside the repo to publish. Defaults to `"."` (everything), so set it, e.g. `"web"`. It must contain `index.html`. |
 | `sourceUrl` | no | Link for the card's "Source" link. Defaults to the GitHub repo when `repo` is set. Set to `""` to hide the link, for a private repo. (Pages CMS can't save an empty value; edit `lab-tools.json` directly.) |
+| `screenshotKind` | yes | `"web"` or `"phone"`. How the card shows the pictures: a framed page, or a whole phone screen. Same for every picture. |
+| `cardImages` | yes | List of `{ "image", "alt" }`, one to five. The first is the cover; more get arrows and dots. See [Add card pictures](CONTENT.md#add-card-pictures). |
 | `enabled` | no | `false` skips the tool entirely. Defaults to `true`. |
 
 ### Private tool repos
@@ -221,6 +227,7 @@ Public repos need nothing. For a private repo, create a GitHub token that can re
 | Run is red: "build command failed" | The tool's own build broke. Run its build locally to see why. |
 | Run is red: "no index.html in output folder" | `output` points at the wrong folder, or the build didn't produce one. |
 | Tool page loads but is unstyled or blank | It's using absolute paths (`/app.js`). Switch to relative paths. |
+| Run is red: "add at least one card image" (or "alt text", or "screenshotKind") | The tool's entry is missing its pictures. See [Add card pictures](CONTENT.md#add-card-pictures). |
 | Tool isn't on the hub | Check `"enabled"` and that the JSON is valid (commas between entries). |
 | Site is fine locally but red on GitHub | Build commands run on a clean Ubuntu machine; check for missing dependencies or things that only exist on your laptop. |
 
