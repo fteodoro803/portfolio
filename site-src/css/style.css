@@ -358,6 +358,9 @@ footer.site-footer a:hover { text-decoration: none; border-color: var(--accent);
   background: var(--media-tint);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
+  /* Rounded here too, not only by the card's overflow clip: iOS Safari doesn't clip a
+     scrolling child (the track) to a parent's rounded corners. 1px is the card border. */
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
 /* Absolute, so the 16:10 box stays fixed however tall the pictures are. */
 .media-track { position: absolute; inset: 0; display: flex; overflow: hidden; }
