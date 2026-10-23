@@ -91,6 +91,24 @@ content:
       - { name: demoNote, label: Note next to the demo button (on a page, optional), type: string }
       - { name: link, label: Link to a repo or site (optional), type: string }
       - { name: note, label: Note shown under the write-up (pop-up, optional), type: text }
+      - name: screenshotKind
+        label: Screenshot kind
+        description: "Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. The same for every picture."
+        type: select
+        required: true
+        default: web
+        options:
+          values:
+            - { value: web, label: Web page or desktop app }
+            - { value: phone, label: Phone app }
+      - name: cardImages
+        label: Card pictures
+        description: "Case studies need at least one, up to 5. The first is the cover; readers can click through the rest. Save as WebP about 1200px wide (phone apps: 450px wide), under 150 KB. Web pictures are shown 16:10, so capture them at that shape."
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Picture, type: image }
+          - { name: alt, label: Describe the picture (for screen readers), type: string }
       - name: body
         label: Write-up
         description: "Use headings for sections. A quote block becomes a highlighted callout."
@@ -136,5 +154,23 @@ content:
       - { name: build, label: Build command (optional), type: string }
       - { name: output, label: Folder to publish, type: string, default: "." }
       - { name: sourceUrl, label: Source link override (optional), type: string }
+      - name: screenshotKind
+        label: Screenshot kind
+        description: "Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. The same for every picture."
+        type: select
+        required: true
+        default: web
+        options:
+          values:
+            - { value: web, label: Web page or desktop app }
+            - { value: phone, label: Phone app }
+      - name: cardImages
+        label: Card pictures
+        description: "Every tool needs at least one, up to 5. The first is the cover; readers can click through the rest. Save as WebP about 1200px wide (phone apps: 450px wide), under 150 KB. Web pictures are shown 16:10, so capture them at that shape."
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Picture, type: image }
+          - { name: alt, label: Describe the picture (for screen readers), type: string }
       - { name: featured, label: Show on the home page, type: boolean, default: false }
       - { name: enabled, label: Published, type: boolean, default: true }

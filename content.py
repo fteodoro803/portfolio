@@ -16,6 +16,7 @@ import yaml
 
 ROOT_DIR = Path(__file__).parent
 CONTENT = ROOT_DIR / "content"
+SRC = ROOT_DIR / "site-src"
 
 # The settings block can be empty (`---` then `---`), which is how Pages CMS saves a
 # file with no settings, and may use Windows line endings.
@@ -133,6 +134,38 @@ def load_projects():
     return entries
 
 
+SCREENSHOT_KINDS = ("phone", "web")
+MAX_CARD_IMAGES = 5
+
+
+def card_images(owner, meta):
+    """The card screenshots for a case study or Lab tool, checked so a card can't ship without one.
+
+    `owner` names the file in error messages. `meta` holds `cardImages`, a list of
+    {image, alt} (the first is the cover; paths look like assets/uploads/<file>), and
+    `screenshotKind`: "phone" or "web", the same for every picture of one project.
+    """
+    items = meta.get("cardImages") or []
+    if not isinstance(items, list) or not items:
+        raise SystemExit(f"{owner}: add at least one card image. Set 'cardImages' to files in site-src/assets/uploads/")
+    if len(items) > MAX_CARD_IMAGES:
+        raise SystemExit(f"{owner}: 'cardImages' has {len(items)} pictures, the most a card shows is {MAX_CARD_IMAGES}")
+    kind = meta.get("screenshotKind")
+    if kind not in SCREENSHOT_KINDS:
+        raise SystemExit(f"{owner}: 'screenshotKind' must be one of {', '.join(SCREENSHOT_KINDS)}")
+    images = []
+    for n, item in enumerate(items, 1):
+        item = item if isinstance(item, dict) else {}
+        path = str(item.get("image") or "").lstrip("/")
+        if not path or not (SRC / path).is_file():
+            raise SystemExit(f"{owner}: card image {n} not found. Put the file in site-src/assets/uploads/")
+        alt = str(item.get("alt") or "").strip()
+        if not alt:
+            raise SystemExit(f"{owner}: describe card image {n} in its 'alt' text (for screen readers)")
+        images.append({"src": path, "alt": alt})
+    return {"kind": kind, "images": images}
+
+
 def project_spec(entry):
     """Card spec for a content/projects/ entry."""
     m, fmt = entry["meta"], entry["meta"]["format"]
@@ -154,6 +187,7 @@ def project_spec(entry):
         "secondary": secondary,
     }
     if fmt == "page":
+        spec["media"] = card_images(f"content/projects/{entry['slug']}.md", m)
         spec["primary"] = ("Read more", f'{{{{ROOT}}}}projects/{entry["slug"]}.html')
     else:
         # The pop-up shows the role and the stack on separate lines, and repeats
@@ -183,6 +217,39 @@ def sort_specs(specs):
     return sorted(specs, key=key)
 
 
+def card_media(media):
+    """Screenshots at the top of a card: a framed page for web, a phone for apps.
+
+    With more than one picture the slides sit side by side and js/site.js scrolls
+    between them. The arrows and dots sit above the card's click area (see style.css),
+    so they work while the rest of the card still opens the project.
+    """
+    kind, images = media["kind"], media["images"]
+    frame = "device" if kind == "phone" else "framed"
+    slides = "".join(
+        f'<div class="media-slide"><div class="{frame}">'
+        f'<img src="{{{{ROOT}}}}{esc(i["src"])}" alt="{esc(i["alt"])}" loading="lazy" decoding="async">'
+        "</div></div>"
+        for i in images
+    )
+    controls = ""
+    if len(images) > 1:
+        total = len(images)
+        dots = "".join(
+            f'<button type="button" class="media-dot" data-slide="{n}" aria-label="Show picture {n + 1} of {total}"></button>'
+            for n in range(total)
+        )
+        controls = (
+            '<button type="button" class="media-nav prev" aria-label="Previous picture">‹</button>'
+            '<button type="button" class="media-nav next" aria-label="Next picture">›</button>'
+            f'<div class="media-dots">{dots}</div>'
+        )
+    return (
+        f'<div class="card-media is-{kind}"{" data-carousel" if controls else ""}>'
+        f'<div class="media-track">{slides}</div>{controls}</div>'
+    )
+
+
 def project_card(spec):
     """One project card. `spec` keys are described in project_spec()."""
     title = esc(spec["title"])
@@ -210,12 +277,14 @@ def project_card(spec):
     tags = f'<div class="card-tags">{esc(spec["tags"])}</div>' if spec.get("tags") else ""
     note = f'<p class="card-note">{esc(spec["note"])}</p>' if spec.get("note") else ""
 
+    media = card_media(spec["media"]) if spec.get("media") else ""
     html = (
         f'<article class="card project-card{" is-quiet" if spec.get("quiet") else ""}">'
+        f'{media}<div class="card-body">'
         f'<div class="card-head">{pill}{links}</div>'
         f'<h3>{title}</h3>{tags}'
         f'<p class="card-hook">{esc(spec["hook"])}</p>{note}'
-        f'<div class="card-actions">{primary}</div>'
+        f'<div class="card-actions">{primary}</div></div>'
     )
     if dialog:
         role = f'<p class="dialog-role">{esc(dialog["role"])}</p>' if dialog["role"] else ""

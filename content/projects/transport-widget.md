@@ -7,6 +7,14 @@ summary: A personalised departure board on your phone's home screen, built with 
 demoUrl: ''
 demoLabel: Try the live demo →
 demoNote: ''
+screenshotKind: phone
+cardImages:
+  - image: assets/uploads/transport-widget-1.webp
+    alt: The app showing tram route 96 at Russell St/Bourke St on a map, with upcoming departures listed below
+  - image: assets/uploads/transport-widget-2.webp
+    alt: The Saved Routes screen listing a route 96 tram with its next two departure times
+  - image: assets/uploads/transport-widget-3.webp
+    alt: Map search around Melbourne's CBD with nearby stops and a list of transport types to filter by
 featured: true
 visible: true
 order: 3

@@ -68,6 +68,7 @@ def lab_specs(tools):
             "tags": tool.get("tags", ""),
             "hook": tool["description"],
             "note": tool.get("note", ""),
+            "media": content.card_images(f"lab-tools.json ({tool['id']})", tool),
             "primary": ("Open", f"{{{{ROOT}}}}lab/{tool['id']}/"),
             "secondary": [("Source", source_url)] if source_url else [],
         })

@@ -123,10 +123,32 @@ A single "Download resume" link only works with one resume. With variants for di
 1. CMS → **Projects** → add a new entry.
 2. Pick **How it opens**: *Page* for a full case study, *Pop-up* for a short write-up.
 3. Fill in the title, tags and write-up (add a card summary for a page). Set **Order** and leave **Published** on.
-4. Turn on **Show on the home page** if you want it there.
-5. Save. A card appears on the Projects page. A page also gets its own URL at `/projects/<title-as-filename>.html`.
+4. For a page (case study), add its [card pictures](#add-card-pictures). The build fails without at least one.
+5. Turn on **Show on the home page** if you want it there.
+6. Save. A card appears on the Projects page. A page also gets its own URL at `/projects/<title-as-filename>.html`.
 
-A pop-up only needs a title, tags and a short write-up.
+A pop-up only needs a title, tags and a short write-up. Pop-ups have no card pictures.
+
+### Add card pictures
+
+Every case study and every Lab tool needs at least one picture, and shows up to five. The first is the cover. If there are more, the card gets arrows and dots to click through them. A click on the picture itself still opens the project.
+
+1. **Capture the screenshots.** Web projects at 16:10 (for example 1280×800), so nothing is cropped. A taller capture loses its bottom. Phone apps at the phone's own shape, one whole screen each. Crop out any browser or simulator frame, since the site adds its own phone frame.
+2. **Save each as WebP**, about 1200px wide for web and 450px wide for phone apps, under about 150 KB. The build doesn't compress anything.
+3. **Upload them** in the CMS (**Card pictures** on the project or Lab tool), or put the files in `site-src/assets/uploads/`.
+4. **Describe each picture** in its alt text, as someone who can't see it would want it described. The build fails if one is empty.
+5. **Set the screenshot kind**: *Web page or desktop app*, or *Phone app*. It's the same for every picture of one project.
+
+In the file, it looks like this:
+
+```yaml
+screenshotKind: phone
+cardImages:
+  - image: assets/uploads/pa-ride-1.webp
+    alt: The home screen with a search bar and a Post button
+```
+
+**Asking Claude to suggest them.** When you ask Claude to add a project or tool, it captures several candidate screenshots from the live demo (or from a video you point it at) and shows them for you to choose from. The ones you pick go in the card. The ones you don't are kept in `design-input/screenshots/<project>/` on your machine. That folder is git-ignored, so it is neither published nor committed.
 
 ### Add a photo to the home page
 
@@ -202,6 +224,9 @@ Everything between the `---` lines is a setting (`key: value`). Everything after
 | `'format' must be one of page, modal` | A project is missing **How it opens**, or it has another value |
 | CMS doesn't list a section | `.pages.yml` isn't on `main` yet, or has a syntax error |
 | CMS says it can't access the repo | Re-check the GitHub access you granted it |
+| `add at least one card image` | A case study or Lab tool has no entry under **Card pictures** (or the file isn't in `site-src/assets/uploads/`) |
+| `'screenshotKind' must be one of phone, web` | **Screenshot kind** is empty on a case study or Lab tool |
+| `describe card image N in its 'alt' text` | One of the card pictures has no alt text |
 | Image shows as broken | The upload failed, or the path in the entry doesn't match the file in `site-src/assets/uploads/` |
 
 ## Background

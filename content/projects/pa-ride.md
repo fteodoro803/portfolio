@@ -7,6 +7,10 @@ summary: A carpool marketplace for the Philippines, positioned as cost-sharing t
 demoUrl: https://carpool-app-959816621001.australia-southeast2.run.app/
 demoLabel: Try the live demo →
 demoNote: ''
+screenshotKind: phone
+cardImages:
+  - image: assets/uploads/pa-ride-1.webp
+    alt: The Pa-Ride home screen with a "Where are you headed?" search bar, a list and map toggle, and a Post button
 featured: true
 visible: true
 order: 1
