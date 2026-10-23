@@ -9,8 +9,16 @@ demoLabel: Try the live demo →
 demoNote: ''
 screenshotKind: phone
 cardImages:
-  - image: assets/uploads/pa-ride-1.webp
-    alt: The Pa-Ride home screen with a "Where are you headed?" search bar, a list and map toggle, and a Post button
+  - image: assets/uploads/pa-ride-search.webp
+    alt: The Pa-Ride search screen with a "Where are you headed?" bar, saved route chips, a list and map toggle, and trip cards showing the driver, route, seats left and price per seat
+  - image: assets/uploads/pa-ride-trip-page.webp
+    alt: A trip page as a rider sees it, with the departure time, route, driver profile and stats, price per seat, seats left and a Request a seat button
+  - image: assets/uploads/pa-ride-proposal.webp
+    alt: The Request a seat form, filled in with one seat, a pickup point, an offer of 180 pesos per seat and a short baggage note
+  - image: assets/uploads/pa-ride-live-sheet.webp
+    alt: Live trip tracking with the bottom sheet open, showing how many minutes away the driver is, the driver and a Message button, and the vehicle's plate
+  - image: assets/uploads/pa-ride-live-map.webp
+    alt: Live trip tracking on a map of Metro Manila, with the driver's position and route and a bottom sheet showing the rider's pickup and time away
 featured: true
 visible: true
 order: 1

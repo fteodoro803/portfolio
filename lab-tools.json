@@ -42,5 +42,27 @@
       }
     ],
     "enabled": true
+  },
+  {
+    "id": "valorant-team-randomizer",
+    "title": "Valorant Team Randomizer",
+    "type": "Tool",
+    "tags": "TypeScript · React · Vite",
+    "description": "Rolls a unique agent for each of five players, with role minimums, per-player bans and a history that stops anyone getting stuck on one role.",
+    "repo": "fteodoro803/valorant-team-randomizer",
+    "build": "npm ci && npm run build",
+    "output": "dist",
+    "screenshotKind": "web",
+    "cardImages": [
+      {
+        "image": "assets/uploads/valorant-team-randomizer-1.webp",
+        "alt": "The Team Randomiser after a roll: five agent cards, each showing a player's name and role, above the player list, the minimum-per-role rules and the roll history"
+      },
+      {
+        "image": "assets/uploads/valorant-team-randomizer-2.webp",
+        "alt": "A player's Bans picker with role buttons and a grid of agent portraits grouped by role, where two duelists are crossed out as banned"
+      }
+    ],
+    "enabled": true
   }
 ]
