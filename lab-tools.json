@@ -42,5 +42,27 @@
       }
     ],
     "enabled": true
+  },
+  {
+    "id": "valorant-randomizer",
+    "title": "Valorant Team Randomiser",
+    "type": "Tool",
+    "tags": "TypeScript · React · Vite",
+    "description": "Pick everyone's agent for the next game, with role rules, bans and history.",
+    "repo": "fteodoro803/valorant-team-randomizer",
+    "build": "npm ci && npm run build",
+    "output": "dist",
+    "screenshotKind": "web",
+    "cardImages": [
+      {
+        "image": "assets/uploads/valorant-randomizer-1.webp",
+        "alt": "The randomiser after a roll: five role-coloured agent cards, then the player list, role minimum switches and recent roll history"
+      },
+      {
+        "image": "assets/uploads/valorant-randomizer-2.webp",
+        "alt": "The bans picker for one player, with a grid of agent portraits and two of them crossed out"
+      }
+    ],
+    "enabled": true
   }
 ]
