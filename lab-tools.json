@@ -9,5 +9,16 @@
     "repo": "fteodoro803/sim-racing-telemetry",
     "output": "web",
     "enabled": true
+  },
+  {
+    "id": "gran-turismo-tuner",
+    "title": "Gran Turismo Tuner",
+    "type": "Tool",
+    "tags": "TypeScript · React · Vite",
+    "description": "Share Gran Turismo 7 tunes as a link. Pick a car, fill in the tune, and anyone who opens the link gets it in the same editable form.",
+    "repo": "fteodoro803/gran-turismo-tuner",
+    "build": "npm ci && npm run build",
+    "output": "dist",
+    "enabled": true
   }
 ]

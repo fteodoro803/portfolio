@@ -26,6 +26,12 @@ jobs:
         with:
           python-version: "3.11"
 
+      # Lab tools with a build step (e.g. Vite apps) run npm during build.py.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
       - name: Install build dependencies
         run: pip install -r requirements.txt
 
