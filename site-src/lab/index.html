@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Moved — {{site.name}}</title>
-  <meta http-equiv="refresh" content="0; url=../projects.html#lab" />
-  <link rel="canonical" href="../projects.html#lab" />
+  <meta http-equiv="refresh" content="0; url={{ROOT}}{{site.projectsPage}}" />
+  <link rel="canonical" href="{{ROOT}}{{site.projectsPage}}" />
+  <script>location.replace("{{ROOT}}{{site.projectsPage}}");</script>
 </head>
 <body>
-  <p>The Lab now lives on the <a href="../projects.html#lab">Projects page</a>.</p>
+  <p>The Lab now lives on the <a href="{{ROOT}}{{site.projectsPage}}">Projects page</a>.</p>
 </body>
 </html>
