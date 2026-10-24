@@ -158,6 +158,20 @@ CMS → **Home page** → **Photo** → upload. It shows as a round photo next t
 
 In the editor, use the image button and upload. The site rewrites the saved path so it works from any page.
 
+For phone screenshots, put one or two side by side with a caption each. The CMS has no button for this, so switch to the source view (or edit the file) and paste:
+
+```html
+<div class="shots">
+  <figure>
+    <img src="assets/uploads/pa-ride-search.webp" alt="Describe the picture">
+    <figcaption>One short line on what it shows.</figcaption>
+  </figure>
+  <figure> … </figure>
+</div>
+```
+
+Each picture is capped at phone size, so a pair sits next to each other and a single one stays centred. For a web or desktop capture, use `<div class="shots shots-wide">` with one figure, and it takes the full column. Place a picture beside the paragraph it shows, not in a gallery at the end.
+
 ### Add a Lab tool
 
 Add the card in CMS → **Lab tools**, and follow [LAB.md](LAB.md) for the tool's own repo.
@@ -174,6 +188,36 @@ Add the card in CMS → **Lab tools**, and follow [LAB.md](LAB.md) for the tool'
 <summary><strong>▸ Why do quotes become callouts?</strong></summary>
 
 The CMS's editor has a quote button but no "callout" button. Mapping one to the other means you can place a callout anywhere in a write-up, using a button that already exists, with no special syntax to remember.
+
+</details>
+
+## Writing a case study
+
+A case study is a story about why the project is the way it is. It isn't a list of what was built. The test: if a section could be pasted onto a resume as it stands, it's still a resume entry. The reasons behind the features are the heart of the page, and the feature is how a reason shows up.
+
+This is the structure Pa-Ride uses. Reuse it for the next case study.
+
+| Section | What goes in it |
+|---|---|
+| **Why this one** | Why you took it on, in your own words. The friend, person or problem that pulled you in, and what you like about fixing it |
+| **How it works now** | The situation before the project, told as someone who looked closely. What people already do, the few ways it breaks, and why earlier attempts didn't stick. Say what you did to find out (read, watched, asked) |
+| **The reasons that shaped it** | One short paragraph per feature, each opening with the reason in bold and ending with what was built. Pair it with a screenshot where one shows it. Credit ideas that weren't yours and decisions made with others |
+| **A transition or growth idea** | How it gets used by the first people, if that was a design choice in its own right |
+| **Status** | What's built, what isn't, who has used it. Keep it plain. Stack and AI use go here in a line or two |
+
+How to write it:
+
+- **Reason first, feature second.** "Facebook messaging is free-flow, so everyone does it their own way. In Pa-Ride a rider proposes a price…" rather than "Built a proposal flow."
+- **Counts and technical detail go on the resume.** Migration counts, test counts and wording like "concurrency-safe" stay out unless the story needs them. Where one does, say what it protects people from.
+- **Ask before writing.** The files hold what was built, not how it was noticed or what it was weighed against. Ask for the origin, the research, and who had which idea, and don't fill the gaps. A gap with no reason behind it gets left out.
+- **Mark every inference.** When a reason is worked out from the slides or the code and not from you, flag it for a check before it goes in.
+- **Voice.** Follow the writing-style skill: plain words, Australian spelling, no em dashes, no "I'll be upfront", and no inflated effort or ownership.
+- **Pictures.** Use the card screenshots, plus the project's own share or hero image if it has one. See [Add an image inside a write-up](#add-an-image-inside-a-write-up).
+
+<details>
+<summary><strong>▸ Why this shape?</strong></summary>
+
+The first Queue System, Pa-Ride and Transport Widget pages all went problem, then a bullet list of what was built, then status. The bullets were the resume. Pa-Ride's client presentation worked differently: each slide named a pain on a Facebook post and what the app built because of it. That is why the features exist, so it became the structure of the page.
 
 </details>
 

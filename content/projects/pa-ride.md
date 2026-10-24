@@ -3,7 +3,7 @@ title: Pa-Ride
 format: page
 tags: React Native (Expo Router) · TypeScript · Supabase (Postgres, PostGIS, Realtime, Auth) · Self-directed
 cardTags: React Native · TypeScript · Supabase (Postgres, PostGIS)
-summary: A carpool marketplace for the Philippines, positioned as cost-sharing to stay outside ride-hailing regulation. I took it from a one-line idea to a PostGIS corridor-matching algorithm.
+summary: Filipinos already carpool through Facebook groups. Pa-Ride keeps what works about that and fixes the rest.
 demoUrl: https://carpool-app-959816621001.australia-southeast2.run.app/
 demoLabel: Try the live demo →
 demoNote: ''
@@ -23,24 +23,66 @@ featured: true
 visible: true
 order: 1
 ---
-## The problem
+## Why this one
 
-Carpooling already happens across the Philippines, just informally. Someone posts a route in a Facebook group, others reply, and it all gets sorted out over Messenger. It works, but it only reaches whoever happens to see the post, and the formal ride-hailing-style products (BlaBlaCar included) haven't gained much traction there.
+A friend floated a one-line pitch: a carpool app for the Philippines. I liked the idea of working with him, so I took it a lot further than a pitch usually goes.
 
-Someone floated "a carpool app for the Philippines" as a one-line pitch, and I picked it up from there. Whether it was worth building, what shape it should take and all of the technical work were mine.
+I also like fixing things so they're easier for people, and carpooling in the Philippines has a lot of steps and a lot of places for things to go wrong. Most of them looked fixable to me.
 
-## What I did
+## How carpooling works now
 
-I started with research instead of code. I wanted to know how carpooling works informally right now, and why the formal products that tried this didn't stick. Seeing that the informal version already works, my question became how to build on it instead of replacing it. That led to the biggest product decision: positioning Pa-Ride as **cost-sharing rather than ride-hailing**, which keeps it outside LTFRB/TNVS regulation. That call runs through the whole product, from the pricing model to the copy to the app suggesting a price but never setting a fare.
+It already happens, just on Facebook. Every area has its own group. A driver posts a trip, usually as a picture, riders comment, and then everyone moves to a messaging app to sort out the rest.
 
-- A 26-migration Postgres schema as the data model, designed from a spec I wrote myself
-- A PostGIS corridor-matching algorithm. Riders match with drivers going to their destination, and also with drivers who are already passing near their route, with a computed detour cost and a suggested price
-- Seat booking and proposal negotiation as concurrency-safe Postgres functions with row-level locking, so seats can't be oversold or bypassed by a compromised client
-- Auto-generated shareable trip cards and public trip pages that crawlers can read. A driver's Facebook-group post keeps working, and the link pulls new people into the app
-- A data pipeline that joins several open Philippine geographic datasets to seed nationwide place search, which meant untangling renamed provinces, duplicate city names and missing coordinates
+I read through the groups, talked to people, and read up on why the formal apps hadn't taken off. The same four problems kept coming up. It's scattered, with a different group for every area. It's hard to trust anyone you haven't dealt with before. Your number and identity go to everyone who replies. And it's messy: no search, no clear seat count, and no way to tell if a post is still open.
 
-I used Claude Code and Claude Design throughout, including a project-specific Claude Skill that checks new UI code against the app's own design-system docs.
+BlaBlaCar works well in other countries, but here it never got into the community or the way Filipinos already do things, so it had no drivers and no riders.
+
+## Keep what works, fix the rest
+
+Since people already do this and it mostly works, I didn't want to replace it. I wanted to take away the reasons not to use it, one Facebook habit at a time.
+
+**Nothing to install.** Everyone has Facebook, so Pa-Ride is just a website. You don't need an account to look at a trip, and you sign up when you do something, like asking for a seat.
+
+**Posting is a form.** Everyone knows how to post in a group, so a driver fills in a form instead. Every trip then has a clear seat count and price, which a picture in a group never does.
+
+**Trust comes from a record, not mutual friends.** On Facebook you can see a profile and your mutual friends. Here it's a verified phone number and a trip record, and every trip ends with a recorded outcome, so the record keeps growing.
+
+**Negotiation has one shape.** Facebook messaging is free-flow, so everyone does it their own way. In Pa-Ride a rider proposes a price, the driver counters or accepts, and both sides have it recorded. When it's agreed, the seat is locked, so one seat can't be promised to two people.
+
+<div class="shots">
+  <figure>
+    <img src="assets/uploads/pa-ride-search.webp" alt="The Pa-Ride search screen, with trip cards showing the driver, route, seats left and price per seat">
+    <figcaption>Every trip in one place, with seats left and price per seat.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/uploads/pa-ride-proposal.webp" alt="The Request a seat form, filled in with one seat, a pickup point, an offer of 180 pesos per seat and a short baggage note">
+    <figcaption>A rider proposes a price, and the driver counters or accepts.</figcaption>
+  </figure>
+</div>
+
+**Cost-sharing, not ride-hailing.** The app suggests a price and never sets a fare. That keeps Pa-Ride a way to split costs, outside LTFRB and TNVS regulation, and it shapes the pricing and the copy.
+
+**Matching on the route, not just the destination.** Riders also see drivers who are already passing near them, with the detour it would cost and a suggested price. That idea came from my friend, and we worked it out together.
+
+## Transition, not replacement
+
+Drivers keep posting where they do today. Every trip becomes a share card with a QR code and a link, ready to post in a Facebook group. Whoever sees it lands on the trip page without an account: post, scan, view, join. The more people use it, the more it sustains itself.
+
+<div class="shots">
+  <figure>
+    <img src="assets/uploads/pa-ride-share-card.webp" alt="A Pa-Ride share card for a Muntinlupa to Quezon City trip, showing the date, departure time, price per seat, seats, the driver and a QR code">
+    <figcaption>The card a driver posts in a Facebook group.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/uploads/pa-ride-trip-page.webp" alt="A trip page as a rider sees it, with the departure time, route, driver profile, price per seat, seats left and a Request a seat button">
+    <figcaption>Where the QR code lands, no account needed.</figcaption>
+  </figure>
+</div>
+
+It also needed a name people say out loud and a friendly, playful design, since it's meant to feel like something you'd mention to a friend.
 
 ## Status
 
 I'm a few weeks into building it and it's pre-launch, so there are no outside users yet. The core flows (post a trip, search, propose, confirm, recurring trips) are built and verified on desktop (macOS/Windows) and iOS Safari, but not yet as a compiled native iOS/Android app.
+
+It's built with React Native (Expo Router) and TypeScript on Supabase, with Postgres and PostGIS doing the route matching. I used Claude Code and Claude Design throughout.

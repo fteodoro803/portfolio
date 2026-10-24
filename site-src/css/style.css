@@ -664,5 +664,12 @@ ul.project-bullets li { margin-bottom: 10px; line-height: 1.6; }
 
 main img { max-width: 100%; height: auto; border-radius: 12px; }
 
+/* Pictures inside a case study: phone screenshots side by side, each capped so they stay phone-sized. */
+.shots { display: flex; justify-content: center; gap: 16px; margin: 20px 0 28px; }
+.shots figure { flex: 1 1 0; max-width: 260px; margin: 0; }
+.shots-wide figure { max-width: none; }  /* a web or desktop capture takes the full column */
+.shots img { display: block; width: 100%; }
+.shots figcaption { margin-top: 8px; font-size: 0.85rem; line-height: 1.45; color: var(--text-muted); }
+
 .callout p, .status-note p { margin: 0 0 10px; }
 .callout p:last-child, .status-note p:last-child { margin-bottom: 0; }
