@@ -8,7 +8,7 @@ Static site on GitHub Pages. Text lives in `content/`, page shapes and styling i
 |---|---|
 | Edit text, projects, resumes, or hide something | **[Pages CMS](https://pagescms.org)** in a browser. Guide: **[CONTENT.md](CONTENT.md)** |
 | Add or update a Lab tool | **[LAB.md](LAB.md)** |
-| Put a project that runs on a server (like the queue system) on the portfolio, with an entry page that wakes it up | **[LAB.md → Putting a project on the portfolio](LAB.md#putting-a-project-on-the-portfolio)** |
+| Put a project that runs on a server (like the queue system) on the portfolio, with an entry page that gets it started | **[LAB.md → Putting a project on the portfolio](LAB.md#putting-a-project-on-the-portfolio)** |
 | Change colours, fonts or components | **[DESIGN.md](DESIGN.md)** |
 | See what's planned | **[IDEAS.md](IDEAS.md)** |
 

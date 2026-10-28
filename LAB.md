@@ -94,10 +94,10 @@ Your tool is now at `/lab/<id>/` and has a card on the Projects page.
 
 ## Putting a project on the portfolio
 
-For an app that runs on a server and sleeps when idle (Cloud Run scaled to zero, for example). It can't live on GitHub Pages, and linking straight to it leaves the visitor on a blank tab for several seconds while it cold-starts. So the portfolio hosts a small **demo entry page** instead. It opens instantly, explains the demo, and pings the app so it wakes up while the visitor reads.
+For an app that runs on a server and sleeps when idle (Cloud Run scaled to zero, for example). It can't live on GitHub Pages, and linking straight to it leaves the visitor on a blank tab for several seconds while it cold-starts. So the portfolio hosts a small **demo entry page** instead. It opens instantly, explains the demo, and pings the app so it starts up while the visitor reads.
 
 ```
-case study ──"Try the live demo"──▶ /lab/<id>/ (static, instant) ──▶ the app (already awake)
+case study ──"Try the live demo"──▶ /lab/<id>/ (static, instant) ──▶ the app (already running)
                                          │ on load: ping the app, show "Ready" when it answers
 ```
 
@@ -152,7 +152,7 @@ Rules the page follows, so keep them when you edit it:
 
 Cloud Run scales to zero when idle. The first request after a quiet spell starts a new instance, which takes a few seconds, and the browser shows a blank tab the whole time. A visitor can't tell that from a broken link.
 
-A static page on the portfolio has no cold start. Landing there first gives the visitor something to read, and the ping on load means the app is usually awake by the time they click through. Keeping the app running all the time (`min-instances=1`) would remove the wait too, but costs money every month.
+A static page on the portfolio has no cold start. Landing there first gives the visitor something to read, and the ping on load means the app is usually running by the time they click through. Keeping the app running all the time (`min-instances=1`) would remove the wait too, but costs money every month.
 
 </details>
 
