@@ -4,7 +4,7 @@ format: page
 tags: React Native (Expo Router) · TypeScript · Supabase (Postgres, PostGIS, Realtime, Auth) · Self-directed
 cardTags: React Native · TypeScript · Supabase (Postgres, PostGIS)
 summary: Filipinos already carpool through Facebook groups. Pa-Ride keeps what works about that and fixes the rest.
-demoUrl: https://carpool-app-959816621001.australia-southeast2.run.app/
+demoUrl: lab/carpool-demo/
 demoLabel: Try the live demo →
 demoNote: ''
 screenshotKind: phone

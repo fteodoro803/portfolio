@@ -24,6 +24,7 @@
       --base-100: #ffffff; --base-200: #effbf6; --base-300: #daf0e6;
       --content: #0f2a21; --content-muted: rgba(15, 42, 33, 0.7);
       --primary: #0ea672; --primary-dark: #0b5a3f; --primary-tint: rgba(14, 166, 114, 0.1);
+      /* --ready (optional): the ready chip's dot, for themes where the accent colour reads as an error. */
       --display: "Outfit", system-ui, sans-serif;
       --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
     }
@@ -43,7 +44,7 @@
     .dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--content-muted); }
     .status[data-state="waking"] .dot { animation: pulse 1.2s ease-in-out infinite; }
     .status[data-state="ready"] { color: var(--primary-dark); }
-    .status[data-state="ready"] .dot { background: var(--primary); }
+    .status[data-state="ready"] .dot { background: var(--ready, var(--primary)); }
     @keyframes pulse { 50% { opacity: 0.25; } }
     @media (prefers-reduced-motion: reduce) { .status[data-state="waking"] .dot { animation: none; } }
 

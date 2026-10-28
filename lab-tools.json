@@ -73,5 +73,14 @@
     "ref": "release",
     "output": "lab-web",
     "enabled": true
+  },
+  {
+    "id": "carpool-demo",
+    "title": "Pa-Ride: live demo",
+    "card": false,
+    "repo": "fteodoro803/carpool-app-2",
+    "ref": "release",
+    "output": "lab-web",
+    "enabled": true
   }
 ]
