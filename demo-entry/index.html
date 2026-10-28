@@ -74,7 +74,7 @@
 
   <!-- The ping below flips this. The words are for people, so say what is happening. -->
   <p class="status" id="status" data-state="waking" role="status" aria-live="polite">
-    <span class="dot" aria-hidden="true"></span><span id="status-text">Waking the demo up…</span>
+    <span class="dot" aria-hidden="true"></span><span id="status-text">Demo is getting ready</span>
   </p>
 
   <!-- TODO: one card per door into the app (a role, a screen, a persona). Use full
@@ -111,7 +111,7 @@
   const set = (state, message) => { status.dataset.state = state; text.textContent = message; };
 
   fetch(APP_URL, { mode: "no-cors", cache: "no-store", signal: AbortSignal.timeout(GIVE_UP_MS) })
-    .then(() => set("ready", "The demo is ready"))
+    .then(() => set("ready", "Demo is ready"))
     .catch(() => set("slow", "Taking longer than usual. The links below still work."));
 </script>
 </body>
