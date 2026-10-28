@@ -24,7 +24,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 | Put an app that runs on a server (Cloud Run etc.) on the portfolio | [Putting a project on the portfolio](#putting-a-project-on-the-portfolio) |
 | Hide a tool temporarily | Set `"enabled": false` in `lab-tools.json`, push |
 | Stop a broken tool blocking deploys | Same as above |
-| Use a private tool repo | Add the `LAB_TOKEN` secret ([details](#private-tool-repos)) |
+| Use a private tool repo | Make sure `LAB_TOKEN` can read it: add the repo to the token's list ([details](#private-tool-repos)) |
 | Edit Lab cards in a browser | Pages CMS → **Lab tools** (see [CONTENT.md](CONTENT.md)); it edits `lab-tools.json` |
 
 > **⚠️ The portfolio site does not rebuild when a tool repo changes.** Pushing to a tool repo does nothing to the live site until you [rebuild](#rebuild-the-site).
@@ -121,7 +121,7 @@ It's an ordinary Lab entry (the page lives in the app's repo, see [Add a new too
    }
    ```
 
-   A private repo needs the `LAB_TOKEN` secret to be able to read it ([details](#private-tool-repos)).
+   **A private repo needs `LAB_TOKEN` to be able to read it, and a fine-grained token only reaches the repos on its list.** Add the repo to the token before you rebuild, or the build fails with a 403 ([details](#private-tool-repos)).
 4. **Point the case study at it.** In `content/projects/<project>.md` set `demoUrl: lab/<id>/` (a path without `https://` is resolved from the site root, so it works on every page).
 5. **[Rebuild the site](#rebuild-the-site).** The portfolio only picks up the page when it rebuilds.
 6. **Check it.** Open the case study, press the demo button, and watch the chip go from "Demo is getting ready" to "Demo is ready". Check it on a phone width too.
@@ -283,14 +283,22 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 
 ### Private tool repos
 
-Public repos need nothing. For a private repo, create a GitHub token that can read that repo, and save it in the portfolio repo under Settings → Secrets and variables → Actions as **`LAB_TOKEN`**. For local builds, set the `LAB_TOKEN` environment variable.
+Public repos need nothing. A private repo needs a GitHub token that can read it, saved in the portfolio repo under Settings → Secrets and variables → Actions as **`LAB_TOKEN`**. For local builds, set the `LAB_TOKEN` environment variable.
+
+`LAB_TOKEN` is a fine-grained personal access token, and **a fine-grained token only works for the repos listed on it**. So each time a new private repo joins the Lab:
+
+1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → open the token behind `LAB_TOKEN`.
+2. Under **Repository access**, add the new repo. It needs **Contents: Read** and nothing more.
+3. Re-run the portfolio's deploy workflow.
+
+If you skip step 2, the build fails with a 403 on that repo (git words it as "Write access to repository not granted", even though it only reads). A token also expires on the date you chose when you made it, and then every private repo fails at once. When that happens, make a new token with read access to all the private repos and save it as `LAB_TOKEN` again.
 
 ## Troubleshooting
 
 | Symptom | Likely cause |
 |---|---|
 | Tool changes aren't on the live site | You haven't [rebuilt](#rebuild-the-site). |
-| Run is red: "could not clone" | Typo in `repo`, or the repo is private and `LAB_TOKEN` isn't set (or lacks access). |
+| Run is red: "could not clone" (often a 403) | Typo in `repo`, or the repo is private and `LAB_TOKEN` isn't set, has expired, or doesn't list this repo. See [Private tool repos](#private-tool-repos). |
 | Run is red: "build command failed" | The tool's own build broke. Run its build locally to see why. |
 | Run is red: "no index.html in output folder" | `output` points at the wrong folder, or the build didn't produce one. |
 | Tool page loads but is unstyled or blank | It's using absolute paths (`/app.js`). Switch to relative paths. |

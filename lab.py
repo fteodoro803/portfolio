@@ -110,7 +110,7 @@ def fetch_lab_tool(tool):
     if result.returncode != 0:
         sys.exit(
             f"Lab tool {tool['id']!r}: could not clone {tool['repo']} "
-            f"(private repo? set LAB_TOKEN)\n{redact(result.stderr, token)}"
+            f"(private repo? check LAB_TOKEN is set, hasn't expired and lists this repo)\n{redact(result.stderr, token)}"
         )
     sha = subprocess.run(
         ["git", "-C", str(checkout), "rev-parse", "--short", "HEAD"],
