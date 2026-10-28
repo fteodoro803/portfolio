@@ -124,7 +124,7 @@ It's an ordinary Lab entry (the page lives in the app's repo, see [Add a new too
    A private repo needs the `LAB_TOKEN` secret to be able to read it ([details](#private-tool-repos)).
 4. **Point the case study at it.** In `content/projects/<project>.md` set `demoUrl: lab/<id>/` (a path without `https://` is resolved from the site root, so it works on every page).
 5. **[Rebuild the site](#rebuild-the-site).** The portfolio only picks up the page when it rebuilds.
-6. **Check it.** Open the case study, press the demo button, and watch the chip go from "Waking the demo up…" to "The demo is ready". Check it on a phone width too.
+6. **Check it.** Open the case study, press the demo button, and watch the chip go from "Demo is getting ready" to "Demo is ready". Check it on a phone width too.
 7. **Remind the owner of the follow-up:** once the page is live, the app's own entry route (`/`) can redirect straight into the app, so there is one copy of the text, not two.
 
 ### Designing the entry page
