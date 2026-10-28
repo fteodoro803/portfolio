@@ -166,12 +166,18 @@ def card_images(owner, meta):
     return {"kind": kind, "images": images}
 
 
+def demo_href(url):
+    """A demo link as written in a project: a full URL stays as is, and a site
+    path like lab/queue-demo/ is resolved from the root, so it works from any page."""
+    return url if re.match(r"^[a-z][a-z0-9+.-]*:", url, re.I) else f"{{{{ROOT}}}}{url}"
+
+
 def project_spec(entry):
     """Card spec for a content/projects/ entry."""
     m, fmt = entry["meta"], entry["meta"]["format"]
     secondary = []
     if m.get("demoUrl"):
-        secondary.append(("Demo", m["demoUrl"]))
+        secondary.append(("Demo", demo_href(m["demoUrl"])))
     if m.get("link"):
         secondary.append(("Repo", m["link"]))
     spec = {
@@ -194,7 +200,7 @@ def project_spec(entry):
         # the links as buttons so they sit next to the full write-up.
         links = []
         if m.get("demoUrl"):
-            links.append(("Try the demo", m["demoUrl"]))
+            links.append(("Try the demo", demo_href(m["demoUrl"])))
         if m.get("link"):
             links.append(("View repo", m["link"]))
         spec["dialog"] = {
@@ -317,7 +323,7 @@ def project_page_values(entry):
     if m.get("demoUrl"):
         label = m.get("demoLabel") or "Try the live demo →"
         note = f' <span class="tags">{esc(m["demoNote"])}</span>' if m.get("demoNote") else ""
-        demo = f'<p><a class="button" href="{esc(m["demoUrl"])}">{esc(label)}</a>{note}</p>'
+        demo = f'<p><a class="button" href="{esc(demo_href(m["demoUrl"]))}">{esc(label)}</a>{note}</p>'
     return {
         "title": m["title"],
         "tags": m.get("tags", ""),

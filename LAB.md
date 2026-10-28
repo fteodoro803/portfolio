@@ -6,6 +6,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 
 - [Quick reference](#quick-reference)
 - [Add a new tool](#add-a-new-tool)
+- [Putting a project on the portfolio](#putting-a-project-on-the-portfolio)
 - [Update an existing tool](#update-an-existing-tool)
 - [Rebuild the site](#rebuild-the-site)
 - [Edit, hide, pin or remove a tool](#edit-hide-pin-or-remove-a-tool)
@@ -20,6 +21,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 |---|---|
 | Publish a change I made to a tool | Push to the tool's repo, then [rebuild the site](#rebuild-the-site) |
 | Add a new tool | [Add a new tool](#add-a-new-tool) |
+| Put an app that runs on a server (Cloud Run etc.) on the portfolio | [Putting a project on the portfolio](#putting-a-project-on-the-portfolio) |
 | Hide a tool temporarily | Set `"enabled": false` in `lab-tools.json`, push |
 | Stop a broken tool blocking deploys | Same as above |
 | Use a private tool repo | Add the `LAB_TOKEN` secret ([details](#private-tool-repos)) |
@@ -89,6 +91,70 @@ Each tool repo stays a normal, standalone project with its own README, history a
 4. **Commit and push to `main`.** The push triggers a rebuild, which publishes the tool.
 
 Your tool is now at `/lab/<id>/` and has a card on the Projects page.
+
+## Putting a project on the portfolio
+
+For an app that runs on a server and sleeps when idle (Cloud Run scaled to zero, for example). It can't live on GitHub Pages, and linking straight to it leaves the visitor on a blank tab for several seconds while it cold-starts. So the portfolio hosts a small **demo entry page** instead. It opens instantly, explains the demo, and pings the app so it wakes up while the visitor reads.
+
+```
+case study ──"Try the live demo"──▶ /lab/<id>/ (static, instant) ──▶ the app (already awake)
+                                         │ on load: ping the app, show "Ready" when it answers
+```
+
+It's an ordinary Lab entry (the page lives in the app's repo, see [Add a new tool](#add-a-new-tool)) with `"card": false`, so it publishes a page but adds no card to the Projects page. The project's own case study keeps its card and gets the demo button.
+
+### Steps
+
+1. **Design the entry page** with the person ([below](#designing-the-entry-page)), then copy the [`demo-entry/`](demo-entry/index.html) template into the app's repo as `lab-web/index.html` and fill it in. The finished page is the first thing a visitor sees, so it should read like the app, not the portfolio.
+2. **Get it onto the branch the portfolio builds from** (`ref`, below). In the queue system that's `release`.
+3. **Add the Lab entry** to `lab-tools.json`:
+
+   ```json
+   {
+     "id": "queue-demo",
+     "title": "Queue System: live demo",
+     "card": false,
+     "repo": "fteodoro803/queue-system",
+     "ref": "release",
+     "output": "lab-web",
+     "enabled": true
+   }
+   ```
+
+   A private repo needs the `LAB_TOKEN` secret to be able to read it ([details](#private-tool-repos)).
+4. **Point the case study at it.** In `content/projects/<project>.md` set `demoUrl: lab/<id>/` (a path without `https://` is resolved from the site root, so it works on every page).
+5. **[Rebuild the site](#rebuild-the-site).** The portfolio only picks up the page when it rebuilds.
+6. **Check it.** Open the case study, press the demo button, and watch the chip go from "Waking the demo up…" to "The demo is ready". Check it on a phone width too.
+7. **Remind the owner of the follow-up:** once the page is live, the app's own entry route (`/`) can redirect straight into the app, so there is one copy of the text, not two.
+
+### Designing the entry page
+
+Ask these, then draft the page and preview it (open the HTML in a browser) before it goes anywhere.
+
+| Ask | Why |
+|---|---|
+| Who is the visitor, and what should they do first? | Sets the intro line and the order of the cards |
+| What are the doors into the app? (roles, screens, personas) | One card each. Link them to the app's real routes |
+| Does the demo auto-sign-in or seed data? Is it shared, and when does it reset? | Goes in the note. Visitors need to know they may see each other's changes |
+| What shouldn't they enter? | A one-line warning, such as no real names or contact details |
+| What does the app look like? | Take the colours and fonts from the app's design system (`DESIGN_SYSTEM.md` or similar) and put them in the template's `:root` tokens |
+| Does one door make sense, or several? | One card is fine. The queue demo has three because the point is watching one view react to another |
+
+Rules the page follows, so keep them when you edit it:
+
+- **Plain static HTML, CSS and JS.** It's a Lab tool, so [the rules for a tool repo](#rules-for-a-tool-repo) apply. The back link `../` is already in the template.
+- **Links to the app are full URLs in the HTML,** so they work without JavaScript. The ping and the chip are only a bonus.
+- **The links are never disabled.** If the ping fails or takes more than 20 seconds, the chip says so and the links still work.
+- **Ping the app's root address.** Cloud Run holds the request until an instance is up, so the answer arriving means "ready". The request is `no-cors`, which can't read the answer, and that's all it needs.
+
+<details>
+<summary><strong>▸ Why?</strong> — why not just link straight to the app?</summary>
+
+Cloud Run scales to zero when idle. The first request after a quiet spell starts a new instance, which takes a few seconds, and the browser shows a blank tab the whole time. A visitor can't tell that from a broken link.
+
+A static page on the portfolio has no cold start. Landing there first gives the visitor something to read, and the ping on load means the app is usually awake by the time they click through. Keeping the app running all the time (`min-instances=1`) would remove the wait too, but costs money every month.
+
+</details>
 
 ## Update an existing tool
 
@@ -212,6 +278,7 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 | `sourceUrl` | no | Link for the card's "Source" link. Defaults to the GitHub repo when `repo` is set. Set to `""` to hide the link, for a private repo. (Pages CMS can't save an empty value; edit `lab-tools.json` directly.) |
 | `screenshotKind` | yes | `"web"` or `"phone"`. How the card shows the pictures: a framed page, or a whole phone screen. Same for every picture. |
 | `cardImages` | yes | List of `{ "image", "alt" }`, one to five. The first is the cover; more get arrows and dots. See [Add card pictures](CONTENT.md#add-card-pictures). |
+| `card` | no | `false` publishes the page but adds no card to the Projects page, and `description` and the card pictures aren't needed. For a [demo entry page](#putting-a-project-on-the-portfolio). Defaults to `true`. |
 | `enabled` | no | `false` skips the tool entirely. Defaults to `true`. |
 
 ### Private tool repos
