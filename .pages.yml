@@ -146,7 +146,7 @@ content:
       - { name: title, label: Title, type: string, required: true }
       - { name: type, label: "Type label (e.g. Tool, Log)", type: string }
       - { name: tags, label: Tags line, type: string }
-      - { name: description, label: Description, type: text, required: true }
+      - { name: description, label: "Description (needed when the tool has a card)", type: text }
       - { name: note, label: Short note (optional), type: string }
       - { name: repo, label: "GitHub repo (owner/name)", type: string }
       - { name: path, label: Local folder (instead of a repo), type: string }
@@ -173,4 +173,5 @@ content:
           - { name: image, label: Picture, type: image }
           - { name: alt, label: Describe the picture (for screen readers), type: string }
       - { name: featured, label: Show on the home page, type: boolean, default: false }
+      - { name: card, label: "Show a card on the Projects page (turn off for a demo entry page)", type: boolean, default: true }
       - { name: enabled, label: Published, type: boolean, default: true }

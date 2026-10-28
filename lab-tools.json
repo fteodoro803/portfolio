@@ -64,5 +64,14 @@
       }
     ],
     "enabled": true
+  },
+  {
+    "id": "queue-demo",
+    "title": "Queue System: live demo",
+    "card": false,
+    "repo": "fteodoro803/queue-system",
+    "ref": "release",
+    "output": "lab-web",
+    "enabled": true
   }
 ]

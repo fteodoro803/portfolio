@@ -4,8 +4,9 @@ The Lab: self-contained tools that live in their own repos.
 lab-tools.json lists the tools. For each enabled one, build_lab() fetches it
 (git clone of `repo`, or a copy of a local `path`), runs its build command,
 and copies the output folder into dist/lab/<id>/. lab_specs() describes the
-Projects-page cards from the same list (content.py draws them). See LAB.md for the
-full guide.
+Projects-page cards from the same list (content.py draws them). A tool with
+"card": false is published but gets no card (a demo entry page, reached from a
+case study's demo button). See LAB.md for the full guide.
 """
 
 import json
@@ -22,6 +23,11 @@ ROOT_DIR = Path(__file__).parent
 DIST = ROOT_DIR / "dist"
 LAB_CACHE = ROOT_DIR / ".lab-cache"
 LAB_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+
+
+def has_card(tool):
+    """True unless the tool opts out of the Projects-page card with "card": false."""
+    return tool.get("card", True) is not False
 
 
 def load_lab_tools():
@@ -41,7 +47,8 @@ def load_lab_tools():
             continue
         if bool(tool.get("repo")) == bool(tool.get("path")):
             sys.exit(f"lab-tools.json: {tool_id!r} needs exactly one of 'repo' or 'path'")
-        for field in ("title", "description"):
+        required = ("title", "description") if has_card(tool) else ("title",)
+        for field in required:
             if not tool.get(field):
                 sys.exit(f"lab-tools.json: {tool_id!r} is missing '{field}'")
         enabled.append(tool)
@@ -52,6 +59,8 @@ def lab_specs(tools):
     """Card specs (see content.project_spec) for the Lab tools, in list order."""
     specs = []
     for index, tool in enumerate(tools):
+        if not has_card(tool):
+            continue
         # An explicit empty "sourceUrl" hides the Source link, for a tool whose
         # repo is private (the "or" form this replaced treated "" as unset).
         if "sourceUrl" in tool:

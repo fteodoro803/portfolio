@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  Demo entry page template. Copy this folder into the app's repo (as lab-web/ or
+  similar), then fill in the TODOs. See LAB.md, "Putting a project on the portfolio".
+
+  What it does: loads instantly from the portfolio, pings the app so Cloud Run
+  starts waking up, and shows a "Ready" chip once the app answers. The links to the
+  app always work, so the page never blocks anyone.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- TODO: the app's own fonts (from its design system). Delete these three lines to use system fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>TODO App name: live demo</title>
+  <style>
+    /* Styled as the app, not the portfolio: take these tokens from the app's
+       design system. Light only unless the app follows the visitor's dark mode.
+       Self-contained (LAB.md rule 5). */
+    :root {
+      --base-100: #ffffff; --base-200: #effbf6; --base-300: #daf0e6;
+      --content: #0f2a21; --content-muted: rgba(15, 42, 33, 0.7);
+      --primary: #0ea672; --primary-dark: #0b5a3f; --primary-tint: rgba(14, 166, 114, 0.1);
+      --display: "Outfit", system-ui, sans-serif;
+      --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--base-200); color: var(--content); font-family: var(--body); line-height: 1.6; }
+    body { min-height: 100vh; }
+    a { color: var(--primary-dark); }
+    a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    main { max-width: 56rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    .eyebrow { margin: 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); }
+    h1 { font-family: var(--display); font-size: 2.25rem; font-weight: 700; line-height: 1.15; margin: 0.25rem 0 0.75rem; }
+    .lead { margin: 0 0 1.25rem; color: var(--content-muted); max-width: 60ch; }
+
+    .status { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0 1.5rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: var(--base-100); border: 1.5px solid var(--base-300); font-size: 0.85rem; font-weight: 600; color: var(--content-muted); }
+    .dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--content-muted); }
+    .status[data-state="waking"] .dot { animation: pulse 1.2s ease-in-out infinite; }
+    .status[data-state="ready"] { color: var(--primary-dark); }
+    .status[data-state="ready"] .dot { background: var(--primary); }
+    @keyframes pulse { 50% { opacity: 0.25; } }
+    @media (prefers-reduced-motion: reduce) { .status[data-state="waking"] .dot { animation: none; } }
+
+    .views { display: grid; gap: 1rem; margin: 0 0 1.5rem; }
+    @media (min-width: 640px) { .views { grid-template-columns: repeat(3, 1fr); } }
+    .view { display: block; text-decoration: none; color: inherit; background: var(--base-100); border: 1.5px solid var(--base-300); border-radius: 1.5rem; padding: 1.25rem; transition: border-color 0.15s, box-shadow 0.15s; }
+    .view:hover { border-color: var(--primary); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08); }
+    .view:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    .view .icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; margin-bottom: 0.6rem; border-radius: 0.75rem; background: var(--primary-tint); color: var(--primary); }
+    .view .icon svg { width: 1.25rem; height: 1.25rem; }
+    .view .audience { margin: 0 0 0.25rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--content-muted); }
+    .view h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin: 0 0 0.4rem; }
+    .view p { margin: 0; font-size: 0.9rem; color: var(--content-muted); }
+
+    .note { display: flex; gap: 0.75rem; background: var(--base-100); border: 1.5px solid var(--base-300); border-radius: 1.5rem; padding: 1rem 1.25rem; font-size: 0.9rem; color: var(--content-muted); }
+    .note svg { flex: none; width: 1.4rem; height: 1.4rem; margin-top: 0.15rem; color: var(--primary); }
+    .note p { margin: 0; }
+
+    .links { margin-top: 1.5rem; font-size: 0.92rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Live demo</p>
+  <h1>TODO App name</h1>
+  <!-- TODO: what the visitor should try, in one or two sentences. -->
+  <p class="lead">TODO what the app is, and the order to try the views in.</p>
+
+  <!-- The ping below flips this. The words are for people, so say what is happening. -->
+  <p class="status" id="status" data-state="waking" role="status" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span><span id="status-text">Waking the demo up…</span>
+  </p>
+
+  <!-- TODO: one card per door into the app (a role, a screen, a persona). Use full
+       URLs to the app so the links work without JavaScript. Keep target="_blank"
+       if the point is to watch one view react to another. Icons are from
+       heroicons.com (outline, 24px): paste each as inline SVG. -->
+  <div class="views">
+    <a class="view" href="https://YOUR-APP.run.app/TODO-path" target="_blank" rel="noreferrer">
+      <span class="icon"><!-- TODO inline SVG --></span>
+      <p class="audience">TODO who uses this</p>
+      <h2>TODO View name</h2>
+      <p>TODO what they can do here.</p>
+    </a>
+  </div>
+
+  <!-- TODO: what is shared, what resets, what not to enter. Delete if none apply. -->
+  <div class="note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+    <p>TODO Everyone shares this one demo, so you may see other visitors. It resets to sample data after a period without activity.</p>
+  </div>
+
+  <p class="links"><a href="../">← Back to Projects</a></p>
+</main>
+
+<script>
+  // The app's root address. Cloud Run holds this request until an instance is up,
+  // so when it resolves the app is ready. no-cors: the response can't be read,
+  // which is fine because only "it answered" matters.
+  const APP_URL = "https://YOUR-APP.run.app/"; // TODO
+  const GIVE_UP_MS = 20000;
+
+  const status = document.getElementById("status");
+  const text = document.getElementById("status-text");
+  const set = (state, message) => { status.dataset.state = state; text.textContent = message; };
+
+  fetch(APP_URL, { mode: "no-cors", cache: "no-store", signal: AbortSignal.timeout(GIVE_UP_MS) })
+    .then(() => set("ready", "The demo is ready"))
+    .catch(() => set("slow", "Taking longer than usual. The links below still work."));
+</script>
+</body>
+</html>
