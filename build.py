@@ -14,7 +14,7 @@ into dist/, the folder that gets published.
     rendered Markdown) from content/pages/<page>.md. Home uses home.md.
 
   - Marker comments are replaced with generated HTML:
-        <!--FEATURED-CARDS-->    home-page cards: every project and Lab tool marked featured
+        <!--FEATURED-SHOWCASE--> home page: every project and Lab tool marked featured, as a big picture with thumbnails
         <!--CASE-STUDY-CARDS-->  Projects page: projects with format "page"
         <!--LAB-CARDS-->         Projects page: live-tool cards, from lab-tools.json
         <!--WRITEUP-CARDS-->     Projects page: projects with format "modal" (card + pop-up)
@@ -126,7 +126,7 @@ class Site:
         html = mark_active_nav(html, rel)
 
         featured = [c for c in self.cards if c["featured"]]
-        html = html.replace("<!--FEATURED-CARDS-->", content.project_cards(featured))
+        html = html.replace("<!--FEATURED-SHOWCASE-->", content.showcase(featured))
         for marker, group in (("CASE-STUDY", "page"), ("LAB", "live"), ("WRITEUP", "modal")):
             cards = [c for c in self.cards if c["group"] == group]
             html = html.replace(f"<!--{marker}-CARDS-->", content.project_cards(cards))

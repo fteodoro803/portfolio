@@ -23,7 +23,7 @@ Everything on the Projects page is a **project**: one file in `content/projects/
 - **Page:** its own page at `/projects/<name>.html`. For case studies with real detail.
 - **Pop-up:** a short write-up in a window on the Projects page. For smaller work.
 
-Any project can also be put on the home page with **Show on the home page** (`featured`, off by default). The Projects page groups cards into Case studies, Try it live (the Lab) and Smaller work. Every card shares one layout, drawn by `project_card` in `content.py`. Details: **[CONTENT.md](CONTENT.md#fields-worth-knowing)**.
+Any project can also be put on the home page with **Show on the home page** (`featured`, off by default). The Projects page groups cards into Case studies, Try it live (the Lab) and Smaller work. Every card shares one layout, drawn by `project_card` in `content.py`. Featured projects show on the home page as a showcase instead, drawn by `showcase` in `content.py`. Details: **[CONTENT.md](CONTENT.md#fields-worth-knowing)**.
 
 ## The Lab
 

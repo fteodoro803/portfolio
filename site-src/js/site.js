@@ -44,6 +44,31 @@
     show(0);
   });
 
+  // Home page showcase: one project at a time. Without this script they all show in a column.
+  document.querySelectorAll("[data-showcase]").forEach(function (showcase) {
+    var slides = showcase.querySelectorAll(".showcase-slide");
+    var thumbs = showcase.querySelectorAll(".showcase-thumb");
+    var current = 0;
+    if (slides.length < 2) return;
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, i) { slide.hidden = i !== current; });
+      thumbs.forEach(function (thumb, i) {
+        if (i === current) thumb.setAttribute("aria-current", "true");
+        else thumb.removeAttribute("aria-current");
+      });
+      // A picture carousel inside a hidden slide lost its position, so line them up again.
+      window.dispatchEvent(new Event("resize"));
+    }
+
+    showcase.querySelectorAll(".showcase-nav, .showcase-thumbs").forEach(function (el) { el.hidden = false; });
+    showcase.querySelectorAll(".showcase-arrow.prev").forEach(function (b) { b.addEventListener("click", function () { show(current - 1); }); });
+    showcase.querySelectorAll(".showcase-arrow.next").forEach(function (b) { b.addEventListener("click", function () { show(current + 1); }); });
+    thumbs.forEach(function (thumb, i) { thumb.addEventListener("click", function () { show(i); }); });
+    show(0);
+  });
+
   // Clicking the dimmed area outside a dialog closes it.
   document.querySelectorAll("dialog.project-dialog").forEach(function (dialog) {
     dialog.addEventListener("click", function (event) {

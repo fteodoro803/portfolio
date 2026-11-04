@@ -316,6 +316,71 @@ def project_cards(specs):
     return "\n".join(project_card(s) for s in specs)
 
 
+def showcase_slide(spec, position, total):
+    """One project in the home-page showcase: a big picture beside the text.
+
+    The card's click-through trick is not used here (the picture has its own arrows),
+    so the main button is an ordinary link. Pop-up write-ups have no picture and are
+    left to showcase().
+    """
+    title = esc(spec["title"])
+    hidden = lambda text: f'<span class="visually-hidden">{text}</span>'
+    label, href = spec["primary"]
+    primary = f'<a class="pill primary" href="{esc(href)}">{esc(label)}{hidden(" " + title)} →</a>'
+    secondary = "".join(
+        f'<a class="card-link" href="{esc(h)}">{esc(l)}{hidden(" for " + title)}</a>'
+        for l, h in spec["secondary"]
+    )
+    tags = f'<div class="card-tags">{esc(spec["tags"])}</div>' if spec.get("tags") else ""
+    note = f'<p class="card-note">{esc(spec["note"])}</p>' if spec.get("note") else ""
+    return (
+        '<article class="showcase-slide">'
+        f'<div class="showcase-media">{card_media(spec["media"])}</div>'
+        '<div class="showcase-info">'
+        f'<span class="card-type{" neutral" if spec.get("neutral") else ""}">{esc(spec["label"])}</span>'
+        f'<h3>{title}</h3>{tags}'
+        f'<p class="card-hook">{esc(spec["hook"])}</p>{note}'
+        f'<div class="showcase-actions">{primary}{secondary}</div>'
+        f'<div class="showcase-nav" hidden>'
+        '<button type="button" class="showcase-arrow prev" aria-label="Previous project">‹</button>'
+        f'<span class="showcase-count">{position} of {total}</span>'
+        '<button type="button" class="showcase-arrow next" aria-label="Next project">›</button>'
+        "</div></div></article>"
+    )
+
+
+def showcase(specs):
+    """Home page: the featured projects as one big picture with a row of thumbnails.
+
+    Without script every project shows one after another. js/site.js hides all but one,
+    reveals the thumbnails and arrows, and switches between them. Featured items with
+    no picture (pop-up write-ups) are drawn as ordinary cards under the showcase.
+    """
+    shown = [s for s in specs if s.get("media") and s.get("primary")]
+    cards = [s for s in specs if s not in shown]
+    html = ""
+    if shown:
+        total = len(shown)
+        slides = "".join(showcase_slide(s, n, total) for n, s in enumerate(shown, 1))
+        thumbs = ""
+        if total > 1:
+            items = "".join(
+                '<li><button type="button" class="showcase-thumb" '
+                f'aria-label="Show {esc(s["title"])}">'
+                f'{card_media({"kind": s["media"]["kind"], "images": s["media"]["images"][:1]})}'
+                f'<span>{esc(s["title"])}</span></button></li>'
+                for s in shown
+            )
+            thumbs = f'<ul class="showcase-thumbs" hidden>{items}</ul>'
+        html += (
+            '<section class="showcase" data-showcase aria-label="Featured projects">'
+            f'<div class="showcase-slides" aria-live="polite">{slides}</div>{thumbs}</section>'
+        )
+    if cards:
+        html += f'<div class="card-grid">{project_cards(cards)}</div>'
+    return html
+
+
 def project_page_values(entry):
     """Placeholder values for the project page template (format: page)."""
     m = entry["meta"]
