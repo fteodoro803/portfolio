@@ -86,7 +86,7 @@ Not editable in the CMS: the look of the site (`site-src/css/style.css`), the pa
 
 **Projects**
 - **How it opens:** *Page* gives the project its own page at `/projects/<name>.html` (a case study). *Pop-up* shows a short write-up in a window on the Projects page. Use a page for anything with real detail and a pop-up for small work.
-- **Show on the home page:** off by default. Turn it on for any project, page or pop-up, to put its card on the home page. Lab tools have the same switch (`featured` in `lab-tools.json`).
+- **Show on the home page:** off by default. Turn it on for any project, page or pop-up, to put it in the home page showcase (a big picture with thumbnails to switch between projects). Lab tools have the same switch (`featured` in `lab-tools.json`).
 - **Published:** off hides the project everywhere (card, page and pop-up). A page's URL stops working.
 - **Order:** lowest number first. On the Projects page it counts within each section (case studies, then pop-ups; Lab tools follow their order in `lab-tools.json`). The home page lists its cards in the same sequence: case studies, then Lab tools, then pop-ups.
 - **Card summary:** leave empty to use the first sentence of the write-up.

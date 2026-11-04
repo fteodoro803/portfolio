@@ -23,7 +23,7 @@ Defined as CSS variables at the top of `style.css`. Change them there and the wh
 | `--media-tint` | `#f3e7dd` | `#33271f` | Panel behind card pictures |
 | `--backdrop` | `rgba(33,29,26,.48)` | `rgba(10,8,6,.64)` | Dimmed area behind a dialog |
 
-Other tokens: `--font` (Sora, with system fallbacks), `--radius` (16px cards), `--radius-sm` (14px), `--radius-lg` (20px), `--hit` (44px minimum tap target), `--section-gap` (64px between Projects-page sections, 48px on phones), `--max-width` (900px), `--max-width-narrow` (760px).
+Other tokens: `--font` (Sora, with system fallbacks), `--radius` (16px cards), `--radius-sm` (14px), `--radius-lg` (20px), `--hit` (44px minimum tap target), `--section-gap` (64px between Projects-page sections, 48px on phones), `--max-width` (900px), `--max-width-narrow` (760px), `--max-width-wide` (1100px, the Projects page).
 
 <details>
 <summary><strong>▸ Why is the light accent darker than in the original design?</strong></summary>

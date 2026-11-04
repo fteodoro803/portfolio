@@ -25,6 +25,7 @@
   --hit: 44px;
   --max-width: 900px;
   --max-width-narrow: 760px;
+  --max-width-wide: 1100px;
 }
 
 /* Light by default. Dark only applies when the visitor picks it with the toggle. */
@@ -90,6 +91,8 @@ main {
 }
 
 main.narrow { max-width: var(--max-width-narrow); }
+/* The Projects page is wider so the card pictures are big enough to read. */
+main.wide { max-width: var(--max-width-wide); }
 
 .tagline {
   color: var(--text-muted);
@@ -487,6 +490,102 @@ footer.site-footer a:hover { text-decoration: none; border-color: var(--accent);
 }
 .project-card.is-quiet:hover { background: var(--surface); }
 .project-card.is-quiet:hover .card-actions .pill.primary { background: var(--accent-soft); }
+
+/* Home page showcase: the featured projects, one at a time. A big picture sits beside the
+   text, with a row of thumbnails to jump between projects. It is wider than the page
+   column (up to 1100px) so the picture is big enough to read. Without script every
+   project shows in a column; js/site.js hides all but one and reveals the thumbnails. */
+.showcase {
+  width: max(100%, min(1100px, calc(100vw - 64px)));
+  margin: 20px 0 0 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.showcase-slides { display: flex; flex-direction: column; gap: 40px; }
+.showcase-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+.showcase-slide[hidden] { display: none; }
+/* The picture panel is a card of its own here, so it gets all four corners and a border. */
+.showcase-media .card-media {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.showcase-info { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.showcase-info .card-type { margin: 0 0 14px; padding: 4px 10px; line-height: 1; border: 1px solid var(--accent-soft); }
+.showcase-info .card-type.neutral { background: transparent; color: var(--text-muted); border-color: var(--border); }
+.showcase-info h3 { margin: 0 0 8px; font-size: 1.6rem; line-height: 1.25; text-wrap: balance; }
+.showcase-info .card-tags { margin: 0 0 14px; font-size: 0.85rem; line-height: 1.5; }
+.showcase-info .card-hook { margin: 0 0 20px; font-size: 1.05rem; }
+.showcase-info .card-note { margin: -8px 0 20px; }
+.showcase-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.showcase-actions .card-link { min-height: var(--hit); display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: 3px; }
+
+.showcase-nav { display: flex; align-items: center; gap: 12px; margin-top: 24px; color: var(--text-muted); font-size: 0.88rem; }
+.showcase-nav[hidden] { display: none; }
+.showcase-arrow {
+  width: var(--hit);
+  height: var(--hit);
+  padding: 0 0 3px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.showcase-arrow:hover { border-color: var(--border-hover); color: var(--accent); }
+.showcase-arrow:focus-visible, .showcase-thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.showcase-thumbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-flow: column;
+  gap: 16px;
+}
+.showcase-thumbs[hidden] { display: none; }
+.showcase-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
+}
+.showcase-thumb:hover, .showcase-thumb[aria-current="true"] { opacity: 1; }
+.showcase-thumb .card-media {
+  aspect-ratio: 16 / 7;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+.showcase-thumb[aria-current="true"] .card-media { border-color: var(--accent); }
+.showcase-thumb span { display: block; padding: 8px 2px 0; font-size: 0.85rem; font-weight: 600; line-height: 1.35; color: var(--text); }
+
+@media (max-width: 760px) {
+  .showcase-slide { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .showcase-info h3 { font-size: 1.3rem; }
+}
+@media (max-width: 560px) {
+  .showcase { gap: 16px; }
+  .showcase-thumbs { gap: 8px; }
+  .showcase-thumb span { font-size: 0.75rem; }
+}
 
 /* Write-up dialog: sticky header (title, role, stack, close), scrolling body. */
 
