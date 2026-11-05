@@ -693,6 +693,28 @@ section:first-of-type .section-head { margin-top: 48px; }
 }
 .button:hover { text-decoration: none; opacity: 0.9; }
 
+/* Case study page: a sticky side rail of section links beside the text.
+   Under 900px the rail is hidden and the Demo button sits under the title, centred. */
+main.case { max-width: 1000px; }
+.case-layout { display: block; }
+.case-rail { display: none; }
+.case-main { max-width: var(--max-width-narrow); margin: 0 auto; }
+.case-demo { margin: 0 0 8px; text-align: center; }
+.case-demo .tags { display: block; margin: 8px 0 0; }
+.case-body h2[id] { scroll-margin-top: 96px; }
+@media (min-width: 900px) {
+  .case-layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 48px; align-items: start; }
+  .case-main { margin: 0; max-width: 700px; }
+  .case-rail { display: block; position: sticky; top: 96px; padding-top: 6px; border-right: 1px solid var(--border); padding-right: 20px; }
+  .case-rail ul { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 4px; }
+  .case-rail li a { display: block; padding: 5px 0; color: var(--text-muted); font-size: 0.92rem; line-height: 1.35; }
+  .case-rail li a:hover { color: var(--text); text-decoration: none; }
+  .case-rail li a[aria-current="true"] { color: var(--accent); font-weight: 600; }
+  .rail-demo .button { display: block; text-align: center; }
+  .rail-demo .tags { display: block; margin: 8px 0 0; }
+  .case-demo { display: none; }
+}
+
 .status-note, .callout {
   background: var(--accent-soft);
   border-left: 3px solid var(--accent);

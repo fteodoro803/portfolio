@@ -5,7 +5,6 @@ tags: Flutter (iOS/Android/macOS/Windows/Linux) · Python (Flask) · WidgetKit/S
 cardTags: Flutter · Flask · WidgetKit/SwiftUI · GTFS Realtime
 summary: A saved route on your phone's home screen, so you can see when your tram is coming without opening an app. Built with Nicole Penrose.
 demoUrl: ''
-demoLabel: Try the live demo →
 demoNote: ''
 screenshotKind: phone
 cardImages:
