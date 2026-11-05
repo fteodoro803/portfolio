@@ -20,7 +20,7 @@ Sections marked **▸ Why?** expand to explain the reasoning.
 |---|---|
 | Change the intro line on the home page | CMS → **Home page** |
 | Change my bio, or add a photo | CMS → **Home page** |
-| Add or edit a project (case study or smaller work) | CMS → **Projects** |
+| Add or edit a project (case study or university-era project) | CMS → **Projects** |
 | Put a project on the home page | CMS → **Projects** → pick one → **Show on the home page** |
 | Add a new resume variant | CMS → **Resumes** → new |
 | Change email, LinkedIn, GitHub, footer | CMS → **Site details** |
