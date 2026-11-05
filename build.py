@@ -139,7 +139,7 @@ class Site:
             name = "home" if rel == "index.html" else Path(rel).stem
             html = fill(html, "page", self.pages.get(name, {}), raw=("body", "photoBlock"))
         if entry is not None:
-            html = fill(html, "entry", entry, raw=("body", "demoBlock"))
+            html = fill(html, "entry", entry, raw=("body", "demoBlock", "demoRail", "rail"))
 
         # Version-stamp CSS/JS links so browsers refetch a file as soon as it changes.
         html = ASSET_LINK_RE.sub(

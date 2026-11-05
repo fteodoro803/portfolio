@@ -7,15 +7,25 @@
 <body>
 <!--#include partial="nav.html"-->
 
-<main class="narrow">
-  <h1>{{entry.title}}</h1>
-  <div class="tags">{{entry.tags}}</div>
+<main class="case">
+  <div class="case-layout">
+    <nav class="case-rail" aria-label="On this page">
+      <ul>{{entry.rail}}</ul>
+      {{entry.demoRail}}
+    </nav>
+    <div class="case-main">
+      <h1>{{entry.title}}</h1>
+      <div class="tags">{{entry.tags}}</div>
 
-  {{entry.demoBlock}}
+      {{entry.demoBlock}}
 
+      <div class="case-body">
 {{entry.body}}
+      </div>
 
-  <a class="back-link" href="{{ROOT}}index.html">← Back home</a>
+      <a class="back-link" href="{{ROOT}}index.html">← Back home</a>
+    </div>
+  </div>
 </main>
 
 <!--#include partial="footer.html"-->

@@ -5,7 +5,6 @@ tags: React 18 · TypeScript · Meteor (Node.js) · MongoDB · Docker · Google 
 cardTags: React · Meteor · MongoDB · Docker · Google Cloud
 summary: Waiting is a big part of life in the Philippines. I built a queue system that tells people where they stand and roughly when it's their turn.
 demoUrl: lab/queue-demo/
-demoLabel: Try the live demo →
 demoNote: (seeded with demo data)
 screenshotKind: web
 cardImages:

@@ -59,7 +59,7 @@ Every page starts with the shared head and nav partials and ends with the footer
 
 `head.html` brings in the font, stylesheet, theme script and `js/site.js`. The build appends a content fingerprint to the CSS and JS links (`style.css?v=…`) so edits show up immediately; see [Caching](README.md#caching-why-changes-can-take-a-few-minutes-to-show). The build adds `aria-current="page"` to the matching nav link automatically.
 
-Use `<main>` (900px) for grids and hubs, and `<main class="narrow">` (760px) for reading pages like case studies and the Resume page.
+Use `<main>` (900px) for grids and hubs, `<main class="narrow">` (760px) for reading pages like the Resume page, and `<main class="case">` (1000px) for case studies.
 
 ## Components
 
@@ -74,7 +74,8 @@ Use `<main>` (900px) for grids and hubs, and `<main class="narrow">` (760px) for
 | Card grid | `.card-grid` | Columns follow the card count: 1, 2 and 4 cards use 2 columns, 3, 5 and more use 3. Two columns below 760px, one below 560px |
 | Project dialog | `<dialog class="project-dialog">` inside the card, opened by a `button[data-open="<dialog id>"]` | Write-up (`format: modal`) cards only. A sticky `.dialog-head` (title, role, stack, close) over a scrolling `.dialog-body`; a bottom sheet on phones. Focus lands on the title (`tabindex="-1" autofocus`) so no ring shows until Tab. `js/site.js` handles it on any page |
 | Tags line | `<div class="tags">` | Under a case-study title |
-| Button | `<a class="button">` | Primary action on case studies |
+| Button | `<a class="button">` | Primary action on case studies. Its text is "Demo" |
+| Case study layout | `main.case` > `.case-layout` > `nav.case-rail` (section links, then `.rail-demo`) and `.case-main` (`h1`, `.tags`, `.case-demo`, `.case-body`) | A sticky side rail from 900px up, built by `content.project_page_values` from the page's `##` headings, with the section being read highlighted by `js/site.js`. Under 900px the rail is hidden and the Demo button (`.case-demo`) sits centred under the title. Pages without a `demoUrl` show no button |
 | Pills | `<a class="pill">`, `.pill.primary`, `.pill.outline` | Home-page links and the resume button. Wrap in `.pill-row` |
 | Callout | `<div class="callout">` (or `.status-note`) | Highlighted note. In content, a Markdown quote block becomes one |
 | Bullet list | `<ul class="project-bullets">` | Case-study lists. Markdown lists get it automatically |

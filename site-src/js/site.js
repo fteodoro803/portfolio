@@ -17,6 +17,23 @@
     button.addEventListener("click", function () { dialog.showModal(); });
   });
 
+  // Case study side rail: mark the link of the section being read.
+  var railLinks = document.querySelectorAll(".case-rail li a");
+  if (railLinks.length && "IntersectionObserver" in window) {
+    var byId = {};
+    railLinks.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var headings = Array.prototype.filter.call(document.querySelectorAll(".case-body h2[id]"), function (h) { return byId[h.id]; });
+    var mark = function (id) {
+      railLinks.forEach(function (a) { a.removeAttribute("aria-current"); });
+      if (byId[id]) byId[id].setAttribute("aria-current", "true");
+    };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) mark(e.target.id); });
+    }, { rootMargin: "-100px 0px -65% 0px" });
+    headings.forEach(function (h) { io.observe(h); });
+    if (headings.length) mark(headings[0].id);
+  }
+
   // Card pictures: arrows and dots scroll the row of slides, wrapping at the ends.
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   document.querySelectorAll("[data-carousel]").forEach(function (media) {

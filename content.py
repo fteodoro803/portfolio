@@ -389,18 +389,45 @@ def showcase(specs):
 
 
 def project_page_values(entry):
-    """Placeholder values for the project page template (format: page)."""
+    """Placeholder values for the project page template (format: page).
+
+    The side rail is built from the page's `##` headings, so any case study gets
+    it without extra fields. The Demo button is drawn twice (under the title for
+    narrow screens, in the rail for wide ones); CSS shows one of them.
+    """
     m = entry["meta"]
-    demo = ""
+    body = render_markdown(entry["body"])
+
+    # 1. Give every `##` heading an id and collect them for the rail.
+    seen, rail = set(), []
+
+    def add_id(match):
+        text = match.group(1)
+        slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"<[^>]+>", "", text).lower()).strip("-") or "section"
+        base, n = slug, 2
+        while slug in seen:
+            slug, n = f"{base}-{n}", n + 1
+        seen.add(slug)
+        rail.append(f'<li><a href="#{slug}">{text}</a></li>')
+        return f'<h2 id="{slug}">{text}</h2>'
+
+    body = re.sub(r"<h2>(.*?)</h2>", add_id, body)
+
+    # 2. The Demo button, only on pages that have a demo.
+    demo_top = demo_rail = ""
     if m.get("demoUrl"):
-        label = m.get("demoLabel") or "Try the live demo →"
-        note = f' <span class="tags">{esc(m["demoNote"])}</span>' if m.get("demoNote") else ""
-        demo = f'<p><a class="button" href="{esc(demo_href(m["demoUrl"]))}">{esc(label)}</a>{note}</p>'
+        href = esc(demo_href(m["demoUrl"]))
+        note = f'<span class="tags">{esc(m["demoNote"])}</span>' if m.get("demoNote") else ""
+        demo_top = f'<p class="case-demo"><a class="button" href="{href}">Demo</a>{note}</p>'
+        demo_rail = f'<div class="rail-demo"><a class="button" href="{href}">Demo</a>{note}</div>'
+
     return {
         "title": m["title"],
         "tags": m.get("tags", ""),
-        "demoBlock": demo,
-        "body": render_markdown(entry["body"]),
+        "demoBlock": demo_top,
+        "demoRail": demo_rail,
+        "rail": "".join(rail),
+        "body": body,
     }
 
 
