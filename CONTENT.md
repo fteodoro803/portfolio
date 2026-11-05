@@ -137,7 +137,7 @@ Every case study and every Lab tool needs at least one picture, and shows up to 
 2. **Save each as WebP**, about 1200px wide for web and 450px wide for phone apps, under about 150 KB. The build doesn't compress anything.
 3. **Upload them** in the CMS (**Card pictures** on the project or Lab tool), or put the files in `site-src/assets/uploads/`.
 4. **Describe each picture** in its alt text, as someone who can't see it would want it described. The build fails if one is empty.
-5. **Set the screenshot kind**: *Web page or desktop app*, or *Phone app*. It's the same for every picture of one project.
+5. **Set the screenshot kind**: *Web page or desktop app*, or *Phone app*. It's the default for every picture of one project. If one project has both (a web dashboard and a phone screen), leave the default for most and set **Kind** on the odd ones out. Each picture is framed by its own kind.
 
 In the file, it looks like this:
 
@@ -146,6 +146,18 @@ screenshotKind: phone
 cardImages:
   - image: assets/uploads/pa-ride-1.webp
     alt: The home screen with a search bar and a Post button
+```
+
+A project that mixes both sets `kind` on the pictures that differ:
+
+```yaml
+screenshotKind: web
+cardImages:
+  - image: assets/uploads/queue-system-1.webp
+    alt: The staff dashboard
+  - image: assets/uploads/queue-system-status.webp
+    alt: A patient's queue status on a phone
+    kind: phone
 ```
 
 **Asking Claude to suggest them.** When you ask Claude to add a project or tool, it captures several candidate screenshots from the live demo (or from a video you point it at) and shows them for you to choose from. The ones you pick go in the card. The ones you don't are kept in `design-input/screenshots/<project>/` on your machine. That folder is git-ignored, so it is neither published nor committed.

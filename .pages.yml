@@ -93,7 +93,7 @@ content:
       - { name: note, label: Note shown under the write-up (pop-up, optional), type: text }
       - name: screenshotKind
         label: Screenshot kind
-        description: "Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. The same for every picture."
+        description: "The default for every picture. Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. A picture can override it below."
         type: select
         required: true
         default: web
@@ -109,6 +109,13 @@ content:
         fields:
           - { name: image, label: Picture, type: image }
           - { name: alt, label: Describe the picture (for screen readers), type: string }
+          - name: kind
+            label: Kind (only if it differs from the screenshot kind above)
+            type: select
+            options:
+              values:
+                - { value: web, label: Web page or desktop app }
+                - { value: phone, label: Phone app }
       - name: body
         label: Write-up
         description: "Use headings for sections. A quote block becomes a highlighted callout."
@@ -156,7 +163,7 @@ content:
       - { name: sourceUrl, label: Source link override (optional), type: string }
       - name: screenshotKind
         label: Screenshot kind
-        description: "Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. The same for every picture."
+        description: "The default for every picture. Phone: whole screen in a phone frame, for mobile apps. Web: the page on a tinted panel. A picture can override it below."
         type: select
         required: true
         default: web
@@ -172,6 +179,13 @@ content:
         fields:
           - { name: image, label: Picture, type: image }
           - { name: alt, label: Describe the picture (for screen readers), type: string }
+          - name: kind
+            label: Kind (only if it differs from the screenshot kind above)
+            type: select
+            options:
+              values:
+                - { value: web, label: Web page or desktop app }
+                - { value: phone, label: Phone app }
       - { name: featured, label: Show on the home page, type: boolean, default: false }
       - { name: card, label: "Show a card on the Projects page (turn off for a demo entry page)", type: boolean, default: true }
       - { name: enabled, label: Published, type: boolean, default: true }

@@ -10,7 +10,12 @@ demoNote: (seeded with demo data)
 screenshotKind: web
 cardImages:
   - image: assets/uploads/queue-system-1.webp
-    alt: Staff dashboard for a dentistry clinic's queue, showing two patients waiting with their estimated wait times
+    alt: Staff dashboard for a dentistry clinic's queue, with one patient ongoing, two waiting and the providers on shift
+  - image: assets/uploads/queue-system-display.webp
+    alt: The waiting-room display screen, listing queue numbers DEN-01 and DEN-03 with their estimated waits and a QR code to join from a phone
+  - image: assets/uploads/queue-system-status.webp
+    alt: A patient's queue status on a phone, showing their number DEN-05, third in line and an estimated wait of 24 minutes
+    kind: phone
 featured: true
 visible: true
 order: 2
@@ -35,11 +40,7 @@ I thought people could have information specific to themselves: where they are i
 
 <div class="shots">
   <figure>
-    <img src="assets/uploads/queue-system-join.webp" alt="The public queue join screen for a dentistry clinic, with a name field, three services to pick from and a Prefer a specific provider option">
-    <figcaption>Joining takes a name and what you need, with the option to ask for a provider you know.</figcaption>
-  </figure>
-  <figure>
-    <img src="assets/uploads/queue-system-status.webp" alt="A patient's queue status screen showing their number, DEN-05, their position in line as third with two people ahead, and an estimated wait of 24 minutes">
+    <img src="assets/uploads/queue-system-status.webp" alt="A patient's queue status screen showing their number, DEN-05, their position in line as third, and an estimated wait of 24 minutes">
     <figcaption>Your number, your place in line and your estimated wait.</figcaption>
   </figure>
 </div>
@@ -54,8 +55,8 @@ I thought people could have information specific to themselves: where they are i
 
 <div class="shots shots-wide">
   <figure>
-    <img src="assets/uploads/queue-system-1.webp" alt="Staff dashboard for a dentistry clinic's queue, showing two patients waiting with their estimated wait times">
-    <figcaption>The staff side: a clinic's queue, with each patient's estimated wait.</figcaption>
+    <img src="assets/uploads/queue-system-1.webp" alt="Staff dashboard for a dentistry clinic's queue, with one patient ongoing, two waiting and the providers on shift">
+    <figcaption>The staff side: a clinic's queue, who's being seen, who's waiting and which providers are on shift.</figcaption>
   </figure>
 </div>
 
