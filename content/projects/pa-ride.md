@@ -25,7 +25,7 @@ order: 1
 ---
 ## Why this one
 
-A friend floated a one-line pitch: a carpool app for the Philippines. I liked the idea of working with him, so I took it a lot further than a pitch usually goes.
+A friend floated a one-line pitch: a carpool app for the Philippines. I liked the idea of working with him, so I started by finding out how carpooling there works today.
 
 I also like fixing things so they're easier for people, and carpooling in the Philippines has a lot of steps and a lot of places for things to go wrong. Most of them looked fixable to me.
 
@@ -41,11 +41,11 @@ BlaBlaCar works well in other countries, but here it never got into the communit
 
 Since people already do this and it mostly works, I didn't want to replace it. I wanted to take away the reasons not to use it, one Facebook habit at a time.
 
-**Nothing to install.** Everyone has Facebook, so Pa-Ride is just a website. You don't need an account to look at a trip, and you sign up when you do something, like asking for a seat.
+**Nothing to install.** Everyone has Facebook, so Pa-Ride is a website. You don't need an account to look at a trip, and you sign up when you do something, like asking for a seat.
 
 **Posting is a form.** Everyone knows how to post in a group, so a driver fills in a form instead. Every trip then has a clear seat count and price, which a picture in a group never does.
 
-**Trust comes from a record, not mutual friends.** On Facebook you can see a profile and your mutual friends. Here it's a verified phone number and a trip record, and every trip ends with a recorded outcome, so the record keeps growing.
+**Trust comes from a trip record.** On Facebook you can see a profile and your mutual friends. Here it's a verified phone number and a trip record, and every trip ends with a recorded outcome, so the record keeps growing.
 
 **Negotiation has one shape.** Facebook messaging is free-flow, so everyone does it their own way. In Pa-Ride a rider proposes a price, the driver counters or accepts, and both sides have it recorded. When it's agreed, the seat is locked, so one seat can't be promised to two people.
 
@@ -60,7 +60,7 @@ Since people already do this and it mostly works, I didn't want to replace it. I
   </figure>
 </div>
 
-**Cost-sharing, not ride-hailing.** The app suggests a price and never sets a fare. That keeps Pa-Ride a way to split costs, outside LTFRB and TNVS regulation, and it shapes the pricing and the copy.
+**A way to split costs.** The app suggests a price and never sets a fare. That keeps Pa-Ride a way to split costs, outside LTFRB and TNVS regulation, and it shapes the pricing and the copy.
 
 **Matching on the route, not just the destination.** Riders also see drivers who are already passing near them, with the detour it would cost and a suggested price. That idea came from my friend, and we worked it out together.
 
@@ -83,6 +83,6 @@ It also needed a name people say out loud and a friendly, playful design, since 
 
 ## Status
 
-I'm a few weeks into building it and it's pre-launch, so there are no outside users yet. The core flows (post a trip, search, propose, confirm, recurring trips) are built and verified on desktop (macOS/Windows) and iOS Safari, but not yet as a compiled native iOS/Android app.
+I'm a few months into building it and I'm waiting on a meeting with the potential client. The core flows (post a trip, search, propose, confirm, recurring trips) are built and verified on desktop (macOS/Windows) and iOS Safari, but not yet as a compiled native iOS/Android app.
 
 It's built with React Native (Expo Router) and TypeScript on Supabase, with Postgres and PostGIS doing the route matching. I used Claude Code and Claude Design throughout.
