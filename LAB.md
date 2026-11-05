@@ -276,8 +276,8 @@ The same goes for the back link: from `/lab/telemetry/`, `../` is `/lab/`. The t
 | `build` | no | Shell command run in a fresh checkout (e.g. `"npm ci && npm run build"`). Leave out for plain HTML. |
 | `output` | no | Folder inside the repo to publish. Defaults to `"."` (everything), so set it, e.g. `"web"`. It must contain `index.html`. |
 | `sourceUrl` | no | Link for the card's "Source" link. Defaults to the GitHub repo when `repo` is set. Set to `""` to hide the link, for a private repo. (Pages CMS can't save an empty value; edit `lab-tools.json` directly.) |
-| `screenshotKind` | yes | `"web"` or `"phone"`. How the card shows the pictures: a framed page, or a whole phone screen. Same for every picture. |
-| `cardImages` | yes | List of `{ "image", "alt" }`, one to five. The first is the cover; more get arrows and dots. See [Add card pictures](CONTENT.md#add-card-pictures). |
+| `screenshotKind` | yes | `"web"` or `"phone"`. How the card shows the pictures: a framed page, or a whole phone screen. The default for every picture. |
+| `cardImages` | yes | List of `{ "image", "alt" }`, one to five. Add `"kind": "web"` or `"phone"` to a picture that differs from `screenshotKind`. The first is the cover; more get arrows and dots. See [Add card pictures](CONTENT.md#add-card-pictures). |
 | `card` | no | `false` publishes the page but adds no card to the Projects page, and `description` and the card pictures aren't needed. For a [demo entry page](#putting-a-project-on-the-portfolio). Defaults to `true`. |
 | `enabled` | no | `false` skips the tool entirely. Defaults to `true`. |
 

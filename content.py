@@ -142,8 +142,9 @@ def card_images(owner, meta):
     """The card screenshots for a case study or Lab tool, checked so a card can't ship without one.
 
     `owner` names the file in error messages. `meta` holds `cardImages`, a list of
-    {image, alt} (the first is the cover; paths look like assets/uploads/<file>), and
-    `screenshotKind`: "phone" or "web", the same for every picture of one project.
+    {image, alt, kind?} (the first is the cover; paths look like assets/uploads/<file>)
+    and `screenshotKind`: "phone" or "web", the default for every picture. A picture can
+    set its own `kind`, so one carousel can mix web pages and phone screens.
     """
     items = meta.get("cardImages") or []
     if not isinstance(items, list) or not items:
@@ -162,7 +163,10 @@ def card_images(owner, meta):
         alt = str(item.get("alt") or "").strip()
         if not alt:
             raise SystemExit(f"{owner}: describe card image {n} in its 'alt' text (for screen readers)")
-        images.append({"src": path, "alt": alt})
+        own = item.get("kind") or kind
+        if own not in SCREENSHOT_KINDS:
+            raise SystemExit(f"{owner}: card image {n} 'kind' must be one of {', '.join(SCREENSHOT_KINDS)}")
+        images.append({"src": path, "alt": alt, "kind": own})
     return {"kind": kind, "images": images}
 
 
@@ -229,11 +233,14 @@ def card_media(media):
     With more than one picture the slides sit side by side and js/site.js scrolls
     between them. The arrows and dots sit above the card's click area (see style.css),
     so they work while the rest of the card still opens the project.
+
+    Each picture is framed by its own `kind`. The card's `is-<kind>` class follows the
+    cover (the first picture).
     """
-    kind, images = media["kind"], media["images"]
-    frame = "device" if kind == "phone" else "framed"
+    images = media["images"]
+    kind = images[0]["kind"]
     slides = "".join(
-        f'<div class="media-slide"><div class="{frame}">'
+        f'<div class="media-slide"><div class="{"device" if i["kind"] == "phone" else "framed"}">'
         f'<img src="{{{{ROOT}}}}{esc(i["src"])}" alt="{esc(i["alt"])}" loading="lazy" decoding="async">'
         "</div></div>"
         for i in images
@@ -367,7 +374,7 @@ def showcase(specs):
             items = "".join(
                 '<li><button type="button" class="showcase-thumb" '
                 f'aria-label="Show {esc(s["title"])}">'
-                f'{card_media({"kind": s["media"]["kind"], "images": s["media"]["images"][:1]})}'
+                f'{card_media({"images": s["media"]["images"][:1]})}'
                 f'<span>{esc(s["title"])}</span></button></li>'
                 for s in shown
             )
